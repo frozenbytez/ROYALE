@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GCash Payment</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Trigger Button to Open Modal -->
+    <button id="openModalBtn" class="open-modal-button">Pay with GCash</button>
+
+    <!-- First Modal (Input Phone Number) -->
+    <div id="gcashModal" class="modal">
+        <div class="modal-content">
+            <div class="gcash-header">
+                <h1>GCash</h1>
+            </div>
+            <div class="gcash-box">
+                <p class="merchant">Merchant: CG Upmake</p>
+                <p class="amount-due">Amount Due</p>
+                <p class="price">PHP 459.00</p>
+                <p class="login-text">Login to pay with GCash</p>
+                <input type="text" placeholder="Enter your phone number" id="phoneInput" class="phone-input">
+                <p id="error-message" class="error-message"></p> <!-- Error message for invalid phone number -->
+                <button class="next-button" id="nextBtn">NEXT</button>
+            </div>
+            <p class="register-text">
+                Don't have a GCash account? <a href="#">Register now</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Second Modal (Payment Confirmation) -->
+    <div id="confirmationModal" class="modal">
+        <div class="modal-content">
+            <div class="gcash-header">
+                <h1>GCash</h1>
+            </div>
+            <div class="gcash-box">
+                <p class="merchant-confirmation">CG Upmake</p>
+                <div class="pay-with">
+                    <span>PAY WITH</span>
+                    <span class="gcash-balance">GCash PHP 5,459.00</span>
+                </div>
+                <p class="about-to-pay">YOU ARE ABOUT TO PAY</p>
+                <div class="amount-box">
+                    <div class="amount-detail">
+                        <span>Amount</span>
+                        <span>PHP 459.00</span>
+                    </div>
+                    <div class="amount-detail">
+                        <span>Total</span>
+                        <span class="total-amount">PHP 459.00</span>
+                    </div>
+                </div>
+                <p class="review-text">Please review to ensure the details are correct before you proceed.</p>
+                <button class="pay-button">PAY PHP 459.00</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
