@@ -11,7 +11,363 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <title>🎞️ Royale Cinema - Now Showing Movies</title>
-    <link rel="stylesheet" href="../Asset/css/nowshowing.css">
+    <style>
+        * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+body {
+    background-color: #1e1e2d;
+    color: #f2f2f2;
+}
+.navbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1050;
+    background: transparent;
+    height: 60px;
+    font-family: 'Arial', sans-serif;
+    font-size: 1rem; 
+    color: #ffffff;
+}
+.navbar-nav .nav-item .nav-link {
+    position: relative; 
+    padding: 10px 15px;
+    color: #ffffff;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+.navbar-nav .nav-item .nav-link:hover {
+    color: #7acaff; 
+}
+.navbar-nav .nav-item .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: #f3f7ec; 
+    transform: scaleX(0);
+    transform-origin: bottom right;
+    transition: transform 0.3s ease-out;
+}
+.navbar-nav .nav-item .nav-link:hover::after {
+    transform: scaleX(1); 
+    transform-origin: bottom left;
+}
+.navbar .nav-link.active {
+    background-color: #e3eaf31d; 
+    color: white; 
+    padding: 7px 7px;
+    border-radius: 5px;
+}
+@media(max-width: 991px) {
+    .sidebar {
+        background-color: rgba(225, 225, 225, 0.15);
+        backdrop-filter: blur(10px);
+    }
+}
+.now-showing {
+    text-align: center;
+    padding: 40px 20px;
+}
+.now-showing h1 {
+    font-family: Arial, sans-serif; 
+    font-weight: bold;
+    font-size: 3.5rem;
+  }
+.now {
+    color: white;
+  }
+.showing {
+    color: #a341f1;
+  }
+/* STYLE FOR GET TICKET BUTTON */
+.button {
+    --width: 100px;
+    --height: 35px;
+    --tooltip-height: 35px;
+    --tooltip-width: 90px;
+    --gap-between-tooltip-to-button: 18px;
+    --button-color: #222;
+    --tooltip-color: #fff;
+    width: var(--width);
+    height: var(--height);
+    background: var(--button-color);
+    position: relative;
+    text-align: center;
+    border-radius: 0.45em;
+    font-family: "Arial";
+    transition: background 0.3s;
+}
+.tooltip-inner {
+    background-color: rgba(0, 0, 0, 0.9) !important; 
+    color: #fff; 
+}
+.button::after {
+    position: absolute;
+    content: '';
+    width: 0;
+    height: 0;
+    border: 10px solid transparent;
+    border-top-color: #555;
+    left: calc(50% - 10px);
+    bottom: calc(100% + var(--gap-between-tooltip-to-button) - 10px);
+}
+.button::after,.button::before {
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.5s;
+}
+.text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.button-wrapper,.text,.icon {
+    overflow: hidden;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    color: #fff;
+}
+.button::before {
+    position: absolute;
+    content: attr(data-tooltip);
+    width: var(--tooltip-width);
+    height: var(--tooltip-height);
+    background-color: transparent; 
+    font-size: 0.9rem;
+    color: #fff; 
+    border-radius: .25em;
+    line-height: var(--tooltip-height);
+    bottom: calc(var(--height) + var(--gap-between-tooltip-to-button) + 10px);
+    left: calc(50% - var(--tooltip-width) / 2);
+}
+.button:hover:before, .button:hover:after {
+    opacity: 1;
+    visibility: visible;
+}
+.button:hover:after {
+    bottom: calc(var(--height) + var(--gap-between-tooltip-to-button) - 20px);
+}
+.button:hover:before {
+    bottom: calc(var(--height) + var(--gap-between-tooltip-to-button));
+}
+.text {
+    top: 0
+}
+.text,.icon {
+    transition: top 0.5s;
+}
+.icon {
+    color: #fff;
+    top: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.icon svg {
+    width: 24px;
+    height: 24px;
+}
+.button:hover {
+    background: #222;
+}
+.button:hover .text {
+    top: -100%;
+}
+.button:hover .icon {
+    top: 0;
+}
+.button:hover:before,.button:hover:after {
+    opacity: 1;
+    visibility: visible;
+}
+/*------------------------------------------------------------------------*/
+.movie-card {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 10px;
+    background-color: #f2f2f2;
+    border-radius: 15px;
+    color: #1e1e2d;
+    max-width: 800px;
+    margin: 2px auto;
+    transition: transform 0.3s ease-in-out;
+}
+.movie-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
+}
+.movie-poster img {
+    width: 250px;
+    border-radius: 10px;
+}   
+.movie-info {
+    max-width: 450px;
+    text-align: left;
+}
+.movie-info h2 {
+    font-size: 1.8em;
+    margin-bottom: 10px;
+}
+.movie-poster {
+    text-align: center;
+    position: relative;
+}
+.movie-poster .button {
+    margin-top: 10px; 
+    display: inline-block;
+}
+.trailer-link {
+    color: red;
+    text-decoration: none;
+    font-size: 1em;
+    margin-bottom: 10px;
+    display: inline-block;
+}
+.modal-title {
+    color: black;
+}
+@media (max-width: 768px) {
+    .movie-card {
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 20px; 
+    }
+    .movie-info {
+        text-align: center;
+    }
+    .nav-links {
+        display: none;
+    }
+    .dropdown {
+        display: block;
+    }
+}
+
+/*STYLE FOR FOOTER*/
+.footer {
+    background-color: #02162a;
+    padding: 40px 20px;
+    text-align: center;
+}
+.footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    max-width: 1200px;
+    margin: auto;
+    gap: 20px;
+}
+.footer-section {
+    flex: 1;
+    min-width: 250px;
+}
+.footer-section h4 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+.footer-section p,
+.footer-section a {
+    font-size: 14px;
+    color: #ffffff;
+    text-decoration: none;
+    margin-bottom: 8px;
+    display: block;
+}
+.logo {
+    width: 80px;
+    margin-bottom: 10px;
+}
+.social-icons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+.social-icons a {
+    margin: 0 10px;
+    color: #555;
+    text-decoration: none;
+    font-size: 24px;
+    transition: color 0.3s;
+}
+.social-icons a:hover {
+    color: #308bed; 
+}
+.footer-bottom {
+    margin-top: 20px;
+}
+.footer-bottom p {
+    font-size: 14px;
+    color: #ffffff;
+    margin-top: 10px;
+}
+.footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 10px;
+}
+.footer-links a {
+    font-size: 14px;
+    color: #ffffff;
+    text-decoration: none;
+}
+.footer-section input[type="email"] {
+    width: calc(100% - 100px);
+    padding: 8px;
+    margin-bottom: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+.footer-section button[type="submit"] {
+    padding: 8px 15px;
+    background-color: #007bff;
+    color: rgb(255, 255, 255);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.footer-section button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+@media (max-width: 768px) {
+    .footer-container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    .footer-section {
+        min-width: unset;
+    }
+    .footer-section input[type="email"] {
+        width: 100%;
+    }
+}
+@media (max-width: 576px) {
+    .footer-section h4 {
+        font-size: 16px;
+    }
+    .footer-section p,
+    .footer-section a {
+        font-size: 13px;
+    }
+    .footer-bottom p,
+    .footer-links a {
+        font-size: 12px;
+    }
+}
+    </style>
     
 </head>
 <body>
@@ -38,16 +394,16 @@
                         <a class="nav-link" href="../home.php">Home</a>
                     </li>
                     <li class="nav-item mx-2">
-                        <a class="nav-link active" arie-cureent="page" href="nowshowing.php">Now Showing</a>
+                        <a class="nav-link active" arie-cureent="page" href="../../Pages/user/nowshowing.php">Now Showing</a>
                     </li>
                     <li class="nav-item mx-2">
-                        <a class="nav-link" href="comingSoon.php">Upcoming</a>
+                        <a class="nav-link" href="../Pages/comingSoon.php">Upcoming</a>
                     </li>
                     <li class="nav-item mx-2">
-                        <a class="nav-link" href="contact.php">Contact Us</a>
+                        <a class="nav-link" href="/Pages/user/contact.php">Contact Us</a>
                     </li>
                     <li class="nav-item mx-2">
-                        <a class="nav-link" href="../login2.php">Login</a>
+                        <a class="nav-link" href="/Pages/user/login2.php">Login</a>
                     </li>
                 </ul>
             </div>
@@ -69,7 +425,7 @@
     <div class="container py-4">
         <div class="row movie-card">
             <div class="col-12 col-md-4 text-center movie-poster">
-                <img src="../Asset/images/hello_love_again.jpg" class="img-fluid mb-3" alt="Hello Love Again Photo">
+                <img src="../../Asset/images/hello_love_again.jpg" class="img-fluid mb-3" alt="Hello Love Again Photo">
                 <div data-bs-toggle="tooltip" data-bs-placement="top" title="Price: ₱350" class="button">
                     <div class="button-wrapper">
                         <div class="text">Get Ticket</div>
@@ -121,7 +477,7 @@
             <div class="container py-4">
                 <div class="row movie-card">
                     <div class="col-12 col-md-4 text-center movie-poster">
-                        <img src="../Asset/images/deadpool_and_wolverine.jpg" class="img-fluid mb-3" alt="Deadpool and Wolverine">
+                        <img src="../../Asset/images/deadpool_and_wolverine.jpg" class="img-fluid mb-3" alt="Deadpool and Wolverine">
                         <div data-bs-toggle="tooltip" data-bs-placement="top" title="Price: ₱370" class="button">
                             <div class="button-wrapper">
                                 <div class="text">Get Ticket</div>
@@ -172,7 +528,7 @@
         <div class="container py-4">
                 <div class="row movie-card">
                     <div class="col-12 col-md-4 text-center movie-poster">
-                        <img src="../Asset/images/the_wild_robot.jpg" class="img-fluid mb-3" alt="The Wild Robot">
+                        <img src="../../Asset/images/the_wild_robot.jpg" class="img-fluid mb-3" alt="The Wild Robot">
                         <div data-bs-toggle="tooltip" data-bs-placement="top" title="Price: ₱350" class="button">
                             <div class="button-wrapper">
                                 <div class="text">Get Ticket</div>
@@ -226,7 +582,7 @@
             <div class="container py-4">
                 <div class="row movie-card">  
                     <div class="col-12 col-md-4 text-center movie-poster">
-                        <img src="../Asset/images/oppenheimer.jpg" class="img-fluid mb-3" alt="The Wild Robot">
+                        <img src="../../Asset/images/oppenheimer.jpg" class="img-fluid mb-3" alt="The Wild Robot">
                         <div data-bs-toggle="tooltip" data-bs-placement="top" title="Price: ₱350" class="button">
                             <div class="button-wrapper">
                                 <div class="text">Get Ticket</div>
@@ -276,7 +632,7 @@
             <div class="container py-4">
                 <div class="row movie-card">
                     <div class="col-12 col-md-4 text-center movie-poster">
-                        <img src="../Asset/images/the_super_mario_bros2.jpg" class="img-fluid mb-3" alt="The Super Mario Bros 2">
+                        <img src="../../Asset/images/the_super_mario_bros2.jpg" class="img-fluid mb-3" alt="The Super Mario Bros 2">
                         <div data-bs-toggle="tooltip" data-bs-placement="top" title="Price: ₱350" class="button">
                             <div class="button-wrapper">
                                 <div class="text">Get Ticket</div>
@@ -327,7 +683,7 @@
             <div class="container py-4">
                 <div class="row movie-card">
                     <div class="col-12 col-md-4 text-center movie-poster">
-                        <img src="../Asset/images/the_nun2.jpg" class="img-fluid mb-3" alt="The Nun 2">
+                        <img src="../../Asset/images/the_nun2.jpg" class="img-fluid mb-3" alt="The Nun 2">
                         <div data-bs-toggle="tooltip" data-bs-placement="top" title="Price: ₱350" class="button">
                             <div class="button-wrapper">
                                 <div class="text">Get Ticket</div>
@@ -379,7 +735,7 @@
             <div class="container py-4">
                 <div class="row movie-card">
                     <div class="col-12 col-md-4 text-center movie-poster">
-                        <img src="../Asset/images/spider_man_across_spider_verse.jpg" class="img-fluid mb-3" alt="The Spider Man Across Spider Verse">
+                        <img src="../../Asset/images/spider_man_across_spider_verse.jpg" class="img-fluid mb-3" alt="The Spider Man Across Spider Verse">
                         <div data-bs-toggle="tooltip" data-bs-placement="top" title="Price: ₱350" class="button">
                             <div class="button-wrapper">
                                 <div class="text">Get Ticket</div>
@@ -430,7 +786,7 @@
             <div class="container py-4">
                 <div class="row movie-card">
                     <div class="col-12 col-md-4 text-center movie-poster">
-                        <img src="../Asset/images/venom_last_dance.jpg" class="img-fluid mb-3" alt="Venom The Last Dance">
+                        <img src="../../Asset/images/venom_last_dance.jpg" class="img-fluid mb-3" alt="Venom The Last Dance">
                         <div data-bs-toggle="tooltip" data-bs-placement="top" title="Price: ₱350" class="button">
                             <div class="button-wrapper">
                                 <div class="text">Get Ticket</div>
@@ -477,7 +833,7 @@
             </div>
 
                 <?php
-    include('../Asset/connection/config.php');  
+    include('../../Asset/connection/config.php');  
     $query = "SELECT * FROM movies WHERE status = 'nowshowing'";
     $result = mysqli_query($conn, $query);
 
@@ -579,7 +935,7 @@
         <div class="footer-container">
 
             <div class="footer-section">
-                <img src="logo.png" alt="Logo" class="logo">
+                <img src="../../Asset/images/whitelogo.png" alt="Logo" class="logo">
                 <p>Enjoy Watching with us</p>
                 <div class="social-icons">
                     <a href="#" class="social-link">

@@ -65,11 +65,203 @@ $conn_admin->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="Asset/css/login2.css">
+    <style>
+        body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #333;
+  color: #fff;
+  margin: 0;
+  flex-direction: column;
+}
+
+.navbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1050;
+  background: transparent;
+  height: 60px;
+  font-family: 'Arial', sans-serif;
+  font-size: 1rem; 
+  color: #ffffff;
+}
+
+.navbar-nav .nav-item .nav-link {
+  position: relative; 
+  padding: 10px 15px;
+  color: #ffffff;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.navbar-nav .nav-item .nav-link:hover {
+  color: #7acaff; 
+}
+
+.navbar-nav .nav-item .nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: #f3f7ec; 
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.3s ease-out;
+}
+
+.navbar-nav .nav-item .nav-link:hover::after {
+  transform: scaleX(1); 
+  transform-origin: bottom left;
+}
+
+.navbar .nav-link.active {
+  background-color: #e3eaf31d; 
+  color: white; 
+  padding: 7px 7px;
+  border-radius: 5px;
+}
+
+.navbar-brand {
+  margin-left: 33px;
+}
+
+.background-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+
+.content {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 100%;
+  padding: 3rem;
+  color: white;
+}
+.left-text h1 {
+  font-size: 5rem;
+  font-weight: bold;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+}
+
+.left-text p {
+  font-size: 1.25rem;
+  font-weight: 400;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+}
+
+.login-container {
+  background: rgba(19, 7, 46, 0.85); 
+  border-radius: 20px;
+  color: white;
+  padding: 2rem;
+  max-width: 400px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  margin-left: auto;
+  
+}
+.d-grid button {
+  background-color: #502779;
+  color: white;
+}
+
+.d-grid:hover {
+  background-color: #5a379e;
+}
+
+.login-card h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.form-toggle {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.form-toggle span {
+  margin: 0 10px;
+  cursor: pointer;
+  padding: 5px 10px;
+  color: #ccc;
+}
+
+.form-toggle .active {
+  color: #fff;
+  border-bottom: 2px solid #fff;
+}
+
+form input {
+  background: rgba(19, 7, 46, 0.85); 
+  border-radius: 20px;
+  color: white;
+  padding: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+form button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #000000; /* Custom color */
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+}
+.forgot-password {
+  display: block;
+  margin-top: 10px;
+  color: #ccc;
+  text-decoration: none;
+  font-size: 12px;
+}
+@media (max-width: 991px) {
+  .sidebar {
+      background-color: rgba(225, 225, 225, 0.15);
+      backdrop-filter: blur(10px);
+  }
+}
+@media (max-width: 768px) {
+  .content {
+      flex-direction: column;
+      padding: 1rem;
+      justify-content: flex-start; 
+  }
+
+  .left-text h1 {
+      font-size: 2.5rem;
+  }
+
+  .left-text p {
+      font-size: 1.1rem;
+  }
+
+  .signup-card {
+      width: 90%;
+  }
+}
+
+    </style>
 </head>
 <body>
     <video autoplay muted loop playsinline class="background-video">
-        <source src="Asset/images/signupbgbg.mp4" type="video/mp4">
+        <source src="../../Asset/images/signupbgbg.mp4" type="video/mp4">
         Your browser does not support the video tag.
     </video>
 

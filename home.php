@@ -27,7 +27,9 @@ $result = mysqli_query($conn, $query);
    
     <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
         <div class ="container-fluid">
-            <a class="navbar-brand fs-4" href="#">LOGO</a>
+        <a class="navbar-brand fs-4" href="home.html">
+                <img src="Asset/images/whitelogo.png" alt="Logo" style="height: 40px;">
+            </a> 
             <button class="navbar-toggler shadow-none border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -46,16 +48,16 @@ $result = mysqli_query($conn, $query);
                             <a class="nav-link active" aria-current="page" href="home.php">Home</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="nav-link" href="Pages/guest/nowshowing.php">Now Showing</a>
+                            <a class="nav-link" href="Pages/user/nowshowing.php">Now Showing</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="nav-link" href="PAGES/comingSoon.php">Upcoming</a>
+                            <a class="nav-link" href="Pages/user/comingSoon.php">Upcoming</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="nav-link" href="PAGES/contact.php">Contact Us</a>
+                            <a class="nav-link" href="Pages/user/contact.php">Contact Us</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="nav-link" href="login2.php">Login</a>
+                            <a class="nav-link" href="Pages/user/login2.php">Login</a>
                         </li>
                     </ul>
                 </div>
@@ -305,7 +307,7 @@ $result = mysqli_query($conn, $query);
 
             <!--- Royale Cinema Media --->
             <div class="footer-section">
-                <img src="Asset/images/royalelogo.png" alt="Logo" class="logo">
+                <img src="Asset/images/whitelogo.png" alt="Logo" class="logo">
                 <p>Enjoy Watching with us</p>
                 <div class="social-icons">
                     <a href="#" class="social-link">
