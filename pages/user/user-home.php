@@ -50,13 +50,13 @@ $result = mysqli_query($conn, $query);
                             <a class="nav-link active" aria-current="page" href="#">Home</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="nav-link" href="PAGES/nowshowing.php">Now Showing</a>
+                            <a class="nav-link" href="nowshowing.php">Now Showing</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="nav-link" href="PAGES/comingSoon.php">Upcoming</a>
+                            <a class="nav-link" href="comingSoon.php">Upcoming</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="nav-link" href="PAGES/contact.php">Contact Us</a>
+                            <a class="nav-link" href="contact.php">Contact Us</a>
                         </li>
                         <li class="nav-item mx-2 dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -80,13 +80,13 @@ $result = mysqli_query($conn, $query);
         
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img src="stylesheet/images/venom.png" class="d-block w-100" alt="Venom">
+                <img src="../../assets/images/venom.png" class="d-block w-100" alt="Venom">
             </div>
             <div class="carousel-item">
-                <img src="stylesheet/images/deadpool.png" class="d-block w-100" alt="Deadpool">
+                <img src="../../assets/images/deadpool.png" class="d-block w-100" alt="Deadpool">
             </div>
             <div class="carousel-item">
-                <img src="stylesheet/images/batman.jpg" class="d-block w-100" alt="Humane">
+                <img src="../../assets/images/batman.jpg" class="d-block w-100" alt="Humane">
             </div>
         </div>
     
@@ -151,7 +151,7 @@ $result = mysqli_query($conn, $query);
         <div class="row row-cols-1 row-cols-md-4 g-4 py-5">
         <div class="col">
             <div class="card now-showing text-center">
-                <img src="stylesheet/images/ns1.jpg" class="card-img-top" alt="">
+                <img src="../../assets/images/ns1.jpg" class="card-img-top" alt="">
                 <div class="card-body">
                     <p class="card-title">DeadPool & Wolverine</p>
                     <a href="details.php" class="btn btn-primary" id="moreDetailsButton">More Details</a>
@@ -161,7 +161,7 @@ $result = mysqli_query($conn, $query);
     
         <div class="col now-showing text-center">
             <div class="card">
-                <img src="stylesheet/images/ns2.jpg" class="card-img-top" alt="">
+                <img src="../../assets/images/ns2.jpg" class="card-img-top" alt="">
                 <div class="card-body">
                     <p class="card-title">The Wild Robot</p>
                     <a href="#" class="btn btn-primary" id="moreDetailsButton">More Details</a>
@@ -171,7 +171,7 @@ $result = mysqli_query($conn, $query);
     
         <div class="col now-showing text-center">
             <div class="card text-center">
-                <img src="stylesheet/images/ns3.jpg" class="card-img-top" alt="">
+                <img src="../../assets/images/ns3.jpg" class="card-img-top" alt="">
                 <div class="card-body">
                     <p class="card-title">Oppenheimer</p>
                     <a href="#" class="btn btn-primary" id="moreDetailsButton">More Details</a>
@@ -181,7 +181,7 @@ $result = mysqli_query($conn, $query);
     
         <div class="col now-showing text-center">
             <div class="card">
-                <img src="stylesheet/images/ns4.jpg" class="card-img-top" alt="">
+                <img src="../../assets/images/ns4.jpg" class="card-img-top" alt="">
                 <div class="card-body">
                     <p class="card-title">The Super MArie Bros2</p>
                     <a href="#" class="btn btn-primary" id="moreDetailsButton">More Details</a>
@@ -191,7 +191,7 @@ $result = mysqli_query($conn, $query);
     
         <div class="col now-showing text-center">
             <div class="card">
-                <img src="stylesheet/images/ns5.jpg" class="card-img-top" alt="">
+                <img src="../../assets/images/ns5.jpg" class="card-img-top" alt="">
                 <div class="card-body">
                     <p class="card-title">The Nun2</p>
                     <a href="#" class="btn btn-primary" id="moreDetailsButton">More Details</a>
@@ -201,7 +201,7 @@ $result = mysqli_query($conn, $query);
     
         <div class="col">
             <div class="card now-showing text-center">
-                <img src="stylesheet/images/ns6.jpg" class="card-img-top" alt="">
+                <img src="../../assets/images/ns6.jpg" class="card-img-top" alt="">
                 <div class="card-body">
                     <p class="card-title">Spider-Man Across Spider-Verse</p>
                     <a href="#" class="btn btn-primary" id="moreDetailsButton">More Details</a>
@@ -211,7 +211,7 @@ $result = mysqli_query($conn, $query);
     
         <div class="col">
             <div class="card now-showing text-center">
-                <img src="stylesheet/images/ns7.jpg" class="card-img-top" alt="">
+                <img src="../../assets/images/ns7.jpg" class="card-img-top" alt="">
                 <div class="card-body">
                     <p class="card-title">Venom The Last Dance</p>
                     <a href="#" class="btn btn-primary" id="moreDetailsButton">More Details</a>
@@ -221,7 +221,7 @@ $result = mysqli_query($conn, $query);
 
         <div class="col">
             <div class="card now-showing text-center">
-                <img src="stylesheet/images/ns8.jpg" class="card-img-top" alt="">
+                <img src="../../assets/images/ns8.jpg" class="card-img-top" alt="">
                 <div class="card-body">
                     <p class="card-title">Hello, Love, Again</p>
                     <a href="#" class="btn btn-primary" id="moreDetailsButton">More Details</a>
@@ -234,7 +234,7 @@ $result = mysqli_query($conn, $query);
 
             <div class="col coming-soon d-none"  style="margin-top: 3px;">
                 <div class="card text-center">
-                    <img src="stylesheet/images/cs4.jpg" class="card-img-top" alt="">
+                    <img src="../../assets/images/cs4.jpg" class="card-img-top" alt="">
                     <div class="card-body">
                         <h5 class="card-title">Movie Title</h5>
                         <a href="#" class="btn btn-primary" id="moreDetailsButton">More Details</a>
@@ -244,7 +244,7 @@ $result = mysqli_query($conn, $query);
 
             <div class="col coming-soon d-none" style="margin-top: 3px;" >
                 <div class="card text-center">
-                    <img src="stylesheet/images/cs2.jpg" class="card-img-top" alt="">
+                    <img src="../../assets/images/cs2.jpg" class="card-img-top" alt="">
                     <div class="card-body">
                         <h5 class="card-title">Movie Title</h5>
                         <a href="#" class="btn btn-primary" id="moreDetailsButton">More Details</a>
@@ -254,7 +254,7 @@ $result = mysqli_query($conn, $query);
       
             <div class="col coming-soon d-none" style="margin-top: 3px;">
                 <div class="card text-center">
-                    <img src="stylesheet/images/cs3.jpg" class="card-img-top" alt="">
+                    <img src="../../assets/images/cs3.jpg" class="card-img-top" alt="">
                     <div class="card-body">
                         <h5 class="card-title">Movie Title</h5>
                         <a href="#" class="btn btn-primary" id="moreDetailsButton">More Details</a>
@@ -265,7 +265,7 @@ $result = mysqli_query($conn, $query);
                   
             <div class="col coming-soon d-none" style="margin-top: 3px;">
                 <div class="card text-center">
-                    <img src="stylesheet/images/cs4.jpg" class="card-img-top" alt="">
+                    <img src="../../assets/images/cs4.jpg" class="card-img-top" alt="">
                     <div class="card-body">
                         <h5 class="card-title">Movie Title</h5>
                         <a href="#" class="btn btn-primary" id="moreDetailsButton">More Details</a>
@@ -281,7 +281,7 @@ $result = mysqli_query($conn, $query);
         <div class="row g-0"> 
           <div class="col-12">
             <div class="full-width-image">
-              <img src="stylesheet/images/snacks3.png" alt="Sample Image">
+              <img src="../../assets/images/snacks3.png" alt="Sample Image">
             </div>
           </div>
         </div>
@@ -292,13 +292,13 @@ $result = mysqli_query($conn, $query);
     <div id="carouselExampleAutoplaying1" class="carousel slide" data-bs-ride="carousel" style="width: 70%; margin: 0 auto;">
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img src="stylesheet/images/popcorn.png" class="d-block w-100 carousel-image" alt="Pop Corn">
+                <img src="../../assets/images/popcorn.png" class="d-block w-100 carousel-image" alt="Pop Corn">
             </div>
             <div class="carousel-item">
-                <img src="stylesheet/images/drinks.png" class="d-block w-100 carousel-image" alt="Drinks">
+                <img src="../../assets/images/drinks.png" class="d-block w-100 carousel-image" alt="Drinks">
             </div>
             <div class="carousel-item">
-                <img src="stylesheet/images/hot snacks.png" class="d-block w-100 carousel-image" alt="Hot Snacks">
+                <img src="../../assets/images/hot snacks.png" class="d-block w-100 carousel-image" alt="Hot Snacks">
             </div>
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying1" data-bs-slide="prev">
@@ -317,7 +317,7 @@ $result = mysqli_query($conn, $query);
 
             <!--- Royale Cinema Media --->
             <div class="footer-section">
-                <img src="stylesheet/images/logo.png" alt="Logo" class="logo">
+                <img src="../../assets/images/logo.png" alt="Logo" class="logo">
                 <p>Enjoy Watching with us</p>
                 <div class="social-icons">
                     <a href="#" class="social-link">

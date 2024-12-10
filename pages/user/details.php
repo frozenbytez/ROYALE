@@ -1,366 +1,388 @@
 <?php
-session_start();
-require('libs/fpdf.php'); // Include FPDF library
+session_start();  // Start the session to use session variables
+include('../../assets/php/config.php');  // Include database connection
 
-// Check if user is logged in
 $loggedIn = isset($_SESSION['user']) || isset($_SESSION['admin']);
 $first_name = $_SESSION['user'] ?? $_SESSION['admin'] ?? '';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['generate_receipt'])) {
-    // Constants
-    $pricePerSeat = 440; // Price per seat in PHP
-    
-    // Receipt generation logic
-    $movieTitle = "Deadpool & Wolverine";
-    $cinemaName = "Royale Cinema";
-    $cinemaRoom = "1";
-    $showtime = htmlspecialchars($_POST['showtime']);
-    $selectedSeats = htmlspecialchars($_POST['seats']); // Expected format: "A1, A2, A3"
-    
-    // Calculate total cost
-    $seatArray = explode(',', $selectedSeats); // Convert to array
-    $totalSeats = count($seatArray); // Count the number of seats
-    $totalCost = $pricePerSeat * $totalSeats; // Multiply by price per seat
+// Fetch the movie ID from the URL
+if (isset($_GET['movie_id'])) {
+    $movie_id = $_GET['movie_id'];
 
-    $paymentMethod = "Credit Card"; // Example, this could be dynamic
+    // Query the database to fetch details for the selected movie
+    $query = "SELECT * FROM movies WHERE id = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i", $movie_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-    // Create PDF
-    $pdf = new FPDF();
-    $pdf->AddPage();
-    $pdf->SetFont('Arial', 'B', 16);
-    
-    // Header
-    $pdf->SetTextColor(230, 126, 34); // Color for title
-    $pdf->Cell(0, 10, "RECEIPT", 0, 1, 'C');
-    $pdf->Ln(5);
-
-    $pdf->SetFont('Arial', '', 12);
-    $pdf->SetTextColor(52, 73, 94); // Dark gray
-    $pdf->Cell(0, 10, "Royale Cinema", 0, 1, 'C');
-    $pdf->Cell(0, 10, "143 Royale Street, North Caloocan City", 0, 1, 'C');
-    $pdf->Ln(5);
-
-    // Divider
-    $pdf->SetFont('Arial', '', 10);
-    $pdf->SetTextColor(0, 0, 0);
-    $pdf->Cell(0, 0, str_repeat('*', 40), 0, 1, 'C');
-    $pdf->Ln(5);
-
-    // Details
-    $pdf->SetFont('Arial', '', 12);
-    $details = [
-        "Cinema Name" => $cinemaName,
-        "Cinema Room" => $cinemaRoom,
-        "Movie Title" => $movieTitle,
-        "Showtime" => $showtime,
-        "Seats" => $selectedSeats,
-        "Price per Seat" => "PHP " . number_format($pricePerSeat, 2) . " x " . $totalSeats,
-    ];
-
-    foreach ($details as $key => $value) {
-        $pdf->Cell(50, 10, $key, 0, 0);
-        $pdf->Cell(5, 10, ":", 0, 0);
-        $pdf->Cell(0, 10, $value, 0, 1);
+    // Check if a movie was found
+    if ($result->num_rows > 0) {
+        $movie = $result->fetch_assoc();  // Fetch movie details
+    } else {
+        echo "Movie not found!";
+        exit;
     }
-    $pdf->Ln(5);
-
-    // Total
-    $pdf->SetFont('Arial', 'B', 14);
-    $pdf->SetTextColor(0, 0, 0);
-    $pdf->Cell(50, 10, "Total", 0, 0);
-    $pdf->Cell(5, 10, ":", 0, 0);
-    $pdf->Cell(0, 10, "PHP " . number_format($totalCost, 2), 0, 1);
-    $pdf->Ln(5);
-
-    // Payment method
-    $pdf->SetFont('Arial', '', 12);
-    $pdf->SetTextColor(52, 73, 94);
-    $pdf->Cell(0, 10, "Payment Method: " . $paymentMethod, 0, 1);
-    $pdf->Ln(5);
-
-    // Divider
-    $pdf->Cell(0, 0, str_repeat('*', 40), 0, 1, 'C');
-    $pdf->Ln(10);
-
-    // Footer
-    $pdf->SetFont('Arial', 'I', 10);
-    $pdf->SetTextColor(7, 21, 93); // Blue
-    $pdf->Cell(0, 10, "Thank you for choosing Royale Cinema! Enjoy the movie!", 0, 1, 'C');
-
-    // Save PDF to the receipts folder with a unique file name based on the current date and time
-    $currentDateTime = date('Y-m-d_H-i-s'); // Format: YYYY-MM-DD_HH-MM-SS
-    $receiptsDir = 'receipts'; // Directory to store receipts
-    if (!is_dir($receiptsDir)) {
-        mkdir($receiptsDir, 0777, true); // Create the directory if it doesn't exist
-    }
-    $filePath = "$receiptsDir/receipt_$currentDateTime.pdf";
-    $pdf->Output('F', $filePath);
-
-    // Send JSON response with the file path
-    echo json_encode(['success' => true, 'file' => $filePath]);
+} else {
+    echo "No movie selected!";
     exit;
 }
+
+// Access the movie details
+$movie_title = $movie['title'];
+$movie_runtime = $movie['runtime'];
+$movie_description = $movie['description'];
+$movie_director = $movie['director'];
+$movie_cast = $movie['cast'];
+$movie_trailer = $movie['trailer_link'];
+$movie_image = isset($movie['image_url']) ? $movie['image_url'] : 'default_image.jpg';
+
+$startDate = new DateTime($movie['start_date']);
+$endDate = new DateTime($movie['end_date']);
+$dateInterval = new DateInterval('P1D');
+$dateRange = new DatePeriod($startDate, $dateInterval, $endDate->modify('+1 day'));
 ?>
-
-
-
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="../../assets/css/user/style.css">
+    <link rel="stylesheet" href="../../assets/css/user/style.css">
+    <style>
+    .seats-container.loading {
+    opacity: 0.5;
+    pointer-events: none;
+}
+.seats-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 20px;
+  background-color: #f4f4f4;
+  border-radius: 10px;
+}
 
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-    const confirmBtn = document.getElementById('confirm-btn');
-    
-    confirmBtn.addEventListener('click', () => {
-        const seats = Array.from(document.querySelectorAll('.seat.selected'))
-            .map(seat => `${seat.dataset.row}-${seat.dataset.col}`).join(', ');
-        const totalCost = document.getElementById('total-cost').innerText;
-        const showtime = document.getElementById('time-select').value;
+.seat-row {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 800px;
+}
 
-        fetch('details.php', {
-            method: 'POST',
-            headers: { 
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: new URLSearchParams({
-                'generate_receipt': true,
-                'seats': seats,
-                'total_cost': totalCost,
-                'showtime': showtime
-            })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                window.open(data.file, '_blank');
-            } else {
-                alert('Error generating receipt!');
-            }
-        })
-        .catch(err => {
-            console.error('Error:', err);
-            alert('There was an error generating the receipt. Please try again.');
-        });
-    });
-});
-    </script>
+.row-label {
+  width: 30px;
+  text-align: right;
+  margin-right: 15px;
+  font-weight: bold;
+  color: #666;
+}
 
-  
-</head>
+.seat-row-container {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+}
 
-<body>
-  <!-- Navbar Start -->
-  <nav class="navbar navbar-expand-lg navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand fs-4" href="home.html">
-            <img src="stylesheet/images/logo.png" alt="Logo" style="height: 40px;">
-        </a>
-        <button class="navbar-toggler shadow-none border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="sidebar offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
-            <div class="offcanvas-header text-white border-bottom">
-                <h5 class="offcanvas-title" id="offcanvasNavbarLabel">LOGO</h5>
-                <button 
-                type="button" 
-                class="btn-close btn-close-white shadow-none" 
-                data-bs-dismiss="offcanvas" 
-                aria-label="Close"></button>
-            </div>
-            <div class="offcanvas-body d-flex flex-column p-4">
-                <ul class="navbar-nav justify-content-center justify-content-lg-end align-items-center fs-5 flex-grow-1 pe-3">
-                    <li class="nav-item mx-2">
-                        <a class="nav-link" href="../index.php">Home</a>
-                    </li>
-                    <li class="nav-item mx-2">
-                        <a class="nav-link" href="pages/nowshowing.php">Now Showing</a>
-                    </li>
-                    <li class="nav-item mx-2">
-                        <a class="nav-link" href="comingSoon.php">Upcoming</a>
-                    </li>
-                    <li class="nav-item mx-2">
-                        <a class="nav-link" href="contact.php">Contact Us</a>
-                    </li>
-                    <li class="nav-item mx-2">
-                    <?php if ($loggedIn): ?>
-                        <a class="nav-link" href="logout.php">Logout (<?php echo htmlspecialchars($first_name); ?>)</a>
-                    <?php else: ?>
-                        <a class="nav-link" href="login.php">Login</a>
-                    <?php endif; ?>
-                    </li>
-                </ul>
+.seat-half {
+  display: flex;
+  gap: 10px;
+}
+
+.middle-gap {
+  width: 50px;
+  height: 1px;
+}
+
+.seat {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.seat:hover {
+  transform: scale(1.1);
+}
+
+.seat.selected {
+  fill: #4CAF50;
+}
+
+.seat.booked {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.screen {
+  width: 80%;
+  height: 10px;
+  background-color: #333;
+  margin: 20px auto;
+  border-radius: 5px;
+}
+    </style>
+    <title><?php echo htmlspecialchars($movie_title); ?> - Movie Details</title>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand fs-4" href="home.html">
+                <img src="stylesheet/images/logo.png" alt="Logo" style="height: 40px;">
+            </a>
+            <button class="navbar-toggler shadow-none border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="sidebar offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+                <div class="offcanvas-header text-white border-bottom">
+                    <h5 class="offcanvas-title" id="offcanvasNavbarLabel">LOGO</h5>
+                    <button type="button" class="btn-close btn-close-white shadow-none" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body d-flex flex-column p-4">
+                    <ul class="navbar-nav justify-content-center justify-content-lg-end align-items-center fs-5 flex-grow-1 pe-3">
+                        <li class="nav-item mx-2">
+                            <a class="nav-link" href="../index.php">Home</a>
+                        </li>
+                        <li class="nav-item mx-2">
+                            <a class="nav-link" href="pages/nowshowing.php">Now Showing</a>
+                        </li>
+                        <li class="nav-item mx-2">
+                            <a class="nav-link" href="comingSoon.php">Upcoming</a>
+                        </li>
+                        <li class="nav-item mx-2">
+                            <a class="nav-link" href="contact.php">Contact Us</a>
+                        </li>
+                        <li class="nav-item mx-2">
+                            <?php if ($loggedIn): ?>
+                                <a class="nav-link" href="../guest/logout.php">Logout (<?php echo htmlspecialchars($first_name); ?>)</a>
+                            <?php else: ?>
+                                <a class="nav-link" href="../guest/login.php">Login</a>
+                            <?php endif; ?>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
-    </div>
-</nav>
-
-  <!-- Navbar End -->
-
-  <div class="movie-title">
-    <div class="content">
-      <h1>Deadpool & Wolverine</h1>
-      <div class="movie-info">
-        <p><i class="fas fa-clock"></i><strong>Runtime:</strong> 2h 7m</p>
-                    <p>
-                        Deadpool's peaceful existence comes crashing down when the Time Variance Authority recruits him 
-                        to help safeguard the multiverse. He soon unites with his would-be pal, Wolverine, to complete 
-                        the mission and save his world from an existential threat.
-                    </p>
-                    <p><i class="fas fa-film"></i><strong>Director:</strong> Shawn Levy</p>
-                    <p><i class="fas fa-users"></i><strong>Cast:</strong> Ryan Reynolds, Morena Baccarin</p>
-      </div>
-    </div>
-    
-    <div class="poster-section">
-    <img src="../../assets/images/deadpool and wolverine.jpg" alt="Movie Poster" class="poster">
-    <a href="https://youtu.be/__2bjWbetsA?si=2lgrCc3CVBDS5gCa" class="trailer-link d-block text-center text-md-left" data-bs-toggle="modal" data-bs-target="#venomTrailerModal" >Watch trailer</a>
-</div>
-
-  </div>
-  <div class="modal fade" id="venomTrailerModal" tabindex="-1" aria-labelledby="venomTrailerModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="venomTrailerModalLabel">Trailer - Venom : The Last Dance</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </nav>
+</head>
+<body>
+    <div class="movie-title">
+        <div class="content">
+            <h1><?php echo htmlspecialchars($movie_title); ?></h1>
+            <div class="movie-info">
+                <p><i class="fas fa-clock"></i><strong>Runtime:</strong> <?php echo htmlspecialchars($movie_runtime); ?></p>
+                <p><?php echo htmlspecialchars($movie_description); ?></p>
+                <p><i class="fas fa-film"></i><strong>Director:</strong> <?php echo htmlspecialchars($movie_director); ?></p>
+                <p><i class="fas fa-users"></i><strong>Cast:</strong> <?php echo htmlspecialchars($movie_cast); ?></p>
             </div>
-            <div class="modal-body">
-                <div class="ratio ratio-16x9">
-                    <iframe width="560" height="315" src="https://www.youtube.com/embed/__2bjWbetsA?si=2lgrCc3CVBDS5gCa" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+
+        <div class="poster-section">
+            <img src="../../assets/images/<?php echo htmlspecialchars($movie_image); ?>" alt="Movie Poster" class="poster">
+            <a href="<?php echo htmlspecialchars($movie_trailer); ?>" class="trailer-link d-block text-center text-md-left" data-bs-toggle="modal" data-bs-target="#trailerModal">Watch trailer</a>
+        </div>
+    </div>
+
+    <!-- Trailer Modal -->
+    <div class="modal fade" id="trailerModal" tabindex="-1" aria-labelledby="trailerModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="trailerModalLabel">Trailer - <?php echo htmlspecialchars($movie_title); ?></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="ratio ratio-16x9">
+                        <iframe width="560" height="315" src="https://www.youtube.com/embed/<?php echo basename($movie_trailer); ?>" title="YouTube video player" frameborder="0" allowfullscreen></iframe>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
+    <!-- Seat Selection Section -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="seat-chart">
+                    <div class="screen text-center my-3">SCREEN</div>
+                    <div id="seats-container" class="d-flex flex-wrap justify-content-center"></div>
+                </div>
+            </div>
 
+            <div class="col-lg-4 mt-3 mt-lg-0">
+                <div class="receipt card p-4" style="background-color: #222; color: white; border-radius: 50px;">
+                    <h3 class="text-center mb-3">Your Basket</h3>
 
-<div class="container">
-  <div class="row">
-      <div class="col-lg-8">
-          <div class="seat-chart">
-              <div class="screen text-center my-3">SCREEN</div>
-              <div id="seats-container" class="d-flex flex-wrap justify-content-center"></div>
-          </div>
-      </div>
+                    <!-- Date Selection -->
+                    <div class="mb-3">
+                        <label for="date-select" class="form-label">Select Date:</label>
+                        <select id="date-select" class="form-select">
+                            <?php
+                            foreach ($dateRange as $date) {
+                                echo '<option value="' . $date->format('Y-m-d') . '">' . $date->format('F j, Y') . '</option>';
+                            }
+                            ?>
+                        </select>
+                    </div>
 
+                    <!-- Time Selection -->
+                    <div class="mb-3">
+                        <label for="time-select" class="form-label">Select Time:</label>
+                        <select id="time-select" class="form-select">
+                            <?php
+                            if (!empty($movie['time1'])) {
+                                echo '<option value="' . $movie['time1'] . '">' . date("g:i A", strtotime($movie['time1'])) . '</option>';
+                            }
+                            if (!empty($movie['time2'])) {
+                                echo '<option value="' . $movie['time2'] . '">' . date("g:i A", strtotime($movie['time2'])) . '</option>';
+                            }
+                            if (!empty($movie['time3'])) {
+                                echo '<option value="' . $movie['time3'] . '">' . date("g:i A", strtotime($movie['time3'])) . '</option>';
+                            }
+                            ?>
+                        </select>
+                    </div>
 
-      <div class="col-lg-4 mt-3 mt-lg-0">
-          <div class="receipt card p-4" style="background-color: #222; color: white; border-radius: 50px; ">
-              <h3 class="text-center mb-3">Your Basket</h3>
+                    <ul id="selected-seats" class="list-unstyled mb-3"></ul>
+                    <p class="total-cost">Total Cost: ₱<span id="total-cost">0</span></p>
+                    <button class="btn btn-primary w-100" id="confirm-btn" disabled>Confirm Selection</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-              <div class="mb-3">
-                  <label for="date-select" class="form-label">Select Date:</label>
-                  <select id="date-select" class="form-select">
-                      <option value="2024-11-13">November 13, 2024</option>
-                      <option value="2024-11-14">November 14, 2024</option>
-                      <option value="2024-11-15">November 15, 2024</option>
-                      <option value="2024-11-16">November 16, 2024</option>
-                  </select>
-              </div>
-
-              <div class="mb-3">
-                  <label for="time-select" class="form-label">Select Time:</label>
-                  <select id="time-select" class="form-select">
-                      <option value="13:00">1:00 PM</option>
-                      <option value="15:30">3:30 PM</option>
-                      <option value="18:00">6:00 PM</option>
-                      <option value="20:30">8:30 PM</option>
-                  </select>
-              </div>
-
-              <ul id="selected-seats" class="list-unstyled mb-3"></ul>
-              <p class="total-cost">Total Cost: ₱<span id="total-cost">0</span></p>
-              <button class="btn btn-primary w-100" id="confirm-btn" disabled>Confirm Selection</button>
-          </div>
-      </div>
-  </div>
-</div>
-
-<div id="modal1">
-  <div id="modal-content">
-      <p>You can only select a maximum of 10 seats per transaction.</p>
-      <button id="close-modal">Close</button>
-  </div>
-</div>
-<?php include('../../assets/php/config.php'); ?>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
 
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
+ document.addEventListener('DOMContentLoaded', () => {
     const seatsContainer = document.getElementById('seats-container');
     const selectedSeats = document.getElementById('selected-seats');
     const totalCostElement = document.getElementById('total-cost');
     const confirmBtn = document.getElementById('confirm-btn');
     const dateSelect = document.getElementById('date-select');
     const timeSelect = document.getElementById('time-select');
-    const modal = document.getElementById('modal1');
-    const closeModalBtn = document.getElementById('close-modal');
 
     const seatPrice = 440;
     const maxSeats = 10;
     let selectedSeatsCount = 0;
 
-    const seatSVG = `
-      <svg viewBox="0 0 24 24">
-        <path d="M18 19H6c-1.1 0-2 .9-2 2v1h16v-1c0-1.1-.9-2-2-2zM18 10c-.55 0-1 .45-1 1v5h-1v-5c0-.55-.45-1-1-1H9c-.55 0-1 .45-1 1v5H7v-5c0-.55-.45-1-1-1H5c-.55 0-1 .45-1 1v6c0 .55.45 1 1 1h14c.55 0 1-.45 1-1v-6c0-.55-.45-1-1-1z"/>
-      </svg>
-    `;
+    const movieId = <?php echo $movie_id; ?>; // Pass the movie ID from PHP to JavaScript
 
-    // Create seat grid
-    const rows = 5;
-    const columns = 10;
-    for (let row = 1; row <= rows; row++) {
-      const rowDiv = document.createElement('div');
-      for (let col = 1; col <= columns; col++) {
-        const seat = document.createElement('div');
-        seat.classList.add('seat');
-        seat.dataset.row = row;
-        seat.dataset.col = col;
-        seat.innerHTML = seatSVG; 
-        seat.addEventListener('click', handleSeatClick);
-        rowDiv.appendChild(seat);
-      }
-      seatsContainer.appendChild(rowDiv);
-    }
+    const seatSVG = 
+      '<svg viewBox="0 0 24 24"><path d="M18 19H6c-1.1 0-2 .9-2 2v1h16v-1c0-1.1-.9-2-2-2zM18 10c-.55 0-1 .45-1 1v5h-1v-5c0-.55-.45-1-1-1H9c-.55 0-1 .45-1 1v5H7v-5c0-.55-.45-1-1-1H5c-.55 0-1 .45-1 1v6c0 .55.45 1 1 1h14c.55 0 1-.45 1-1v-6c0-.55-.45-1-1-1z"/></svg>';
+
+    // Create seat grid - KEEP YOUR ORIGINAL SEAT CREATION LOGIC
+    // Replace the existing seat creation logic with this
+const rows = 5;
+const columns = 10;
+for (let row = 1; row <= rows; row++) {
+  const rowDiv = document.createElement('div');
+  rowDiv.classList.add('seat-row');
+  
+  // Add row letter
+  const rowLabelDiv = document.createElement('div');
+  rowLabelDiv.classList.add('row-label');
+  rowLabelDiv.textContent = String.fromCharCode(64 + row);
+  rowDiv.appendChild(rowLabelDiv);
+
+  // Create a container for seats with a gap in the middle
+  const seatContainer = document.createElement('div');
+  seatContainer.classList.add('seat-row-container');
+
+  // First half of seats
+  const firstHalf = document.createElement('div');
+  firstHalf.classList.add('seat-half');
+  for (let col = 1; col <= columns/2; col++) {
+    const seat = createSeat(row, col);
+    firstHalf.appendChild(seat);
+  }
+
+  // Middle gap
+  const middleGap = document.createElement('div');
+  middleGap.classList.add('middle-gap');
+
+  // Second half of seats
+  const secondHalf = document.createElement('div');
+  secondHalf.classList.add('seat-half');
+  for (let col = columns/2 + 1; col <= columns; col++) {
+    const seat = createSeat(row, col);
+    secondHalf.appendChild(seat);
+  }
+
+  // Assemble the row
+  seatContainer.appendChild(firstHalf);
+  seatContainer.appendChild(middleGap);
+  seatContainer.appendChild(secondHalf);
+  rowDiv.appendChild(seatContainer);
+  
+  seatsContainer.appendChild(rowDiv);
+}
+
+// Seat creation helper function
+function createSeat(row, col) {
+  const seat = document.createElement('div');
+  seat.classList.add('seat');
+  seat.dataset.row = row;
+  seat.dataset.col = col;
+  seat.innerHTML = seatSVG; 
+  seat.addEventListener('click', handleSeatClick);
+  return seat;
+}           
 
     // Fetch and mark booked seats
     function fetchBookedSeats() {
-      const date = dateSelect.value;
-      const time = timeSelect.value;
-
-      fetch('../../assets/php/get-booked-seats.php', {  // <-- Updated path
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          date: date,
-          time: time
-        })
-      })
-      .then(response => response.json())
-      .then(bookedSeats => {
-        bookedSeats.forEach(seat => {
-          const bookedSeat = document.querySelector(
-            `.seat[data-row="${seat.seat_row}"][data-col="${seat.seat_col}"]`
-          );
-          if (bookedSeat) {
-            bookedSeat.classList.add('booked');
-            bookedSeat.style.opacity = '0.3';
-            bookedSeat.style.pointerEvents = 'none';
-          }
+        // Reset all seats before fetching new booking status
+        document.querySelectorAll('.seat').forEach(seat => {
+            seat.classList.remove('booked');
+            seat.style.opacity = '1';
+            seat.style.pointerEvents = 'auto';
         });
-      })
-      .catch(error => {
-        console.error('Error fetching booked seats:', error);
-      });
+
+        const date = dateSelect.value;
+        const time = timeSelect.value;
+
+        fetch('../../assets/php/get-booked-seats.php', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ 
+        movie_id: movieId, 
+        date: dateSelect.value, 
+        time: timeSelect.value 
+    })
+})
+.then(response => {
+    if (!response.ok) {
+        throw new Error('Network response was not ok');
+    }
+    return response.json();
+})
+.then(data => {
+    if (data.success) {
+        data.bookedSeats.forEach(seat => {
+            const bookedSeat = document.querySelector(
+                `.seat[data-row="${seat.seat_row}"][data-col="${seat.seat_col}"]`
+            );
+            if (bookedSeat) {
+                bookedSeat.classList.add('booked');
+                bookedSeat.style.opacity = '0.3';
+                bookedSeat.style.pointerEvents = 'none';
+            }
+        });
+    } else {
+        console.error('Failed to fetch booked seats:', data.message);
+        alert('Failed to load seat availability: ' + data.message);
+    }
+})
+.catch(error => {
+    console.error('Error fetching booked seats:', error);
+    alert('An error occurred while fetching seat availability.');
+})
     }
 
     // Seat click handler
@@ -368,7 +390,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['generate_receipt'])) 
       if (this.classList.contains('booked')) return;
 
       if (selectedSeatsCount >= maxSeats && !this.classList.contains('selected')) {
-        modal.style.display = 'flex';
+        alert('You can only select up to ' + maxSeats + ' seats.');
         return;
       }
 
@@ -378,89 +400,79 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['generate_receipt'])) 
 
     // Update basket details
     function updateBasket() {
-      const selected = Array.from(document.querySelectorAll('.seat.selected'));
-      selectedSeats.innerHTML = '';
-      selectedSeatsCount = selected.length;
+        const selected = Array.from(document.querySelectorAll('.seat.selected'));
+        selectedSeats.innerHTML = '';
+        selectedSeatsCount = selected.length;
 
-      selected.forEach(seat => {
-        const seatInfo = document.createElement('li');
-        seatInfo.textContent = `Row ${seat.dataset.row}, Seat ${seat.dataset.col}`;
-        selectedSeats.appendChild(seatInfo);
-      });
+        selected.forEach(seat => {
+            const seatInfo = document.createElement('li');
+            seatInfo.textContent = `Row ${seat.dataset.row}, Seat ${seat.dataset.col}`;
+            selectedSeats.appendChild(seatInfo);
+        });
 
-      const totalCost = selectedSeatsCount * seatPrice;
-      totalCostElement.textContent = totalCost;
-      confirmBtn.disabled = selectedSeatsCount === 0;
+        const totalCost = selectedSeatsCount * seatPrice;
+        totalCostElement.textContent = totalCost;
+        confirmBtn.disabled = selectedSeatsCount === 0;
     }
-
-    // Close seat limit modal
-    closeModalBtn.addEventListener('click', () => {
-      modal.style.display = 'none';
-    });
 
     // Confirm booking
     confirmBtn.addEventListener('click', () => {
-      const selectedSeatElements = document.querySelectorAll('.seat.selected');
-      const selectedSeatsData = Array.from(selectedSeatElements).map(seat => ({
-        row: parseInt(seat.dataset.row),
-        col: parseInt(seat.dataset.col)
-      }));
+        const selectedSeatElements = document.querySelectorAll('.seat.selected');
+        const selectedSeatsData = Array.from(selectedSeatElements).map(seat => ({
+            row: parseInt(seat.dataset.row),
+            col: parseInt(seat.dataset.col)
+        }));
 
-      const date = dateSelect.value;
-      const time = timeSelect.value;
-      const totalCost = selectedSeatsData.length * seatPrice;
+        const date = dateSelect.value;
+        const time = timeSelect.value;
 
-      fetch('../../assets/php/save-tickets.php', {  // <-- Updated path
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          seats: selectedSeatsData,
-          date: date,
-          time: time,
-          totalCost: totalCost
+        fetch('../../assets/php/save-tickets.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                movie_id: movieId,
+                date,
+                time,
+                seats: selectedSeatsData
+            })
         })
-      })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then(data => {
-        if (data.success) {
-          alert('Tickets successfully booked!');
-          
-          selectedSeatElements.forEach(seat => {
-            seat.classList.add('booked');
-            seat.classList.remove('selected');
-            seat.style.opacity = '0.3';
-            seat.style.pointerEvents = 'none';
-          });
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Tickets successfully booked!');
+                selectedSeatElements.forEach(seat => {
+                    seat.classList.add('booked');
+                    seat.classList.remove('selected');
+                    seat.style.opacity = '0.3';
+                    seat.style.pointerEvents = 'none';
+                });
 
-          selectedSeats.innerHTML = '';
-          totalCostElement.textContent = '0';
-          confirmBtn.disabled = true;
-
-          fetchBookedSeats();
-        } else {
-          alert('Booking failed: ' + (data.message || 'Unknown error'));
-        }
-      })
-      .catch(error => {
-        console.error('Booking error:', error);
-        alert('An error occurred while booking tickets. Please try again.');
-      });
+                selectedSeats.innerHTML = '';
+                totalCostElement.textContent = '0';
+                confirmBtn.disabled = true;
+                
+                // Refresh booked seats after successful booking
+                fetchBookedSeats();
+            } else {
+                alert('Booking failed: ' + (data.message || 'Unknown error'));
+            }
+        })
+        .catch(error => {
+            console.error('Booking error:', error);
+            alert('An error occurred while booking tickets. Please try again.');
+        });
     });
 
-    // Update booked seats on date/time change
+    // Add event listeners for date and time changes to refresh booked seats
     dateSelect.addEventListener('change', fetchBookedSeats);
     timeSelect.addEventListener('change', fetchBookedSeats);
 
     // Initial fetch of booked seats
     fetchBookedSeats();
-  });
+});
+
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

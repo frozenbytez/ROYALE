@@ -1,19 +1,13 @@
-<?php
-include('../../assets/php/config.php'); // Include the database connection file
 
-// Fetch movies with 'nowshowing' status from the database
-$query = "SELECT * FROM movies WHERE status = 'index'";
-$result = mysqli_query($conn, $query);
-?>
 
 <!DOCTYPE php>
-<php lang="en">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
@@ -101,6 +95,8 @@ $result = mysqli_query($conn, $query);
     <!---------------------------------------- NOW SHOWING AND UPCOMING MOVIES IN ROYALE CINEMA-------------------------------------------------------------------------------->
 
     <!--------------------------------------------------------NOW SHOWING MOVIES----------------------------------------------------------------->
+    
+
     <div class="container py-5">
         <div class="d-flex justify-content-between mb-3">
             <h3 class="movie-gallery">
@@ -123,8 +119,40 @@ $result = mysqli_query($conn, $query);
                 </div>
             </div>
         </div>
-    
-        <div class="col now-showing text-center">
+
+        <?php 
+   include('../../assets/php/config.php');
+
+   // Query to get all movies that are "now showing"
+    $query = "SELECT * FROM movies WHERE status = 'nowshowing' LIMIT 8";
+    $result = mysqli_query($conn, $query);
+   
+   if (mysqli_num_rows($result) > 0) {
+       while ($movie = mysqli_fetch_assoc($result)) {
+           $movie_id = $movie['id'];
+           $movie_title = $movie['title'];
+           $movie_image = $movie['image_url'] ?? 'default_image.jpg';
+           $sanitized_title = preg_replace('/[^A-Za-z0-9-]+/', '_', strtolower($movie_title));
+           $image_path = "../../assets/images/" . $movie_image;
+   
+           echo "
+           <div class='col now-showing text-center'>
+               <div class='card now-showing text-center'>
+                   <img src='$image_path' class='card-img-top' alt='$movie_title'>
+                   <div class='card-body'>
+                       <p class='card-title'>$movie_title</p>
+                       <a href='../user/movie_details/$sanitized_title.php' class='btn btn-primary' id='moreDetailsButton'>More Details</a>
+                   </div>
+               </div>
+           </div>
+           ";
+       }
+   } else {
+       echo "<p class='text-center text-white'>No movies available!</p>";
+   }
+?>
+
+        <div class="C">
             <div class="card">
                 <img src="../../assets/images/ns2.jpg" class="card-img-top" alt="">
                 <div class="card-body">

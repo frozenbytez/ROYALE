@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     else if ($result_user->num_rows === 1) {
         $user = $result_user->fetch_assoc();
         $_SESSION['user'] = $user['first_name'];
-        header("Location: index.php");
+        header("Location: ../user/user-home.php");
         exit();
     } else {
         $error = "Invalid email or password!";

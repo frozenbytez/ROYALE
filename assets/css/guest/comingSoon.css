@@ -1,4 +1,5 @@
 
+
 * {
     margin: 0;
     padding: 0;
@@ -11,7 +12,6 @@ body {
     background-color: #1e1e2d;
     color: #f2f2f2;
 }
-
 
 .navbar {
     position: absolute;
@@ -72,29 +72,25 @@ body {
     }
 }
 
-
-.coming-soon {
+.now-showing {
     text-align: center;
     padding: 40px 20px;
 }
 
-.coming-soon h1 {
+.now-showing h1 {
     font-family: Arial, sans-serif; 
     font-weight: bold;
     font-size: 3.5rem;
   }
 
-.coming {
+.now {
     color: white;
   }
   
-  .soon {
+.showing {
     color: #a341f1;
   }
   
-
-
-
 /* STYLE FOR GET TICKET BUTTON */
 
 .button {
@@ -226,13 +222,13 @@ body {
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    gap: 30px;
-    padding: 20px;
+    gap: 20px;
+    padding: 10px;
     background-color: #f2f2f2;
     border-radius: 15px;
     color: #1e1e2d;
     max-width: 800px;
-    margin: 30px auto;
+    margin: 2px auto;
     transition: transform 0.3s ease-in-out;
 }
 
@@ -268,15 +264,20 @@ body {
 }
 
 .trailer-link {
-    color: red;
-    text-decoration: none;
-    font-size: 1em;
-    margin-bottom: 10px;
-    display: inline-block;
+    color: #570c07;
+    text-decoration: underline;
+    transition: color 0.3s ease; 
 }
+
+.trailer-link:hover {
+    
+    color: #ff4d4d;
+}
+
 .modal-title {
     color: black;
 }
+
 
 @media (max-width: 768px) {
     .movie-card {
@@ -432,3 +433,23 @@ body {
         font-size: 12px;
     }
 }
+
+
+.coming-soon {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.coming-soon h1 {
+    font-family: Arial, sans-serif; 
+    font-weight: bold;
+    font-size: 3.5rem;
+  }
+
+.coming {
+    color: white;
+  }
+  
+  .soon {
+    color: #a341f1;
+  }

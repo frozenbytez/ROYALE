@@ -55,133 +55,46 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                   VALUES ('$title', '$status', '$image_url', '$trailer_link', '$runtime', '$description', '$director', '$cast', '$rating', '$genre', '$start_date', '$end_date', '$time1', '$time2', '$time3', $cinema)";
 
         if (mysqli_query($conn, $query)) {
-            // Generate a unique filename based on the movie title
-            $filename = preg_replace('/[^a-zA-Z0-9_]/', '_', strtolower($title)) . '.php';
-            $filepath = '../user/movie_details/' . $filename;
-
-            // Generate the PHP file content dynamically
-            $file_content = '<?php
-            include("../../../assets/php/config.php");
-            
-            // Get movie details from the database
-            $movie_title = "' . htmlspecialchars($title) . '";
-            $stmt = $conn->prepare("SELECT * FROM movies WHERE title = ?");
-            $stmt->bind_param("s", $movie_title);
-            $stmt->execute();
-            $result = $stmt->get_result();
-            $movie = $result->fetch_assoc();
-            ?>
-            <!DOCTYPE html>
-            <html lang="en">
-            <head>
-                <meta charset="UTF-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-                <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-                <link rel="stylesheet" href="../../../assets/css/guest/details.css">
-                <title><?= htmlspecialchars($movie["title"]) ?></title>
-            </head>
-            <body>
-                <!-- Navbar Start -->
-                <nav class="navbar navbar-expand-lg navbar-dark">
-                    <div class="container-fluid">
-                        <a class="navbar-brand fs-4" href="home.html">
-                            <img src="stylesheet/images/logo.png" alt="Logo" style="height: 40px;">
-                        </a>
-                        <button class="navbar-toggler shadow-none border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div class="sidebar offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
-                            <div class="offcanvas-header text-white border-bottom">
-                                <h5 class="offcanvas-title" id="offcanvasNavbarLabel">LOGO</h5>
-                                <button 
-                                type="button" 
-                                class="btn-close btn-close-white shadow-none" 
-                                data-bs-dismiss="offcanvas" 
-                                aria-label="Close"></button>
-                            </div>
-                            <div class="offcanvas-body d-flex flex-column p-4">
-                                <ul class="navbar-nav justify-content-center justify-content-lg-end align-items-center fs-5 flex-grow-1 pe-3">
-                                    <li class="nav-item mx-2">
-                                        <a class="nav-link" href="../index.php">Home</a>
-                                    </li>
-                                    <li class="nav-item mx-2">
-                                        <a class="nav-link" href="pages/nowshowing.php">Now Showing</a>
-                                    </li>
-                                    <li class="nav-item mx-2">
-                                        <a class="nav-link" href="comingSoon.php">Upcoming</a>
-                                    </li>
-                                    <li class="nav-item mx-2">
-                                        <a class="nav-link" href="contact.php">Contact Us</a>
-                                    </li>
-                                    <li class="nav-item mx-2">
-                                        <a class="nav-link active" aria-current="page" href="login.html">Login</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </nav>
-                <!-- Navbar End -->
-                <div class="movie-title">
-                    <div class="content">
-                        <h1><?= htmlspecialchars($movie["title"]) ?></h1>
-                        <div class="movie-info">
-                            <p><i class="fas fa-clock"></i><strong>Runtime:</strong> <?= htmlspecialchars($movie["runtime"]) ?></p>
-                            <p><?= htmlspecialchars($movie["description"]) ?></p>
-                            <p><i class="fas fa-film"></i><strong>Director:</strong> <?= htmlspecialchars($movie["director"]) ?></p>
-                            <p><i class="fas fa-users"></i><strong>Cast:</strong> <?= htmlspecialchars($movie["cast"]) ?></p>
-                        </div>
-                    </div>
-
-                    <div class="poster-section">
-                        <img src="../../../assets/images/<?= htmlspecialchars($movie["image_url"]) ?>" alt="<?= htmlspecialchars($movie["title"]) ?>" class="poster">
-                        <a href="<?= htmlspecialchars($movie["trailer_link"]) ?>" class="trailer-link d-block text-center text-md-left" data-bs-toggle="modal" data-bs-target="#trailerModal">Watch trailer</a>
-                    </div>
-                </div>
-
-                <!-- Trailer Modal -->
-                <div class="modal fade" id="trailerModal" tabindex="-1" aria-labelledby="trailerModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="trailerModalLabel">Trailer - <?= htmlspecialchars($movie["title"]) ?></h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="ratio ratio-16x9">
-                                    <iframe width="560" height="315" src="<?= htmlspecialchars($movie["trailer_link"]) ?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-8">
-                            <div class="seat-chart">
-                                <div class="screen text-center my-3">SCREEN</div>
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="seat available" data-seat="A1">A1</div>
-                                        <div class="seat available" data-seat="A2">A2</div>
-                                        <div class="seat available" data-seat="A3">A3</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </body>
-            </html>';
-
-            // Write the content to the file
-            file_put_contents($filepath, $file_content);
-
-            // Redirect to the newly created movie details page
-            header("Location: " . $filepath);
-            exit;
+            $movie_id = mysqli_insert_id($conn);
+            $rows = 5;
+            $columns = 10;
+            $dates = new DatePeriod(
+                new DateTime($start_date),
+                new DateInterval('P1D'),
+                new DateTime($end_date)
+            );
+    
+            $times = array_filter([$time1, $time2, $time3]);
+    
+            // Prepare the seats insertion statement
+            $seat_stmt = $conn->prepare("INSERT INTO movie_seats (movie_id, date, time, seat_row, seat_col, status) VALUES (?, ?, ?, ?, ?, 'available')");
+    
+            // Loop through each date
+            foreach ($dates as $date) {
+                $formatted_date = $date->format('Y-m-d');
+                
+                // Loop through each time
+                foreach ($times as $time) {
+                    // Loop through rows and columns to create seats
+                    for ($row = 1; $row <= $rows; $row++) {
+                        for ($col = 1; $col <= $columns; $col++) {
+                            $seat_stmt->bind_param(
+                                "issii", 
+                                $movie_id, 
+                                $formatted_date, 
+                                $time, 
+                                $row, 
+                                $col
+                            );
+                            $seat_stmt->execute();
+                        }
+                    }
+                }
+            }
+    
+            // Close the prepared statement
+            $seat_stmt->close();
+            echo "Movie and seats successfully added!";
         } else {
             echo "Error inserting movie into the database: " . mysqli_error($conn);
         }
