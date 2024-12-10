@@ -1,0 +1,56 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.container {
+    text-align: center;
+    width: 80%;
+    max-width: 600px;
+}
+h1 {
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+.cinema {
+    display: grid;
+    grid-template-columns: repeat(10, 50px);
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+.seat {
+    width: 50px;
+    height: 50px;
+    background-color: #4CAF50;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.seat.reserved {
+    background-color: #FF6347;
+}
+.seat.selected {
+    background-color: #FFD700;
+}
+.reservation-details {
+    font-size: 1.2em;
+}
+button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 5px;
+}
+button:disabled {
+    background-color: #888;
+    cursor: not-allowed;
+}

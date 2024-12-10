@@ -1,0 +1,253 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+body {  
+    
+    background-color: #1b1b2f; 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background-color: #2d2d44; 
+    color: #ecf0f1;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding-top: 40px;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.405);
+}
+
+.sidebar h4 {
+    font-size: 1.6rem;
+    font-weight: 500;
+    text-align: center;
+    color: #c5a774; 
+    margin-bottom: 40px;
+}
+
+.sidebar .nav-link {
+    color: #bdc3c7;  
+    font-size: 1.1rem;  
+    padding: 10px 20px;  
+    border-radius: 5px;  
+    transition: background-color 0.3s, color 0.3s; 
+    margin-bottom: 15px;  
+}
+
+.sidebar .nav-link.active, 
+.sidebar .nav-link:hover {
+    background-color: #ffffff;  
+    color: #2c445c;  
+    text-decoration: none;  
+}
+.sidebar .dropdown-menu {
+    background-color: #485e74; 
+    border: none;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+}
+.sidebar .dropdown-item {
+    color: #ecf0f1;  
+    padding: 10px 20px;
+    font-size: 1rem;
+    transition: background-color 0.3s, color 0.3s;
+}
+.sidebar .dropdown-item:hover {
+    background-color: #ffffff; 
+    color: #2c445c;  
+}
+.sidebar .nav-link.text-danger {
+    color: #c97e75; 
+}
+.sidebar .nav-link.text-danger:hover {
+    background-color: #ffffff; 
+    color: #c97e75;  
+}
+
+
+.full-width-image img {
+    width: 100%; 
+    height: auto; 
+    display: block; 
+}
+
+.full-width-container {
+    margin: 0;  
+    padding: 0; 
+  
+}
+.main-content {
+    margin-left: 240px;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+
+.main-content h1 {
+    color: #fbfdff;
+    font-size: 2rem;
+    margin-bottom: 20px;
+    font-weight: 900;
+}
+
+.main-content .d-flex {
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.main-content .d-flex img {
+    border-radius: 50%;
+    border: 3px solid #f5f2f2;
+}
+
+.movie-card {
+    background: linear-gradient(145deg, #060320, #272121); 
+    color: #333333; 
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); 
+    border-radius: 12px; 
+    overflow: hidden; 
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; 
+    border: 1px solid #cccccc; 
+    height: 100%; 
+    display: flex;
+    flex-direction: column; 
+}
+
+
+.movie-card:hover {
+    transform: translateY(-8px); 
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+
+.card-body {
+    padding: 20px;
+    background: #f7f7f7;
+    display: flex;
+    flex-direction: column; 
+    justify-content: space-between; 
+    flex-grow: 1; 
+}
+
+.card-title.movie-title {
+    font-weight: 600; 
+    font-size: 1.5rem; 
+    color: #2c3e50; 
+    margin-bottom: 15px; 
+    line-height: 1.3;
+    text-transform: capitalize;
+    letter-spacing: 1px; 
+    position: relative; 
+}
+
+
+.card-title.movie-title::after {
+    content: "";
+    position: absolute;
+    bottom: -5px; 
+    left: 0;
+    width: 50%; 
+    height: 2px; 
+    background-color: #f39c12; 
+}
+
+
+.card-title.movie-title:hover {
+    color: #d35400; 
+    cursor: pointer; 
+    text-decoration: none; 
+}
+
+
+.card-text {
+    font-size: 1rem; 
+    color: #555555; 
+    margin-bottom: 12px; 
+    line-height: 1.6; 
+}
+
+
+img {
+    width: 100%;
+    height: auto; 
+    object-fit: cover; 
+    border-radius: 12px 12px 0 0; 
+    padding-left: 0; 
+    padding-right: 0; /
+}
+
+/* Footer Section */
+.card-footer {
+    background: #ecf0f1; 
+    padding: 12px 20px;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #2c3e50;
+    border-top: 1px solid #cccccc; 
+}
+
+
+.movie-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+
+.movie-card:not(:last-child) {
+    margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        position: absolute;
+        width: 100%;
+        height: auto;
+        background-color: #2d2d44;
+        top: 0;
+        left: -100%;
+        z-index: 1000;
+        transition: all 0.3s ease;
+    }
+
+    .sidebar.open {
+        left: 0; 
+    }
+
+    .sidebar h4 {
+        margin-bottom: 20px;
+        font-size: 1.2rem;
+    }
+
+    .main-content {
+        margin-left: 0;
+    }
+
+    .toggle-sidebar-btn {
+        display: block;
+        position: fixed;
+        top: 15px;
+        left: 15px;
+        z-index: 1100;
+        background-color: #2d2d44;
+        color: #ecf0f1;
+        border: none;
+        font-size: 20px;
+        padding: 8px 12px;
+        cursor: pointer;
+        border-radius: 50%;
+    }
+
+    .card {
+        padding: 15px; 
+    }
+
+    .movie-title {
+        font-size: 1rem; 
+    }
+
+}

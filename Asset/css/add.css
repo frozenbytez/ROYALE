@@ -1,0 +1,173 @@
+/* General Reset */
+body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+/* Sidebar Styling */
+.sidebar {
+    background-color: #1f1f1f;
+    width: 240px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 10px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.sidebar h4 {
+    color: #f4b400;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 30px;
+}
+
+.sidebar ul.nav {
+    width: 100%;
+    padding: 0;
+    list-style: none;
+}
+
+.sidebar ul.nav li {
+    width: 100%;
+}
+
+.sidebar ul.nav li a {
+    text-decoration: none;
+    color: #b0b0b0;
+    padding: 10px 15px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    margin-bottom: 10px;
+    transition: all 0.3s ease;
+}
+
+.sidebar ul.nav li a i {
+    margin-right: 10px;
+    font-size: 18px;
+}
+
+.sidebar ul.nav li a:hover,
+.sidebar ul.nav li a.active {
+    background-color: #f4b400;
+    color: #121212;
+    font-weight: 600;
+}
+
+
+.sidebar ul.nav li.dropdown-menu {
+    background-color: #292929;
+    border: none;
+    margin-left: 15px;
+}
+
+
+.main-content {
+    margin-left: 240px;
+    padding: 20px;
+    background-color: #202020;
+    min-height: 100vh;
+}
+
+.main-content h1 {
+    color: #f4b400;
+    font-size: 32px;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.main-content .d-flex {
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.main-content .d-flex img {
+    border-radius: 50%;
+    border: 3px solid #f4b400;
+}
+
+/* Add Movie Form */
+form {
+    background-color: #1f1f1f;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    margin: 0 auto;
+}
+
+form h1 {
+    color: #f4b400;
+    font-size: 26px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+form .form-label {
+    color: #b0b0b0;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+form .form-control,
+form .form-select {
+    background-color: #292929;
+    color: #e0e0e0;
+    border: 1px solid #444;
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+form .form-control:focus,
+form .form-select:focus {
+    border-color: #f4b400;
+    outline: none;
+}
+
+form .btn-primary {
+    background-color: #f4b400;
+    border: none;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #121212;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+form .btn-primary:hover {
+    background-color: #ffcc33;
+}
+
+/* Airing Time Group */
+form .row.g-3 .col-md-4 {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 10px 20px;
+    }
+
+    .main-content {
+        margin-left: 0;
+        padding: 20px 10px;
+    }
+}

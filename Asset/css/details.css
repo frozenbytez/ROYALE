@@ -1,0 +1,427 @@
+/* General styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; 
+}
+
+body {
+    font-family: 'Bebas Neue', sans-serif;
+    background-color: #0c0f27;
+    background-attachment: fixed;
+    background-repeat: repeat-y;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    color: #fff;
+    min-height: 100vh;
+}
+
+
+  .navbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1050;
+    background-color: #0c0f27!important;
+    height: 60px;
+    font-family: 'Arial', sans-serif;
+    font-size: 1rem; 
+    color: #ffffff;
+}
+
+.navbar-nav .nav-item .nav-link {
+    position: relative; 
+    padding: 10px 15px;
+    color: #ffffff;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+
+.navbar-nav .nav-item .nav-link:hover {
+    color: #7acaff; 
+}
+
+
+.navbar-nav .nav-item .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: #f3f7ec; 
+    transform: scaleX(0);
+    transform-origin: bottom right;
+    transition: transform 0.3s ease-out;
+}
+
+.navbar-nav .nav-item .nav-link:hover::after {
+    transform: scaleX(1); 
+    transform-origin: bottom left;
+}
+
+.navbar .nav-link.active {
+    background-color: #e3eaf31d; 
+    color: white; 
+    padding: 7px 7px;
+    border-radius: 5px;
+}
+
+.navbar-brand {
+    margin-left: 33px;
+}
+  
+  .movie-title {
+    background: linear-gradient(to bottom, #ffffff 50%, #0c0f27 50%);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 100px;
+
+  
+  }
+  
+  .modal {
+    color:#000;
+  }
+  .seat-chart {
+    margin-bottom: 20px;
+    }
+    .seat {
+        width: 30px;
+        height: 30px;
+        margin: 5px;
+        background-color: #444;
+        border-radius: 5px;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: #ddd;
+    }
+    .seat.selected {
+        background-color: #e50914;
+    }
+    .seat.sold {
+        background-color: #666;
+        cursor: not-allowed;
+    }
+    
+    
+    .screen {
+    font-weight: bold;
+    background-color: #555;
+    padding: 10px;
+    border-radius: 5px;
+    }
+    
+    .receipt {
+    background-color: #222;
+    border-radius: 10px;
+    color: white;
+    }
+    .receipt h3, .receipt p, .receipt label {
+        margin: 0 0 10px;
+    }
+    
+    
+    .total-cost {
+        font-size: 18px;
+        margin-top: 10px;
+        font-weight: bold;
+    }
+    .btn {
+        background-color: #e50914;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .btn:disabled {
+        background-color: #888;
+        cursor: not-allowed;
+    }
+    select {
+        width: 100%;
+        padding: 5px;
+        margin-bottom: 10px;
+        background-color: #333;
+        color: #ddd;
+        border: 1px solid #444;
+        border-radius: 5px;
+    }
+    
+    .seat svg {
+        width: 20px;
+        height: 20px;
+        fill: #ddd;
+    }
+    .seat.selected svg {
+        fill: #fff;
+    }
+  
+  .content {
+    flex: 1;
+    color: #ffffff;
+  }
+  
+
+  h1 {
+    font-size: 4rem;
+    color: #000000;
+    margin-top: 250px; 
+    margin-bottom: 50px; 
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+  
+  .movie-info {
+    
+    top: 20px;
+    bottom: 0;
+    left: 0;
+    width: 100%; 
+    background-color: transparent;
+    color: #ffffff;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.8);
+    padding: 10px; 
+}
+  
+  p {
+    line-height: 1.6;
+  }
+  
+  .runtime, .director, .cast {
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 1.2rem;
+    color: #e0e0e0;
+  }
+  
+  .poster-section {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 175px; 
+    margin-bottom: 30px; 
+  }
+  
+  .poster {
+    width: 100%;
+    max-width: 350px; 
+    height: auto;
+    border: 4px solid #000; 
+    border-radius: 10px; 
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4); 
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-radius 0.3s ease; 
+    margin-bottom: 20px; 
+  }
+  
+  .poster:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6); 
+    border-radius: 15px; 
+  }
+  
+  .seat-chart {
+    margin-bottom: 20px;
+    }
+    .seat {
+        width: 30px;
+        height: 30px;
+        margin: 5px;
+        background-color: #444;
+        border-radius: 5px;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: #ddd;
+    }
+   
+    .seat.available {
+      background-color: #A3C4BC;
+  }
+  
+  .seat.selected {
+      background-color: #4A90E2; 
+  }
+  
+  .seat.booked {
+      background-color: #B0B0B0;
+      opacity: 0.6;
+  }
+  
+  .btn-available {
+      background-color: #A3C4BC !important;
+      color: white;
+  }
+  
+  .btn-taken {
+      background-color: #B0B0B0 !important;
+      color: white;
+  }
+  
+  .btn-selected {
+      background-color: #4A90E2 !important; 
+      color: white;
+  }
+  
+    
+    .screen {
+    font-weight: bold;
+    background-color: #ffffff;
+    color: black;
+    padding: 10px;
+    border-radius: 5px;
+    }
+    
+    .receipt {
+    background-color: #222;
+    border-radius: 10px;
+    color: white;
+    }
+    .receipt h3, .receipt p, .receipt label {
+        margin: 0 0 10px;
+    }
+    
+    
+    .total-cost {
+        font-size: 18px;
+        margin-top: 10px;
+        font-weight: bold;
+    }
+    .btn {
+        background-color: #e50914;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .btn:disabled {
+        background-color: #888;
+        cursor: not-allowed;
+    }
+    select {
+        width: 100%;
+        padding: 5px;
+        margin-bottom: 10px;
+        background-color: #333;
+        color: #ddd;
+        border: 1px solid #444;
+        border-radius: 5px;
+    }
+    
+    .seat svg {
+        width: 20px;
+        height: 20px;
+        fill: #ddd;
+    }
+    .seat.selected svg {
+        fill: #fff;
+    }
+    
+  .button {
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 1rem;
+    display: inline-block;
+    transition: transform 0.3s, background-color 0.3s;
+  }
+  
+  
+  
+  .trailer-button {
+    background-color: transparent;
+    color: #ff4500;
+    border: 2px solid #ff4500;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.trailer-button:hover {
+    background-color: #ff4500;
+    color: white;
+    transform: scale(1.05);
+}
+
+  
+  /* Parallax scrolling effect for the poster section */
+  .poster-section {
+    position: relative;
+    overflow: hidden;
+    bottom: 50px;
+  }
+  
+  .poster-section:hover .poster {
+    transform: scale(1.05);
+  }
+  
+  @media (min-width: 1200px) {
+    .container {
+        max-width: 1100px;
+    }
+    @media(max-width: 991px) {
+      .sidebar {
+          background-color: rgba(225, 225, 225, 0.15);
+          backdrop-filter: blur(10px);
+      }
+  }
+  }
+  
+  #modal1 {
+    display: none; 
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+#modal-content {
+    background-color: rgb(20, 1, 1);
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+#modal-content button {
+    margin-top: 20px;
+}
+
+.fas.fa-clock {
+  color: #ff5733; 
+}
+
+.fas.fa-film {
+  color: #007bff; 
+}
+
+.fas.fa-users {
+  color: #28a745; 
+}

@@ -54,7 +54,7 @@ $conn->close();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Responsive Sign Up</title>
+    <title>Sign Up</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     
@@ -100,7 +100,11 @@ $conn->close();
         background: rgba(19, 7, 46, 0.85);
         border-radius: 20px;
         color: white;
-        padding: 2rem;
+        margin-top: 30px;
+        padding-top: 10px;
+        padding-right: 15px;
+        padding-bottom: 20px;
+        padding-left: 20px;
         max-width: 400px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         margin-left: auto;
@@ -109,6 +113,7 @@ $conn->close();
     .signup-card h2 {
         text-align: center;
         margin-bottom: 1.5rem;
+        margin-top: 10px;
     }
 
     .signup-card .form-control {
@@ -215,13 +220,15 @@ $conn->close();
 <body>
     <!-- Background Video -->
     <video autoplay muted loop playsinline class="background-video">
-        <source src="../../assets/images/signupbgbg.mp4" type="video/mp4">
+        <source src="../../Asset/images/login.mp4" type="video/mp4">
     </video>
 
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
         <div class="container-fluid">
-            <a class="navbar-brand fs-4" href="#">LOGO</a>
+        <a class="navbar-brand fs-4" href="home.html">
+                <img src="../../Asset/images/whitelogo.png" alt="Logo" style="height: 40px;">
+            </a>
             <button class="navbar-toggler shadow-none border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -276,31 +283,41 @@ $conn->close();
 
                 <form method="POST" action="">
                     <div class="mb-3">
-                        <label for="first_name" class="form-label">First Name</label>
-                        <input type="text" class="form-control" id="first_name" name="first_name" required>
+                        <label for="full_name" class="form-label">Name</label>
+                        <div class="d-flex">
+                            <input type="text" class="form-control me-2" id="first_name" name="first_name" placeholder="First Name" required>
+                            <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Last Name" required>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label for="last_name" class="form-label">Last Name</label>
-                        <input type="text" class="form-control" id="last_name" name="last_name" required>
-                    </div>
+                    
                     <div class="mb-3">
                         <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" required>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
                     </div>
                     <div class="mb-3">
                         <label for="phone_number" class="form-label">Phone Number</label>
-                        <input type="text" class="form-control" id="phone_number" name="phone_number" required>
+                        <input type="text" class="form-control" id="phone_number" name="phone_number"placeholder="Phone Number" required>
                     </div>
                     <div class="mb-3">
-                        <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="password" name="password" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="confirm_password" class="form-label">Confirm Password</label>
-                        <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
-                    </div>
+    <label for="password" class="form-label">Password</label>
+    <div class="input-group">
+        <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+        <button type="button" class="btn btn-outline-secondary" id="togglePassword">
+            Show
+        </button>
+    </div>
+</div>
+<div class="mb-3">
+    <label for="confirm-password" class="form-label">Confirm Password</label>
+    <div class="input-group">
+        <input type="password" class="form-control" id="confirm-password" name="confirm_password" placeholder="Confirm Password" required>
+        <button type="button" class="btn btn-outline-secondary" id="toggleConfirmPassword">
+            Show
+        </button>
+    </div>
+</div>
                     <div class="d-grid">
-                        <button type="submit" class="btn btn-primary">Sign Up</button>
+                    <a href="login2.php" class="btn">Sign Up</a>
                     </div>
                 </form>
 
@@ -312,7 +329,33 @@ $conn->close();
     </div>
 
     <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    <script>
+    // Toggle visibility for the main password field
+    document.getElementById('togglePassword').addEventListener('click', function () {
+        const passwordInput = document.getElementById('password');
+        const toggleButton = this;
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            toggleButton.textContent = 'Hide';
+        } else {
+            passwordInput.type = 'password';
+            toggleButton.textContent = 'Show';
+        }
+    });
+
+    // Toggle visibility for the confirm password field
+    document.getElementById('toggleConfirmPassword').addEventListener('click', function () {
+        const confirmPasswordInput = document.getElementById('confirm-password');
+        const toggleButton = this;
+        if (confirmPasswordInput.type === 'password') {
+            confirmPasswordInput.type = 'text';
+            toggleButton.textContent = 'Hide';
+        } else {
+            confirmPasswordInput.type = 'password';
+            toggleButton.textContent = 'Show';
+        }
+    });
+</script>
+
 </body>
 </php>

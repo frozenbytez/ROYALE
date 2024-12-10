@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../Asset/css/add.css">
+</head>
+<body>
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <title>Admin Dashboard - Add Movie</title>
+    <link rel="stylesheet" href="../asset/css/admin-dashboard.css">
+
+
+    
+</head>
+<body>
+
+<div class="sidebar p-3">
+        <h4 class="text-center">Royale Cinema</h4>
+        <ul class="nav flex-column mt-4">
+            <li class="nav-item">
+                <a class="nav-link active" href="db3.html"><i class="fas fa-home"></i> Dashboard</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#"><i class="fas fa-chart-line"></i> Analytics</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="manageMoviesDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-film"></i> Manage Movies
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="manageMoviesDropdown">
+                    <li><a class="dropdown-item" href="add_movie.php">Add Movies</a></li>
+                    <li><a class="dropdown-item" href="update_movie.php">Update Movies</a></li>
+                    <li><a class="dropdown-item" href="delete_movie.php">Delete Movies</a></li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="available2.html"><i class="fas fa-play"></i> Available Movies</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#"><i class="fas fa-calendar-alt"></i> Edit Screening</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-danger" href="#"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </li>
+        </ul>
+    </div>
+    
+
+    <div class="main-content">
+        <div class="d-flex align-items-center mb-4">
+            <img src="../Asset/images/profile.gif" alt="Profile Picture" class="rounded-circle" style="width: 60px; height: 60px; object-fit: cover; margin-right: 15px;">
+            <div>
+                <p class="m-0" style="font-size: 18px; font-weight: 600; color: white;">Abegail Araneta</p>
+                <small style="color: #ffffff;">Manager</small>
+            </div>
+        </div>
+
+        <h1 id="dashboard-text">Royale Cinema Dashboard</h1>  
+
+        <div class="container" style="max-width: 100%; padding: 0 5%;">
+            
+        <div class="row justify-content-center">
+    <div class="col-12 col-md-10 col-lg-8"> 
+        <div class="content p-4 shadow-sm rounded">
+            <h1 class="text-center mb-4">Add Movie</h1>
+
+            <form action="add_movie.php" method="POST" enctype="multipart/form-data">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label for="title" class="form-label">Movie Title:</label>
+                        <input type="text" name="title" class="form-control" placeholder="Movie Title" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="description" class="form-label">Description:</label>
+                        <textarea name="description" class="form-control" placeholder="Movie Description" required></textarea>
+                    </div>
+
+                    <div class="col-12">
+                        <label for="director" class="form-label">Director:</label>
+                        <input type="text" name="director" class="form-control" placeholder="Director" required>
+                    </div>
+
+                    <div class="col-12">
+                        <label for="cast" class="form-label">Cast:</label>
+                        <input type="text" name="cast" class="form-control" placeholder="Cast" required>
+                    </div>
+
+                    <div class="col-12">
+                        <label for="rating" class="form-label">Rating:</label>
+                        <input type="text" name="rating" class="form-control" placeholder="Rating" required>
+                    </div>
+
+                    <div class="col-12">
+                        <label for="genre" class="form-label">Genre:</label>
+                        <input type="text" name="genre" class="form-control" placeholder="e.g., Action, Drama" required>
+                    </div>
+
+                    <div class="col-12">
+                        <label for="runtime" class="form-label">Runtime:</label>
+                        <input type="text" name="runtime" class="form-control" placeholder="Runtime" required>
+                    </div>
+
+                    <div class="col-12">
+                        <label for="trailer_link" class="form-label">Trailer Link:</label>
+                        <input type="url" name="trailer_link" class="form-control" placeholder="Trailer Link" required>
+                    </div>
+
+                    <div class="col-12">
+                        <label for="image" class="form-label">Image:</label>
+                        <input type="file" name="image" class="form-control" required>
+                    </div>
+
+                    <div class="col-12">
+                        <label for="status" class="form-label">Select Page to Add:</label>
+                        <select id="status" name="status" class="form-select" required>
+                            <option value="nowshowing">Now Showing</option>
+                            <option value="comingsoon">Coming Soon</option>
+                            <option value="index">Home</option>
+                        </select>
+                    </div>
+
+                    <div class="col-12">
+                        <label for="start_date" class="form-label">Start Date:</label>
+                        <input type="date" name="start_date" class="form-control" required>
+                    </div>
+
+                    <div class="col-12">
+                        <label for="end_date" class="form-label">End Date:</label>
+                        <input type="date" name="end_date" class="form-control" required>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label for="time1" class="form-label">Airing Time 1:</label>
+                        <input type="time" name="time1" class="form-control" required>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label for="time2" class="form-label">Airing Time 2:</label>
+                        <input type="time" name="time2" class="form-control" required>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label for="time3" class="form-label">Airing Time 3:</label>
+                        <input type="time" name="time3" class="form-control" required>
+                    </div>
+
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary w-100">Add Movie</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+</body>
+</html>

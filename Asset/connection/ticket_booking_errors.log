@@ -1,0 +1,2 @@
+[07-Dec-2024 05:10:35 Europe/Berlin] Raw input: {"seats":[{"row":3,"col":5},{"row":3,"col":6},{"row":3,"col":7}],"date":"2024-11-13","time":"13:00","totalCost":1320}
+[07-Dec-2024 05:18:27 Europe/Berlin] Raw input: {"seats":[{"row":1,"col":9},{"row":1,"col":10},{"row":2,"col":10}],"date":"2024-11-13","time":"13:00","totalCost":1320}
