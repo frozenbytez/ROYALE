@@ -140,8 +140,7 @@ if (isset($_POST['update_movie']) && isset($_POST['movie_id'])) {
             <option value="index" <?php echo ($movie['status'] == 'index') ? 'selected' : ''; ?>>Home</option>
         </select>
 
-        <label for="start_date">Start Date:</label>
-        <input type="date" name="start_date" value="<?php echo htmlspecialchars($movie['start_date']); ?>" required>
+       
 
         <label for="end_date">End Date:</label>
         <input type="date" name="end_date" value="<?php echo htmlspecialchars($movie['end_date']); ?>" required>
