@@ -64,6 +64,7 @@ $dateRange = new DatePeriod($startDate, $dateInterval, $endDate->modify('+1 day'
   padding: 20px;
   background-color: #f4f4f4;
   border-radius: 10px;
+  
 }
 
 .seat-row {
@@ -98,8 +99,8 @@ $dateRange = new DatePeriod($startDate, $dateInterval, $endDate->modify('+1 day'
 }
 
 .seat {
-  width: 30px;
-  height: 30px;
+  width: 39px;
+  height: 32px;
   cursor: pointer;
   transition: transform 0.2s;
 }
@@ -119,7 +120,7 @@ $dateRange = new DatePeriod($startDate, $dateInterval, $endDate->modify('+1 day'
 
 .screen {
   width: 80%;
-  height: 10px;
+  height: 40px;
   background-color: #333;
   margin: 20px auto;
   border-radius: 5px;
@@ -210,7 +211,7 @@ $dateRange = new DatePeriod($startDate, $dateInterval, $endDate->modify('+1 day'
                     <div id="seats-container" class="d-flex flex-wrap justify-content-center"></div>
                 </div>
             </div>
-
+                            
             <div class="col-lg-4 mt-3 mt-lg-0">
                 <div class="receipt card p-4" style="background-color: #222; color: white; border-radius: 50px;">
                     <h3 class="text-center mb-3">Your Basket</h3>
@@ -252,7 +253,7 @@ $dateRange = new DatePeriod($startDate, $dateInterval, $endDate->modify('+1 day'
             </div>
         </div>
     </div>
-
+                            
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
