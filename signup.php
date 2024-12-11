@@ -54,8 +54,6 @@ $conn->close();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up</title>
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     
 </head>
@@ -220,14 +218,14 @@ $conn->close();
 <body>
     <!-- Background Video -->
     <video autoplay muted loop playsinline class="background-video">
-        <source src="../../Asset/images/login.mp4" type="video/mp4">
+        <source src="Asset/images/login.mp4" type="video/mp4">
     </video>
 
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
         <div class="container-fluid">
         <a class="navbar-brand fs-4" href="home.html">
-                <img src="../../Asset/images/whitelogo.png" alt="Logo" style="height: 40px;">
+                <img src="Asset/images/whitelogo.png" alt="Logo" style="height: 40px;">
             </a>
             <button class="navbar-toggler shadow-none border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -244,7 +242,7 @@ $conn->close();
                 <div class="offcanvas-body d-flex flex-column p-4">
                     <ul class="navbar-nav justify-content-center justify-content-lg-end align-items-center fs-5 flex-grow-1 pe-3">
                         <li class="nav-item mx-2">
-                            <a class="nav-link" href="index.php">Home</a>
+                            <a class="nav-link" href="home.php">Home</a>
                         </li>
                         <li class="nav-item mx-2">
                             <a class="nav-link" href="nowshowing.php">Now Showing</a>
@@ -322,7 +320,7 @@ $conn->close();
                 </form>
 
                 <div class="mt-3 text-center">
-                    <p>Already have an account? <a href="login.php">Login</a></p>
+                    <p>Already have an account? <a href="login2.php">Login</a></p>
                 </div>
             </div>
         </div>

@@ -261,14 +261,13 @@ form button {
 </head>
 <body>
     <video autoplay muted loop playsinline class="background-video">
-        <source src="../../Asset/images/signupbgbg.mp4" type="video/mp4">
-        Your browser does not support the video tag.
+        <source src="Asset/images/login.mp4" type="video/mp4">
     </video>
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
         <div class="container-fluid">
         <a class="navbar-brand fs-4" href="home.html">
-                <img src="../../Asset/images/whitelogo.png" alt="Logo" style="height: 40px;">
+                <img src="Asset/images/whitelogo.png" alt="Logo" style="height: 40px;">
             </a>         
             <button class="navbar-toggler shadow-none border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -284,13 +283,13 @@ form button {
                             <a class="nav-link" href="home.php">Home</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="nav-link" href="">Now Showing</a>
+                            <a class="nav-link" href="nowshowing.php">Now Showing</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="nav-link" href="../Pages/comingSoon.php">Upcoming</a>
+                            <a class="nav-link" href="comingSoon.php">Upcoming</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="nav-link" href="../Pages/contact.php">Contact Us</a>
+                            <a class="nav-link" href="contact.php">Contact Us</a>
                         </li>
                         <li class="nav-item mx-2">
                             <a class="nav-link active" aria-current="page" href="login2.php">Login</a>
@@ -324,11 +323,16 @@ form button {
                     
                     <!-- Password Field -->
                     <div class="mb-3">
-                        <label for="password" class="form-label">Password</label>
-                        <input type="password" name="password" class="form-control" id="password" placeholder="Enter Password..." required>
-                    </div>
-                    
-                    <!-- Forgot Password Link -->
+    <label for="password" class="form-label">Password</label>
+    <div class="input-group">
+        <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+        <button type="button" class="btn btn-secondary" id="togglePassword">
+            Show
+        </button>
+    </div>
+</div>    
+
+<!-- Forgot Password Link -->
                     <div class="mb-3">
                         <a href="#">Forgot password?</a>
                     </div>
@@ -340,7 +344,7 @@ form button {
                     
                     <!-- Sign Up Link -->
                     <div class="text-center mt-3">
-                        <small>Don't have an account? <a href="Pages/guest/signup.php">Sign up</a></small>
+                        <small>Don't have an account? <a href="signup.php">Sign up</a></small>
                     </div>
                 </form>
             </div>
@@ -356,6 +360,31 @@ form button {
                 document.querySelector("form button").textContent = formAction;
             });
         });
+
+        document.getElementById('togglePassword').addEventListener('click', function () {
+        const passwordInput = document.getElementById('password');
+        const toggleButton = this;
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            toggleButton.textContent = 'Hide';
+        } else {
+            passwordInput.type = 'password';
+            toggleButton.textContent = 'Show';
+        }
+    });
+
+    // Toggle visibility for the confirm password field
+    document.getElementById('toggleConfirmPassword').addEventListener('click', function () {
+        const confirmPasswordInput = document.getElementById('confirm-password');
+        const toggleButton = this;
+        if (confirmPasswordInput.type === 'password') {
+            confirmPasswordInput.type = 'text';
+            toggleButton.textContent = 'Hide';
+        } else {
+            confirmPasswordInput.type = 'password';
+            toggleButton.textContent = 'Show';
+        }
+    });
     </script>
 </body>
 </html>
