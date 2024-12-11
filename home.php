@@ -1,5 +1,5 @@
 <?php
-include('config.php'); 
+include('Asset/connection/config.php'); 
 
 
 $query = "SELECT * FROM movies WHERE status = 'index'";
