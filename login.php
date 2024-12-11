@@ -93,19 +93,19 @@ $conn_admin->close();
                 <div class="offcanvas-body d-flex flex-column p-4">
                     <ul class="navbar-nav justify-content-center justify-content-lg-end align-items-center fs-5 flex-grow-1 pe-3">
                         <li class="nav-item mx-2">
-                            <a class="nav-link" href="../home.php">Home</a>
+                            <a class="nav-link" href="home.php">Home</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="nav-link" href="nowshowing.html">Now Showing</a>
+                            <a class="nav-link" href="nowshowing.php">Now Showing</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="nav-link" href="comingSoon.html">Upcoming</a>
+                            <a class="nav-link" href="comingSoon.php">Upcoming</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="nav-link" href="contact.html">Contact Us</a>
+                            <a class="nav-link" href="contact.php">Contact Us</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="nav-link active" aria-current="page" href="login2.html">Login</a>
+                            <a class="nav-link active" aria-current="page" href="login2.php">Login</a>
                         </li>
                     </ul>
                 </div>

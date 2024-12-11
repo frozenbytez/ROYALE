@@ -48,16 +48,16 @@ $result = mysqli_query($conn, $query);
                             <a class="nav-link active" aria-current="page" href="home.php">Home</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="nav-link" href="Pages/user/nowshowing.php">Now Showing</a>
+                            <a class="nav-link" href="nowshowing.php">Now Showing</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="nav-link" href="Pages/user/comingSoon.php">Upcoming</a>
+                            <a class="nav-link" href="comingSoon.php">Upcoming</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="nav-link" href="Pages/user/contact.php">Contact Us</a>
+                            <a class="nav-link" href="contact.php">Contact Us</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="nav-link" href="Pages/user/login2.php">Login</a>
+                            <a class="nav-link" href="login2.php">Login</a>
                         </li>
                     </ul>
                 </div>
