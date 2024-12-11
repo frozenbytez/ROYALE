@@ -1,18 +1,15 @@
 <?php
 session_start();
 
-// Connection for user database (login_system)
 $conn_user = new mysqli('localhost', 'root', '', 'login_system');
 
-// Connection for admin database (admin_system)
+
 $conn_admin = new mysqli('localhost', 'root', '', 'admin_system');
 
-// Check connection for user database
 if ($conn_user->connect_error) {
     die("Connection failed: " . $conn_user->connect_error);
 }
 
-// Check connection for admin database
 if ($conn_admin->connect_error) {
     die("Connection failed: " . $conn_admin->connect_error);
 }
@@ -21,34 +18,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'];
     $password = md5($_POST['password']);
 
-    // Check if the user exists in the login_system database
+  
     $stmt_user = $conn_user->prepare("SELECT * FROM users WHERE email = ? AND password = ?");
     $stmt_user->bind_param('ss', $email, $password);
     $stmt_user->execute();
     $result_user = $stmt_user->get_result();
 
-    // Check if the user exists in the admin_system database
     $stmt_admin = $conn_admin->prepare("SELECT * FROM users WHERE email = ? AND password = ?");
     $stmt_admin->bind_param('ss', $email, $password);
     $stmt_admin->execute();
     $result_admin = $stmt_admin->get_result();
 
-    // Check if user is an admin
     if ($result_admin->num_rows === 1) {
         $user = $result_admin->fetch_assoc();
         if ($user['is_admin'] == 1) {
             $_SESSION['admin'] = $user['first_name'];
-            header("Location: ../admin/add_movie.php");
+            header("Location: admin_dashboard.php");
             exit();
         } else {
             $error = "Invalid email or password!";
         }
     } 
-    // Check if user is a regular user
     else if ($result_user->num_rows === 1) {
         $user = $result_user->fetch_assoc();
         $_SESSION['user'] = $user['first_name'];
-        header("Location: index2.php");
+        header("Location: home.php");
         exit();
     } else {
         $error = "Invalid email or password!";
@@ -61,24 +55,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $conn_user->close();
 $conn_admin->close();
 ?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="Asset/css/login.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
+    <title>Login</title>
+      <link rel="stylesheet" href="Asset/css/login2.css">
+  
 </head>
-<body>
-    <!-- Background Video -->
-    <video autoplay muted loop playsinline class="background-video">
-        <source src="signupbgbg.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
 
-    <!-- Navbar -->
+<body>
+    <video autoplay muted loop playsinline class="background-video">
+        <source src="Asset/images/signupbg.mp4" type="video/mp4">
+    </video>
     <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
         <div class="container-fluid">
             <a class="navbar-brand fs-4" href="home.html">
@@ -95,19 +93,19 @@ $conn_admin->close();
                 <div class="offcanvas-body d-flex flex-column p-4">
                     <ul class="navbar-nav justify-content-center justify-content-lg-end align-items-center fs-5 flex-grow-1 pe-3">
                         <li class="nav-item mx-2">
-                            <a class="nav-link" href="../index.html">Home</a>
+                            <a class="nav-link" href="home.php">Home</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="nav-link" href="nowshowing.html">Now Showing</a>
+                            <a class="nav-link" href="nowshowing.php">Now Showing</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="nav-link" href="comingSoon.html">Upcoming</a>
+                            <a class="nav-link" href="comingSoon.php">Upcoming</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="nav-link" href="contact.html">Contact Us</a>
+                            <a class="nav-link" href="contact.php">Contact Us</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="nav-link active" aria-current="page" href="login.html">Login</a>
+                            <a class="nav-link active" aria-current="page" href="login2.php">Login</a>
                         </li>
                     </ul>
                 </div>
@@ -115,57 +113,43 @@ $conn_admin->close();
         </div>
     </nav>
 
-    <br><br>
-    <!-- Content -->
-    <div class="content container">
-        <!-- Left Text -->
-        <div class="left-text col-12 col-md-6">
-            <h1>Login Now!</h1>
-            <p>Enjoy watchig with us!</p>
-        </div>
-
-        <!-- Login Section -->
-        <div class="col-12 col-md-6 ms-auto">
-            <div class="login-container">
-                <div class="login-card">
-                    <h2>Log In</h2>
-                    <div class="form-toggle">
-                        <span class="active">USER</span>
-                        <span>ADMIN</span>
-                    </div>
-                    <form>
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="email" placeholder="Enter Email..." required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="password" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="password" placeholder="Enter Password..." required>
-                        </div>
-                        <div class="d-grid">
-                            <button type="submit" class="btn">Login</button>
-                        </div>
-                        <div class="text-center mt-3">
-                            <small>Don't have an account? <a href="#">Sign up</a></small>
-                        </div>
-                    </form>
-                </div>
+    <div class="col-12 col-md-6 ms-auto">
+    <div class="login-container">
+        <h1>LOGIN</h1>
+        
+        <!-- PHP Error Message Display -->
+        <?php if (isset($error)) echo "<p style='color:red;'>$error</p>"; ?>
+        
+        <form method="POST">
+            <!-- Email Field -->
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" name="email" class="form-control" id="email" placeholder="Enter Email..." required>
             </div>
-        </div>
+            
+            <!-- Password Field -->
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" name="password" class="form-control" id="password" placeholder="Enter Password..." required>
+            </div>
+            
+            <!-- Forgot Password Link -->
+            <div class="mb-3">
+                <a href="#">Forgot password?</a>
+            </div>
+            
+            <!-- Submit Button -->
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary">Login</button>
+            </div>
+            
+            <!-- Sign Up Link -->
+            <div class="text-center mt-3">
+                <small>Don't have an account? <a href="../Pages/signup.html">Sign up</a></small>
+            </div>
+        </form>
     </div>
+</div>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- JavaScript for Tab Switching -->
-    <script>
-        document.querySelectorAll('.form-toggle span').forEach((tab) => {
-            tab.addEventListener('click', function () {
-                document.querySelectorAll('.form-toggle span').forEach((t) => t.classList.remove('active'));
-                this.classList.add('active');
-                const formAction = this.textContent.trim() === "User" ? "Admin" : "Login";
-                document.querySelector("form button").textContent = formAction;
-            });
-        });
-    </script>
 </body>
 </html>
