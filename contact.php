@@ -10,7 +10,7 @@
     <style>
         
 body {
-  background-color: rgb(0, 0, 0);
+  background-color: #060930;
   color: #FFFFFF;
   font-family: Arial, sans-serif;
   padding-top: 50px;
@@ -95,7 +95,7 @@ body {
   max-width: 500px;
   margin: 20px;
   padding: 20px;
-  background-color: #00000026;
+  background-color: #060930;
   border-radius: 10px;
 }
 
@@ -182,7 +182,7 @@ body {
   /*STYLE FOR FOOTER*/
 
 .footer {
-  background-color: #02162a;
+  background-color: #333456;
   padding: 40px 20px;
   text-align: center;
 }
@@ -271,7 +271,7 @@ body {
 
 .footer-section button[type="submit"] {
   padding: 8px 15px;
-  background-color: #007bff;
+  background-color: #092635;
   color: rgb(255, 255, 255);
   border: none;
   border-radius: 4px;
@@ -279,7 +279,7 @@ body {
 }
 
 .footer-section button[type="submit"]:hover {
-  background-color: #0056b3;
+  background-color: #092635;
 }
 
 @media (max-width: 768px) {
@@ -364,7 +364,7 @@ body {
   <div class="row g-0"> 
     <div class="col-12">
       <div class="full-width-image">
-        <img src="../Asset/images/contacts2.png" alt="Sample Image">
+        <img src="Asset/images/contacts2.png" alt="Sample Image">
       </div>
     </div>
   </div>
@@ -422,12 +422,7 @@ body {
               <p>Caloocan City</p>
           </div>
 
-          <div class="footer-section">
-              <a href="#">Home</a>
-              <a href="#">Now Showing</a>
-              <a href="#">Coming Soon</a>
-              <a href="#">Contact</a>
-          </div>
+         
       </div>
       <div class="footer-bottom">
           <div class="footer-links">
@@ -435,7 +430,7 @@ body {
               <a href="#">Privacy</a>
               <a href="#">Cookies</a>
           </div>
-          <p>&copy; 2023 Pagedone, All rights reserved.</p>
+          <p>&copy; 2024 Pagedone, All rights reserved.</p>
       </div>
   </footer>
     

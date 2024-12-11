@@ -18,8 +18,442 @@ $result = mysqli_query($conn, $query);
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="Asset/css/home.css">
     <title>Home Page</title>
+    <style>
+        
+body {
+    background-color: rgb(0, 0, 0);
+    color: #FFFFFF;
+    font-family: Arial, sans-serif;
+    padding-top: 50px;
+}
+@media(max-width: 991px) {
+    .sidebar {
+        background-color: rgba(225, 225, 225, 0.15);
+        backdrop-filter: blur(10px);
+    }
+}
+.navbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1050;
+    background: transparent;
+    height: 60px;
+    font-family: 'Arial', sans-serif;
+    font-size: 1rem; 
+    color: #ffffff;
+}
+.navbar-nav .nav-item .nav-link {
+    position: relative; 
+    padding: 10px 15px;
+    color: #ffffff;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+.navbar-nav .nav-item .nav-link:hover {
+    color: #7acaff; 
+}
+.navbar-nav .nav-item .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: #f3f7ec; 
+    transform: scaleX(0);
+    transform-origin: bottom right;
+    transition: transform 0.3s ease-out;
+}
+.navbar-nav .nav-item .nav-link:hover::after {
+    transform: scaleX(1); 
+    transform-origin: bottom left;
+}
+.navbar .nav-link.active {
+    background-color: #e3eaf31d; 
+    color: white; 
+    padding: 7px 7px;
+    border-radius: 5px;
+}
+/*STYLE FOR FOOTER*/
+.footer {
+    background-color: #333456;
+    padding: 40px 20px;
+    text-align: center;
+}
+.footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    max-width: 1200px;
+    margin: auto;
+    gap: 20px;
+}
+.footer-section {
+    flex: 1;
+    min-width: 250px;
+}
+.footer-section h4 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+.footer-section p,
+.footer-section a {
+    font-size: 14px;
+    color: #ffffff;
+    text-decoration: none;
+    margin-bottom: 8px;
+    display: block;
+}
+.logo {
+    width: 80px;
+    margin-bottom: 10px;
+}
+.social-icons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+.social-icons a {
+    margin: 0 10px;
+    color: #555;
+    text-decoration: none;
+    font-size: 24px;
+    transition: color 0.3s;
+}
+.social-icons a:hover {
+    color: #308bed; 
+}
+.footer-bottom {
+    margin-top: 20px;
+}
+.footer-bottom p {
+    font-size: 14px;
+    color: #ffffff;
+    margin-top: 10px;
+}
+.footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 10px;
+}
+.footer-links a {
+    font-size: 14px;
+    color: #ffffff;
+    text-decoration: none;
+}
+.footer-section input[type="email"] {
+    width: calc(100% - 100px);
+    padding: 8px;
+    margin-bottom: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+.footer-section button[type="submit"] {
+    padding: 8px 15px;
+    background-color: #007bff;
+    color: rgb(255, 255, 255);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.footer-section button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+@media (max-width: 768px) {
+    .footer-container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    .footer-section {
+        min-width: unset;
+    }
+
+    .footer-section input[type="email"] {
+        width: 100%;
+    }
+}
+@media (max-width: 576px) {
+    .footer-section h4 {
+        font-size: 16px;
+    }
+    .footer-section p,
+    .footer-section a {
+        font-size: 13px;
+    .footer-bottom p,
+    .footer-links a {
+        font-size: 12px;
+    }
+}
+}
+.custom-pagination {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.custom-pagination .page-link {
+    background-color: transparent;
+    color: white;
+    border: 2px solid transparent; 
+    border-radius: 50%; 
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+.custom-pagination .page-link:hover {
+    background-color: rgba(255, 255, 255, 0.7);
+    color: black;
+}
+.custom-pagination .page-active {
+    background-color: transparent;
+    color: white; 
+    border-color: rgb(255, 255, 255); 
+    border-radius: 30px;
+    border: 1px solid rgb(239, 231, 231); 
+}
+.arrow-button {
+    background-color: rgba(0, 0, 0, 0.5);
+    border: none;
+    color: white;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+.arrow-button:hover {
+    background-color: rgba(255, 255, 255, 0.7);
+    color: black;
+}
+.arrow-icon {
+    font-size: 20px;
+    line-height: 0;
+}
+.card-img-top{
+    border-radius: 20px;
+    padding: 5px;
+}
+.card{
+    background-color:#26263e; ;
+    height: 100%;
+    border-radius: 20px;
+}
+.card-body{
+    padding: 25px;
+    margin-top: -15px;
+}
+.btn-primary{
+    border-radius: 50px;
+    width: 120px;
+}
+.btn-primary:hover{
+    background-color: black;
+    border: none;
+}
+h3{
+    color: rgb(255, 255, 255);
+    font-weight: bolder
+}
+.movie-gallery {
+    letter-spacing: 5px; 
+    text-transform: uppercase; 
+    font-weight: bold; 
+    font-size: 5rem;
+    color: #474545; 
+    text-align: center; 
+    width: 100%; 
+}
+.card-title {
+    color: white;
+}
+.card img {
+    object-fit: fill;
+    height: 400px;  
+}
+.card:hover {
+    border-color: #e4dddd; 
+    box-shadow: 3px 5px 8px rgba(26, 25, 25, 0.5); 
+    transform: scale(1.01);
+    transition: transform 0.3s ease, box-shadow 0.3s ease; 
+    filter: none;
+    }
+#moreDetailsButton {
+    padding: 3px 3px;
+    background-color: transparent;
+    color: #E94560;
+    border: 1px solid #E94560;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+} 
+#moreDetailsButton:hover {
+    background-color: #E94560;
+    color: #FFFFFF;
+}
+.btn.active {
+    background-color: #007bff; 
+    color: white; 
+}
+#carouselExampleAutoplaying1 {
+    margin-left: auto;   
+    margin-right: auto;  
+    width: 70%;         
+    position: relative;  
+}
+.carousel-control-prev {
+    left: -7vw;  
+}
+.carousel-control-next {
+    right: -7vw; 
+     color: black;
+}
+.carousel-control-prev, .carousel-control-next {
+    position: absolute;
+    top: 50%;              
+    transform: translateY(-50%); 
+    z-index: 10;          
+    transition: transform 0.3s ease, background-color 0.3s ease; 
+}
+.carousel-control-prev-icon, .carousel-control-next-icon {
+    background-color: rgb(255, 255, 255); 
+    color: black;
+    border-radius: 50%;
+    width: 40px;  
+    height: 40px; 
+    transition: transform 0.3s ease, background-color 0.3s ease; 
+}
+.carousel-control-prev:hover .carousel-control-prev-icon, 
+.carousel-control-next:hover .carousel-control-next-icon {
+    background-color: rgb(251, 251, 251); 
+    transform: scale(1.1); 
+} 
+@media (max-width: 768px) {
+    .carousel-control-prev, .carousel-control-next {
+        left: -3vw; 
+        right: -3vw; 
+    }
+}
+@media (max-width: 480px) {
+    .carousel-control-prev, .carousel-control-next {
+        left: -2vw; 
+        right: -2vw; 
+    }
+}
+#NowShowing, #ComingSoon {
+    margin-right: 20px;
+    font-size: 1.2rem;  
+    padding: 10px 40px; 
+    border-radius: 10px; 
+    transition: all 0.3s ease; 
+    font-weight:lighter;
+}
+#NowShowing {
+    background-color: transparent; 
+    color: white; 
+    border: 2px solid #f5a623; 
+}
+#NowShowing:hover {
+    font-weight:bolder;
+    background-color: #d48d20; 
+    border-color: #d48d20; 
+    transform: scale(1.07); 
+}
+#ComingSoon {
+    background-color: transparent;
+    color: white; 
+    border: 2px solid #3a7bbd; 
+}
+#ComingSoon:hover {
+    font-weight: bolder;
+    background-color: #1f5e8c; 
+    border-color: #1f5e8c; 
+    transform: scale(1.07); 
+}
+#NowShowing.active {
+    background-color: #d48d20;
+    border-color: #fcfcfc; 
+    font-weight: bold; 
+}
+#ComingSoon.active {
+    background-color: #1f5e8c; 
+    border-color: #fcfcfc; 
+    font-weight: bold; 
+}
+.group {
+    display: flex;
+    line-height: 28px;
+    align-items: center;
+    position: relative;
+    max-width: 190px;
+  }
+  .input {
+    font-family: "Montserrat", sans-serif;
+    width: 100%;
+    height: 45px;
+    padding-left: 2.5rem;
+    box-shadow: 0 0 0 1.5px #2b2c37, 0 0 25px -17px #000;
+    border: 0;
+    border-radius: 12px;
+    background-color: #16171d;
+    outline: none;
+    color: #bdbecb;
+    transition: all 0.25s cubic-bezier(0.19, 1, 0.22, 1);
+    cursor: text;
+    z-index: 0;
+  }
+  .input::placeholder {
+    color: #bdbecb;
+  }
+  .input:hover {
+    box-shadow: 0 0 0 2.5px #2f303d, 0px 0px 25px -15px #000;
+  }
+  .input:active {
+    transform: scale(0.95);
+  }
+  .input:focus {
+    box-shadow: 0 0 0 2.5px #2f303d;
+  }
+  .search-icon {
+    position: absolute;
+    left: 1rem;
+    fill: #bdbecb;
+    width: 1rem;
+    height: 1rem;
+    pointer-events: none;
+    z-index: 1;
+  }
+.full-width-image {
+    width: 100vw;       
+    height: auto;     
+    margin: 0;         
+    overflow: hidden;    
+}
+.full-width-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;   
+}
+.body, .full-width-container {
+    padding: 0;
+    margin: 0;
+}
+    </style>
 </head>
 <body>
 
@@ -330,12 +764,7 @@ $result = mysqli_query($conn, $query);
                 <p>Caloocan City</p>
             </div>
 
-            <div class="footer-section">
-                <a href="#">Home</a>
-                <a href="#">Now Showing</a>
-                <a href="#">Coming Soon</a>
-                <a href="#">Contact</a>
-            </div>
+  
         </div>
         <div class="footer-bottom">
             <div class="footer-links">
@@ -343,7 +772,7 @@ $result = mysqli_query($conn, $query);
                 <a href="#">Privacy</a>
                 <a href="#">Cookies</a>
             </div>
-            <p>&copy; 2023 Pagedone, All rights reserved.</p>
+            <p>&copy; 2024 Pagedone, All rights reserved.</p>
         </div>
     </footer>
       

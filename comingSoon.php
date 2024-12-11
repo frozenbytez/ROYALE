@@ -29,7 +29,7 @@ $result = mysqli_query($conn, $query);
     
     
     body {
-        background-color: #1e1e2d;
+        background-color: #060930;
         color: #f2f2f2;
     }
     
@@ -322,7 +322,7 @@ $result = mysqli_query($conn, $query);
     /*STYLE FOR FOOTER*/
     
     .footer {
-        background-color: #02162a;
+        background-color: #333456;
         padding: 40px 20px;
         text-align: center;
     }
@@ -514,7 +514,7 @@ $result = mysqli_query($conn, $query);
                 <div class="container py-4">
                     <div class="row movie-card">
                         <div class="col-12 col-md-4 text-center movie-poster">
-                            <img src="../../Asset/images/cs4.jpg" class="img-fluid mb-3" alt=" Moan 2 Photo">
+                            <img src="Asset/images/cs4.jpg" class="img-fluid mb-3" alt=" Moan 2 Photo">
                             <div data-bs-toggle="tooltip" data-bs-placement="top" title="Price: ₱350" class="button">
                                 <div class="button-wrapper">
                                     <div class="text">Get Ticket</div>
@@ -566,7 +566,7 @@ $result = mysqli_query($conn, $query);
                         <div class="container py-4">
                             <div class="row movie-card">
                                 <div class="col-12 col-md-4 text-center movie-poster">
-                                    <img src="../../Asset/images/cs2.jpg" class="img-fluid mb-3" alt="Deadpool and Wolverine">
+                                    <img src="Asset/images/cs2.jpg" class="img-fluid mb-3" alt="Deadpool and Wolverine">
                                     <div data-bs-toggle="tooltip" data-bs-placement="top" title="Price: ₱370" class="button">
                                         <div class="button-wrapper">
                                             <div class="text">Get Ticket</div>
@@ -618,7 +618,7 @@ $result = mysqli_query($conn, $query);
                     <div class="container py-4">
                             <div class="row movie-card">
                                 <div class="col-12 col-md-4 text-center movie-poster">
-                                    <img src="../../Asset/images/cs3.jpg" class="img-fluid mb-3" alt="The Wild Robot">
+                                    <img src="Asset/images/cs3.jpg" class="img-fluid mb-3" alt="The Wild Robot">
                                     <div data-bs-toggle="tooltip" data-bs-placement="top" title="Price: ₱350" class="button">
                                         <div class="button-wrapper">
                                             <div class="text">Get Ticket</div>
@@ -668,7 +668,7 @@ $result = mysqli_query($conn, $query);
                         </div> 
 
                         <?php
-include('../../config.php');  
+include('Asset/connection/config.php');  
 
 
 $query = "SELECT * FROM movies WHERE status = 'comingSoon'";
@@ -776,7 +776,7 @@ if (mysqli_num_rows($result) > 0) {
     <div class="footer-container">
 
         <div class="footer-section">
-            <img src="../../Asset/images/whitelogo.png" alt="Logo" class="logo">
+            <img src="Asset/images/whitelogo.png" alt="Logo" class="logo">
             <p>Enjoy Watching with us</p>
             <div class="social-icons">
                 <a href="#" class="social-link">
@@ -797,13 +797,6 @@ if (mysqli_num_rows($result) > 0) {
             <p>+91 945 658 3256</p>
             <p>Caloocan City</p>
         </div>
-
-        <div class="footer-section">
-            <a href="#">Home</a>
-            <a href="#">Now Showing</a>
-            <a href="#">Coming Soon</a>
-            <a href="#">Contact</a>
-        </div>
     </div>
     <div class="footer-bottom">
         <div class="footer-links">
@@ -811,7 +804,7 @@ if (mysqli_num_rows($result) > 0) {
             <a href="#">Privacy</a>
             <a href="#">Cookies</a>
         </div>
-        <p>&copy; 2023 Pagedone, All rights reserved.</p>
+        <p>&copy; 2024 Pagedone, All rights reserved.</p>
     </div>
 </footer>
 

@@ -326,13 +326,12 @@ form button {
     <label for="password" class="form-label">Password</label>
     <div class="input-group">
         <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
-        <button type="button" class="btn btn-secondary" id="togglePassword">
+        <button type="button" class="btn btn-outline-secondary" id="togglePassword">
             Show
         </button>
     </div>
-</div>    
-
-<!-- Forgot Password Link -->
+</div>
+                    <!-- Forgot Password Link -->
                     <div class="mb-3">
                         <a href="#">Forgot password?</a>
                     </div>
@@ -369,19 +368,6 @@ form button {
             toggleButton.textContent = 'Hide';
         } else {
             passwordInput.type = 'password';
-            toggleButton.textContent = 'Show';
-        }
-    });
-
-    // Toggle visibility for the confirm password field
-    document.getElementById('toggleConfirmPassword').addEventListener('click', function () {
-        const confirmPasswordInput = document.getElementById('confirm-password');
-        const toggleButton = this;
-        if (confirmPasswordInput.type === 'password') {
-            confirmPasswordInput.type = 'text';
-            toggleButton.textContent = 'Hide';
-        } else {
-            confirmPasswordInput.type = 'password';
             toggleButton.textContent = 'Show';
         }
     });

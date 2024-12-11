@@ -19,7 +19,7 @@
     font-family: Arial, sans-serif;
 }
 body {
-    background-color: #1e1e2d;
+    background-color: #060930;
     color: #f2f2f2;
 }
 .navbar {
@@ -257,7 +257,7 @@ body {
 
 /*STYLE FOR FOOTER*/
 .footer {
-    background-color: #02162a;
+    background-color: #333456;
     padding: 40px 20px;
     text-align: center;
 }
@@ -427,7 +427,7 @@ body {
     <div class="container py-4">
         <div class="row movie-card">
             <div class="col-12 col-md-4 text-center movie-poster">
-                <img src="../../Asset/images/hello_love_again.jpg" class="img-fluid mb-3" alt="Hello Love Again Photo">
+                <img src="Asset/images/hello_love_again.jpg" class="img-fluid mb-3" alt="Hello Love Again Photo">
                 <div data-bs-toggle="tooltip" data-bs-placement="top" title="Price: ₱350" class="button">
                     <div class="button-wrapper">
                         <div class="text">Get Ticket</div>
@@ -479,7 +479,7 @@ body {
             <div class="container py-4">
                 <div class="row movie-card">
                     <div class="col-12 col-md-4 text-center movie-poster">
-                        <img src="../../Asset/images/deadpool_and_wolverine.jpg" class="img-fluid mb-3" alt="Deadpool and Wolverine">
+                        <img src="Asset/images/deadpool_and_wolverine.jpg" class="img-fluid mb-3" alt="Deadpool and Wolverine">
                         <div data-bs-toggle="tooltip" data-bs-placement="top" title="Price: ₱370" class="button">
                             <div class="button-wrapper">
                                 <div class="text">Get Ticket</div>
@@ -530,7 +530,7 @@ body {
         <div class="container py-4">
                 <div class="row movie-card">
                     <div class="col-12 col-md-4 text-center movie-poster">
-                        <img src="../../Asset/images/the_wild_robot.jpg" class="img-fluid mb-3" alt="The Wild Robot">
+                        <img src="Asset/images/the_wild_robot.jpg" class="img-fluid mb-3" alt="The Wild Robot">
                         <div data-bs-toggle="tooltip" data-bs-placement="top" title="Price: ₱350" class="button">
                             <div class="button-wrapper">
                                 <div class="text">Get Ticket</div>
@@ -584,7 +584,7 @@ body {
             <div class="container py-4">
                 <div class="row movie-card">  
                     <div class="col-12 col-md-4 text-center movie-poster">
-                        <img src="../../Asset/images/oppenheimer.jpg" class="img-fluid mb-3" alt="The Wild Robot">
+                        <img src="Asset/images/oppenheimer.jpg" class="img-fluid mb-3" alt="The Wild Robot">
                         <div data-bs-toggle="tooltip" data-bs-placement="top" title="Price: ₱350" class="button">
                             <div class="button-wrapper">
                                 <div class="text">Get Ticket</div>
@@ -634,7 +634,7 @@ body {
             <div class="container py-4">
                 <div class="row movie-card">
                     <div class="col-12 col-md-4 text-center movie-poster">
-                        <img src="../../Asset/images/the_super_mario_bros2.jpg" class="img-fluid mb-3" alt="The Super Mario Bros 2">
+                        <img src="Asset/images/the_super_mario_bros2.jpg" class="img-fluid mb-3" alt="The Super Mario Bros 2">
                         <div data-bs-toggle="tooltip" data-bs-placement="top" title="Price: ₱350" class="button">
                             <div class="button-wrapper">
                                 <div class="text">Get Ticket</div>
@@ -685,7 +685,7 @@ body {
             <div class="container py-4">
                 <div class="row movie-card">
                     <div class="col-12 col-md-4 text-center movie-poster">
-                        <img src="../../Asset/images/the_nun2.jpg" class="img-fluid mb-3" alt="The Nun 2">
+                        <img src="Asset/images/the_nun2.jpg" class="img-fluid mb-3" alt="The Nun 2">
                         <div data-bs-toggle="tooltip" data-bs-placement="top" title="Price: ₱350" class="button">
                             <div class="button-wrapper">
                                 <div class="text">Get Ticket</div>
@@ -737,7 +737,7 @@ body {
             <div class="container py-4">
                 <div class="row movie-card">
                     <div class="col-12 col-md-4 text-center movie-poster">
-                        <img src="../../Asset/images/spider_man_across_spider_verse.jpg" class="img-fluid mb-3" alt="The Spider Man Across Spider Verse">
+                        <img src="Asset/images/spider_man_across_spider_verse.jpg" class="img-fluid mb-3" alt="The Spider Man Across Spider Verse">
                         <div data-bs-toggle="tooltip" data-bs-placement="top" title="Price: ₱350" class="button">
                             <div class="button-wrapper">
                                 <div class="text">Get Ticket</div>
@@ -788,7 +788,7 @@ body {
             <div class="container py-4">
                 <div class="row movie-card">
                     <div class="col-12 col-md-4 text-center movie-poster">
-                        <img src="../../Asset/images/venom_last_dance.jpg" class="img-fluid mb-3" alt="Venom The Last Dance">
+                        <img src="Asset/images/venom_last_dance.jpg" class="img-fluid mb-3" alt="Venom The Last Dance">
                         <div data-bs-toggle="tooltip" data-bs-placement="top" title="Price: ₱350" class="button">
                             <div class="button-wrapper">
                                 <div class="text">Get Ticket</div>
@@ -835,7 +835,7 @@ body {
             </div>
 
                 <?php
-    include('../../Asset/connection/config.php');  
+    include('Asset/connection/config.php');  
     $query = "SELECT * FROM movies WHERE status = 'nowshowing'";
     $result = mysqli_query($conn, $query);
 
@@ -937,7 +937,7 @@ body {
         <div class="footer-container">
 
             <div class="footer-section">
-                <img src="../../Asset/images/whitelogo.png" alt="Logo" class="logo">
+                <img src="Asset/images/whitelogo.png" alt="Logo" class="logo">
                 <p>Enjoy Watching with us</p>
                 <div class="social-icons">
                     <a href="#" class="social-link">
@@ -959,12 +959,6 @@ body {
                 <p>Caloocan City</p>
             </div>
 
-            <div class="footer-section">
-                <a href="#">Home</a>
-                <a href="#">Now Showing</a>
-                <a href="#">Coming Soon</a>
-                <a href="#">Contact</a>
-            </div>
         </div>
         <div class="footer-bottom">
             <div class="footer-links">
@@ -972,7 +966,7 @@ body {
                 <a href="#">Privacy</a>
                 <a href="#">Cookies</a>
             </div>
-            <p>&copy; 2023 Pagedone, All rights reserved.</p>
+            <p>&copy; 2024 Pagedone, All rights reserved.</p>
         </div>
     </footer>
 
