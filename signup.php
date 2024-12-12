@@ -58,113 +58,103 @@ $conn->close();
     
 </head>
 <style>
-    body, php {
-        margin: 0;
-        height: 100%;
-    }
 
-    .background-video {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        z-index: -1;
-    }
-
-    .content {
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-        height: 100%;
-        padding: 3rem;
-        color: white;
-    }
-
-    .left-text h1 {
-        font-size: 5rem;
-        font-weight: bold;
-        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
-    }
-
-    .left-text p {
-        font-size: 1.25rem;
-        font-weight: 400;
-        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
-    }
-
-    .signup-card {
-        background: rgba(19, 7, 46, 0.85);
-        border-radius: 20px;
-        color: white;
-        margin-top: 30px;
-        padding-top: 10px;
-        padding-right: 15px;
-        padding-bottom: 20px;
-        padding-left: 20px;
-        max-width: 400px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-        margin-left: auto;
-    }
-
-    .signup-card h2 {
-        text-align: center;
-        margin-bottom: 1.5rem;
-        margin-top: 10px;
-    }
-
-    .signup-card .form-control {
-        background-color: rgba(255, 255, 255, 0.9);
-        border-radius: 10px;
-        border: none;
-        color: black;
-    }
-
-    .signup-card .form-control:focus {
-        background-color: #f7e7e7;
-        color: black;
-        outline: none;
-        box-shadow: none;
-    }
-
-    .signup-card button {
-        background-color: #502779;
-        color: white;
-    }
-
-    .signup-card button:hover {
-        background-color: #5a379e;
-    }
-
-    .signup-card a {
-        color: #a887fa;
-    }
-
-    .signup-card a:hover {
-        text-decoration: underline;
-    }
-
-    @media (max-width: 768px) {
-        .content {
+body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #333;
+            color: #fff;
+            margin: 0;
             flex-direction: column;
-            padding: 1rem;
-            justify-content: flex-start;
         }
-
-        .left-text h1 {
-            font-size: 2.5rem;
+        .signup-form {
+            background-color: #0e1538;
+            padding: 5px;
+            border-radius: 10px;
+            width: 350px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            text-align: center;
         }
-
-        .left-text p {
-            font-size: 1.1rem;
+        .signup-form h2 {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #fff;
         }
-
-        .signup-card {
-            width: 90%;
+        .form-group {
+            margin-bottom: 15px;
+            position: relative;
         }
-    }
-
+        label {
+            font-size: 14px;
+            margin-bottom: 5px;
+            display: block;
+        }
+        input {
+            width: calc(100% - 60px);
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            background-color: #f8f9fc;
+            margin-bottom: 5px;
+            font-size: 14px;
+            color: #333;
+            display: inline-block;
+        }
+        .name-group {
+            display: flex;
+            justify-content: space-between;
+            gap: 0px;
+        }
+        .name-group input {
+            width: 65%;
+        }
+        .show-password {
+            position: absolute;
+            right: 28px;
+            top: 22px;
+            transform: translateY(-50%);
+            background-color: #000;
+            color: #fff;
+            border: none;
+            padding: 6px 8px;
+            cursor: pointer;
+            font-size: 12px;
+            border-radius: 5px;
+            outline: none;
+            width: 70px;
+            height: 44px;
+        }
+        .show-password:hover {
+            background-color: #7a3eb7;
+        }
+        button {
+            width: 80%;
+            padding: 10px;
+            background-color: #1a73e8;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        button:hover {
+            background-color: #7a3eb7;
+        }
+        .login-link {
+            margin-top: 20px;
+            font-size: 14px;
+        }
+        .login-link a {
+            color: #9b4de5;
+            text-decoration: none;
+        }
+        .login-link a:hover {
+            text-decoration: underline;
+        }
     .navbar {
         position: absolute;
         top: 0;
@@ -214,11 +204,27 @@ $conn->close();
         padding: 7px 7px;
         border-radius: 5px;
     }
+
+
+    .background-video {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: -1;
+    }
+    .logo img {
+            max-width: 80%;
+            margin-bottom: 20px;
+        }
+
 </style>
 <body>
     <!-- Background Video -->
     <video autoplay muted loop playsinline class="background-video">
-        <source src="Asset/images/login.mp4" type="video/mp4">
+        <source src="Asset/images/videobg.mp4" type="video/mp4">
     </video>
 
     <!-- Navbar -->
@@ -262,67 +268,56 @@ $conn->close();
         </div>
     </nav>
 
-    <!-- Content -->
-    <div class="content container">
-        <!-- Left Text -->
-        <div class="left-text col-12 col-md-6">
-            <h1>Sign up Now!</h1>
-            <p>Create Your Account and Get ready to experience movies like never before.</p>
-        </div>
-
-        <!-- Right Form -->
-        <div class="col-12 col-md-6 ms-auto"> <!-- Add ms-auto here to push to the right -->
-            <div class="signup-card">
-                <h2>Sign Up</h2>
+    
 
                 <?php if (isset($error_message)): ?>
                     <div class="alert alert-danger"><?= $error_message; ?></div>
                 <?php endif; ?>
 
-                <form method="POST" action="">
-                    <div class="mb-3">
-                        <label for="full_name" class="form-label">Name</label>
-                        <div class="d-flex">
-                            <input type="text" class="form-control me-2" id="first_name" name="first_name" placeholder="First Name" required>
-                            <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Last Name" required>
-                        </div>
-                    </div>
-                    
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="phone_number" class="form-label">Phone Number</label>
-                        <input type="text" class="form-control" id="phone_number" name="phone_number"placeholder="Phone Number" required>
-                    </div>
-                    <div class="mb-3">
-    <label for="password" class="form-label">Password</label>
-    <div class="input-group">
-        <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
-        <button type="button" class="btn btn-outline-secondary" id="togglePassword">
-            Show
-        </button>
-    </div>
-</div>
-<div class="mb-3">
-    <label for="confirm-password" class="form-label">Confirm Password</label>
-    <div class="input-group">
-        <input type="password" class="form-control" id="confirm-password" name="confirm_password" placeholder="Confirm Password" required>
-        <button type="button" class="btn btn-outline-secondary" id="toggleConfirmPassword">
-            Show
-        </button>
-    </div>
-</div>
-                    <div class="d-grid">
-                    <a href="login2.php" class="btn">Sign Up</a>
-                    </div>
-                </form>
-
-                <div class="mt-3 text-center">
-                    <p>Already have an account? <a href="login2.php">Login</a></p>
+                <div class="signup-form">
+                <div class="login-container">
+        <div class="logo">
+            <img src="Asset/images/whitelogo.png" alt="Royale Cinema Logo">
+        </div>
+        <form action="#" method="post">
+            <!-- First Name and Last Name -->
+            <div class="form-group name-group">
+                <div>
+                    <input type="text" id="first-name" name="first_name" placeholder="First Name" required>
+                </div>
+                <div>
+                    <input type="text" id="last-name" name="last_name" placeholder="Last Name" required>
                 </div>
             </div>
+
+            <!-- Email -->
+            <div class="form-group">
+                <input type="email" id="email" name="email" placeholder="Email" required>
+            </div>
+
+            <!-- Phone Number -->
+            <div class="form-group">
+                <input type="tel" id="phone" name="phone" placeholder="Phone Number" required>
+            </div>
+
+            <!-- Password -->
+            <div class="form-group">
+                <input type="password" id="password" name="password" placeholder="Password" required>
+                <button type="button" class="show-password" onclick="togglePassword('password')">Show</button>
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="form-group">
+                <input type="password" id="confirm-password" name="confirm_password" placeholder="Confirm Password" required>
+                <button type="button" class="show-password" onclick="togglePassword('confirm-password')">Show</button>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit">LOGIN</button>
+        </form>
+        
+        <div class="login-link">
+            Already have an account? <a href="#">Sign up</a>
         </div>
     </div>
 
