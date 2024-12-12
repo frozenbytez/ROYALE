@@ -1,12 +1,4 @@
 <?php
-include('Asset/connection/config.php'); 
-
-
-$query = "SELECT * FROM movies WHERE status = 'index'";
-$result = mysqli_query($conn, $query);
-?>
-
-<?php
 session_start();
 
 // Database connections
@@ -25,7 +17,7 @@ $error = "";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'];
-    $password = md5($_POST['password']);
+    $password = md5($_POST['password']); // Assuming the password is stored as md5 in the database
 
     // User query
     $stmt_user = $conn_user->prepare("SELECT * FROM users WHERE email = ? AND password = ?");
@@ -62,9 +54,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $conn_user->close();
 $conn_admin->close();
 ?>
-
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -104,38 +93,7 @@ body {
     font-size: 1rem; 
     color: #ffffff;
 }
-.navbar-nav .nav-item .nav-link {
-    position: relative; 
-    padding: 10px 15px;
-    color: #ffffff;
-    text-decoration: none;
-    transition: all 0.3s ease;
-}
-.navbar-nav .nav-item .nav-link:hover {
-    color: #7acaff; 
-}
-.navbar-nav .nav-item .nav-link::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 1px;
-    background-color: #f3f7ec; 
-    transform: scaleX(0);
-    transform-origin: bottom right;
-    transition: transform 0.3s ease-out;
-}
-.navbar-nav .nav-item .nav-link:hover::after {
-    transform: scaleX(1); 
-    transform-origin: bottom left;
-}
-.navbar .nav-link.active {
-    background-color: #e3eaf31d; 
-    color: white; 
-    padding: 7px 7px;
-    border-radius: 5px;
-}
+
 /*STYLE FOR FOOTER*/
 .footer {
     background-color: #333456;
@@ -532,7 +490,7 @@ h3{
                 <button type="button" class="btn-close btn-close-white shadow-none" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body d-flex flex-column p-4">
-                <ul class="navbar-nav justify-content-center justify-content-lg-end align-items-center fs-5 flex-grow-1 pe-3">
+                <ul class="navbar-nav justify-content-center justify-content-lg-end align-items-center fs-5 flex-grow-1 ">
                     <li class="nav-item mx-2">
                         <a class="nav-link active" aria-current="page" href="home.php">Home</a>
                     </li>
@@ -559,7 +517,7 @@ h3{
         </a>
         <ul class="dropdown-menu" aria-labelledby="userDropdown">
             <li><a class="dropdown-item" href="history.php">View History</a></li>
-            <li><a class="dropdown-item" href="logout.php">Logout</a></li>
+            <li><a class="dropdown-item" href="login2.php">Logout</a></li>
         </ul>
     </li>
 <?php endif; ?>
@@ -903,32 +861,10 @@ document.getElementById('customCarouselExample').addEventListener('slid.bs.carou
 
 <!--------------------------------------------------------------------------------------------------------------------------------->
     
-document.getElementById('NowShowing').addEventListener('click', function() {
-    const nowShowing = document.querySelectorAll('.now-showing');
-    const comingSoon = document.querySelectorAll('.coming-soon');
 
-  
-    nowShowing.forEach(movie => movie.classList.remove('d-none'));
-    comingSoon.forEach(movie => movie.classList.add('d-none'));
-
-   
-    document.getElementById('NowShowing').classList.add('active');
-    document.getElementById('ComingSoon').classList.remove('active');
-});
-
-document.getElementById('ComingSoon').addEventListener('click', function() {
-    const nowShowing = document.querySelectorAll('.now-showing');
-    const comingSoon = document.querySelectorAll('.coming-soon');
-
-    nowShowing.forEach(movie => movie.classList.add('d-none'));
-    comingSoon.forEach(movie => movie.classList.remove('d-none'));
-
-  
-    document.getElementById('ComingSoon').classList.add('active');
-    document.getElementById('NowShowing').classList.remove('active');
-});
 
     </script>
-
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 </body>
 </html>

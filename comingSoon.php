@@ -1,9 +1,8 @@
 <?php
-// Include the database connection file
-include('Asset/connection/config.php');
+include('Asset/connection/config.php'); 
 
-// Fetch movies with 'nowshowing' status from the database
-$query = "SELECT * FROM movies WHERE status = 'comingsoon'";
+
+$query = "SELECT * FROM movies WHERE status = 'index'";
 $result = mysqli_query($conn, $query);
 ?>
 
@@ -65,7 +64,6 @@ $conn_admin->close();
 ?>
 
 
-
 <!DOCTYPE php>
 <php lang="en">
 <head>          
@@ -105,46 +103,7 @@ $conn_admin->close();
         font-size: 1rem; 
         color: #ffffff;
     }
-    
-    .navbar-nav .nav-item .nav-link {
-        position: relative; 
-        padding: 10px 15px;
-        color: #ffffff;
-        text-decoration: none;
-        transition: all 0.3s ease;
-    }
-    
-    
-    .navbar-nav .nav-item .nav-link:hover {
-        color: #7acaff; 
-    }
-    
-    
-    .navbar-nav .nav-item .nav-link::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 1px;
-        background-color: #f3f7ec; 
-        transform: scaleX(0);
-        transform-origin: bottom right;
-        transition: transform 0.3s ease-out;
-    }
-    
-    .navbar-nav .nav-item .nav-link:hover::after {
-        transform: scaleX(1); 
-        transform-origin: bottom left;
-    }
-    
-    .navbar .nav-link.active {
-        background-color: #e3eaf31d; 
-        color: white; 
-        padding: 7px 7px;
-        border-radius: 5px;
-    }
-    
+
     @media(max-width: 991px) {
         .sidebar {
             background-color: rgba(225, 225, 225, 0.15);
@@ -549,15 +508,21 @@ $conn_admin->close();
 
                     <!-- Show login/signup links if the user is not logged in -->
                     <?php if (!isset($_SESSION['user']) && !isset($_SESSION['admin'])): ?>
-                        <li class="nav-item mx-2">
-                            <a class="nav-link" href="login2.php">Login</a>
-                        </li>
-                    <?php else: ?>
-                        <!-- Display the user's first name if logged in -->
-                        <li class="nav-item mx-2">
-                            <span class="nav-link">Hello, <?php echo $_SESSION['user'] ?? $_SESSION['admin']; ?></span>
-                        </li>
-                    <?php endif; ?>
+    <li class="nav-item mx-2">
+        <a class="nav-link" href="login2.php">Login</a>
+    </li>
+<?php else: ?>
+    <!-- Display the user's first name if logged in -->
+    <li class="nav-item mx-2 dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+           <?php echo $_SESSION['user'] ?? $_SESSION['admin']; ?>
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="userDropdown">
+            <li><a class="dropdown-item" href="history.php">View History</a></li>
+            <li><a class="dropdown-item" href="login2.php">Logout</a></li>
+        </ul>
+    </li>
+<?php endif; ?>
                 </ul>
             </div>
         </div>
@@ -910,6 +875,7 @@ if (mysqli_num_rows($result) > 0) {
             }
                             
              </script>
-                        
+                     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+                     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>   
         </body>
     </php>

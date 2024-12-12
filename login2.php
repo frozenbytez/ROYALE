@@ -17,7 +17,7 @@ $error = "";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'];
-    $password = md5($_POST['password']);
+    $password = md5($_POST['password']); // Assuming the password is stored as md5 in the database
 
     // User query
     $stmt_user = $conn_user->prepare("SELECT * FROM users WHERE email = ? AND password = ?");
@@ -54,8 +54,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $conn_user->close();
 $conn_admin->close();
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -89,38 +87,8 @@ $conn_admin->close();
     font-size: 1rem; 
     color: #ffffff;
 }
-.navbar-nav .nav-item .nav-link {
-    position: relative; 
-    padding: 10px 15px;
-    color: #ffffff;
-    text-decoration: none;
-    transition: all 0.3s ease;
-}
-.navbar-nav .nav-item .nav-link:hover {
-    color: #7acaff; 
-}
-.navbar-nav .nav-item .nav-link::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 1px;
-    background-color: #f3f7ec; 
-    transform: scaleX(0);
-    transform-origin: bottom right;
-    transition: transform 0.3s ease-out;
-}
-.navbar-nav .nav-item .nav-link:hover::after {
-    transform: scaleX(1); 
-    transform-origin: bottom left;
-}
-.navbar .nav-link.active {
-    background-color: #e3eaf31d; 
-    color: white; 
-    padding: 7px 7px;
-    border-radius: 5px;
-}
+
+
 
 
 
@@ -197,6 +165,70 @@ $conn_admin->close();
         object-fit: cover;
         z-index: -1;
     }
+    /* From Uiverse.io by aadium */ 
+.paste-button {
+  position: relative;
+  display: block;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.button {
+  background-color: #4CAF50;
+  color: #212121;
+  padding: 10px 15px;
+  font-size: 15px;
+  font-weight: bold;
+  border: 2px solid transparent;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+.dropdown-content {
+  display: none;
+  font-size: 13px;
+  position: absolute;
+  z-index: 1;
+  min-width: 200px;
+  background-color: #212121;
+  border: 2px solid #4CAF50;
+  border-radius: 0px 15px 15px 15px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.dropdown-content a {
+  color: #4CAF50;
+  padding: 8px 10px;
+  text-decoration: none;
+  display: block;
+  transition: 0.1s;
+}
+
+.dropdown-content a:hover {
+  background-color: #4CAF50;
+  color: #212121;
+}
+
+.dropdown-content a:focus {
+  background-color: #212121;
+  color: #4CAF50;
+}
+
+.dropdown-content #top:hover {
+  border-radius: 0px 13px 0px 0px;
+}
+
+.dropdown-content #bottom:hover {
+  border-radius: 0px 0px 13px 13px;
+}
+
+.paste-button:hover button {
+  border-radius: 15px 15px 0px 0px;
+}
+
+.paste-button:hover .dropdown-content {
+  display: block;
+}
+
     </style>
 </head>
 <body>
@@ -233,27 +265,25 @@ $conn_admin->close();
                         <a class="nav-link" href="contact.php">Contact Us</a>
                     </li>
 
-                    <!-- Show login/signup links if the user is not logged in -->
+                    <!-- Display login link only if user/admin is NOT logged in -->
                     <?php if (!isset($_SESSION['user']) && !isset($_SESSION['admin'])): ?>
-                        <li class="nav-item mx-2">
-                            <a class="nav-link" href="login2.php">Login</a>
-                        </li>
-                    <?php else: ?>
-                        <!-- Display the user's first name if logged in -->
-                        <li class="nav-item mx-2">
-                            <span class="nav-link">Hello, <?php echo $_SESSION['user'] ?? $_SESSION['admin']; ?></span>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="history.php">View History</a></li>
-                                <li><a class="dropdown-item" href="logout.php">Logout</a></li>
-                            </ul>
-                          </li>
-
-                    <?php endif; ?>
+    <li class="nav-item mx-2">
+        <a class="nav-link" href="login2.php">Login</a>
+    </li>
+<?php else: ?>
+    <!-- Display the user's first name if logged in -->
+    <li class="nav-item mx-2 dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+           <?php echo $_SESSION['user'] ?? $_SESSION['admin']; ?>
+        </a>
+    </li>
+<?php endif; ?>
                 </ul>
             </div>
         </div>
     </div>
 </nav>
+
 
 
 
@@ -294,7 +324,10 @@ $conn_admin->close();
                 passwordInput.type = 'password';
                 togglePasswordBtn.textContent = 'Show';
             }
-        });
+            var carousel = new bootstrap.Carousel(document.getElementById('customCarouselExample'));
+
+
     </script>
+    
 </body>
 </html>
