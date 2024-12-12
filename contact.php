@@ -448,8 +448,6 @@ body {
       <form>
           Email
           <input type="email" placeholder="Enter Email" required>
-          Password
-          <input type="password" placeholder="Enter Password" required>
           How Can We Help You?
           <textarea placeholder="Your Message" rows="4" required></textarea>
           <button type="submit">Send</button>
