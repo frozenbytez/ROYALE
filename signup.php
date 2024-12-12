@@ -72,9 +72,9 @@ body {
         }
         .signup-form {
             background-color: #0e1538;
-            padding: 5px;
+            padding: 15px;
             border-radius: 10px;
-            width: 350px;
+            width: 390px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
             text-align: center;
         }
@@ -94,7 +94,7 @@ body {
             display: block;
         }
         input {
-            width: calc(100% - 60px);
+            width: 100%;
             padding: 10px;
             border-radius: 4px;
             border: 1px solid #ccc;
@@ -105,16 +105,17 @@ body {
             display: inline-block;
         }
         .name-group {
-            display: flex;
-            justify-content: space-between;
-            gap: 0px;
-        }
-        .name-group input {
-            width: 65%;
-        }
+    display: flex;
+    justify-content: space-between;
+    gap: 10px; /* Set gap to 0 to eliminate the spacing */
+}
+
+.name-group input {
+    width: 100%; /* Adjust the width slightly to ensure the inputs fit well */
+}
         .show-password {
             position: absolute;
-            right: 28px;
+            right: -1px;
             top: 22px;
             transform: translateY(-50%);
             background-color: #000;
@@ -302,15 +303,15 @@ body {
 
             <!-- Password -->
             <div class="form-group">
-                <input type="password" id="password" name="password" placeholder="Password" required>
-                <button type="button" class="show-password" onclick="togglePassword('password')">Show</button>
-            </div>
+    <input type="password" id="password" name="password" placeholder="Password" required>
+    <button type="button" class="show-password" onclick="togglePassword('password')">Show</button>
+</div>
 
-            <!-- Confirm Password -->
-            <div class="form-group">
-                <input type="password" id="confirm-password" name="confirm_password" placeholder="Confirm Password" required>
-                <button type="button" class="show-password" onclick="togglePassword('confirm-password')">Show</button>
-            </div>
+<!-- Confirm Password Field -->
+<div class="form-group">
+    <input type="password" id="confirm-password" name="confirm_password" placeholder="Confirm Password" required>
+    <button type="button" class="show-password" onclick="togglePassword('confirm-password')">Show</button>
+</div>
 
             <!-- Submit Button -->
             <button type="submit">LOGIN</button>
@@ -323,31 +324,20 @@ body {
 
     <!-- Bootstrap JS -->
     <script>
-    // Toggle visibility for the main password field
-    document.getElementById('togglePassword').addEventListener('click', function () {
-        const passwordInput = document.getElementById('password');
-        const toggleButton = this;
-        if (passwordInput.type === 'password') {
-            passwordInput.type = 'text';
-            toggleButton.textContent = 'Hide';
-        } else {
-            passwordInput.type = 'password';
-            toggleButton.textContent = 'Show';
-        }
-    });
-
-    // Toggle visibility for the confirm password field
-    document.getElementById('toggleConfirmPassword').addEventListener('click', function () {
-        const confirmPasswordInput = document.getElementById('confirm-password');
-        const toggleButton = this;
-        if (confirmPasswordInput.type === 'password') {
-            confirmPasswordInput.type = 'text';
-            toggleButton.textContent = 'Hide';
-        } else {
-            confirmPasswordInput.type = 'password';
-            toggleButton.textContent = 'Show';
-        }
-    });
+// Function to toggle password visibility
+function togglePassword(inputId) {
+    var input = document.getElementById(inputId);
+    var button = input.nextElementSibling; // Get the button that is next to the input field
+    
+    // Check if the input type is password, if it is, change it to text and vice versa
+    if (input.type === 'password') {
+        input.type = 'text';  // Change to text to show password
+        button.textContent = 'Hide';  // Change button text to "Hide"
+    } else {
+        input.type = 'password';  // Change back to password to hide it
+        button.textContent = 'Show';  // Change button text back to "Show"
+    }
+}
 </script>
 
 </body>
