@@ -6,6 +6,9 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+$error_message = ''; // Initialize the error message
+$success_message = ''; // Initialize success message
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $first_name = $_POST['first_name'];
     $last_name = $_POST['last_name'];
@@ -14,6 +17,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
 
+    // Validate phone number is numeric and has exactly 11 digits
+    if (!is_numeric($phone_number) || strlen($phone_number) != 11) {
+        $phone_error_message = "Phone number must be 11 digits and numeric.";
+    }
+
+    // Check if passwords match
     if ($password === $confirm_password) {
         $hashed_password = md5($password);
 
@@ -25,40 +34,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $result_phone = $conn->query($phone_check);
 
         if ($result_email->num_rows > 0) {
-            $error_message = "Email is already registered!";
-        } elseif ($result_phone->num_rows > 0) {
-            $error_message = "Phone number is already registered!";
-        } else {
+            $email_error_message = "Email is already registered!";
+        }
+        
+        if ($result_phone->num_rows > 0) {
+            $phone_error_message = "Phone number is already registered!";
+        }
+
+        if (empty($email_error_message) && empty($phone_error_message)) {
+            // If no issues, insert the new user
             $stmt = $conn->prepare("INSERT INTO users (first_name, last_name, email, phone_number, password) VALUES (?, ?, ?, ?, ?)");
             $stmt->bind_param('sssss', $first_name, $last_name, $email, $phone_number, $hashed_password);
 
             if ($stmt->execute()) {
-                $_SESSION['success'] = "Account created successfully! Please login.";
-                header("Location: login.php");
-                exit();
+                $success_message = "Account created successfully! Redirecting to login page...";
+                $_SESSION['success'] = $success_message;
+                // Use JavaScript to show modal and redirect after 2 seconds
+                echo "<script>setTimeout(function() { showSuccessModal(); }, 500);</script>";
             } else {
                 $error_message = "Error: " . $stmt->error;
             }
             $stmt->close();
         }
     } else {
-        $error_message = "Passwords do not match!";
+        $password_error_message = "Passwords do not match!";
     }
 }
-
 $conn->close();
 ?>
 
-<!DOCTYPE php>
-<php lang="en">
+
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    
 </head>
 <style>
-
 body {
             font-family: Arial, sans-serif;
             display: flex;
@@ -220,9 +233,50 @@ body {
             max-width: 80%;
             margin-bottom: 20px;
         }
+        .error-message {
+        font-size: 12px;
+        color: #f44336;  /* Red color for error */
+        }
+/* Modal container */
+.modal-container {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.7); /* Dark background */
+    color: white;
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    z-index: 1051;  /* Ensure it appears above other content */
+    width: 80%;
+    max-width: 500px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); /* Optional: shadow for a 3D effect */
+}
+
+/* Background blur effect */
+.body.modal-active {
+    backdrop-filter: blur(5px);
+    transition: backdrop-filter 0.3s ease; /* Smooth blur transition */
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.modal-container {
+    animation: fadeIn 0.5s ease-in-out;
+}
 
 </style>
 <body>
+
     <!-- Background Video -->
     <video autoplay muted loop playsinline class="background-video">
         <source src="Asset/images/videobg.mp4" type="video/mp4">
@@ -261,7 +315,7 @@ body {
                             <a class="nav-link" href="contact.php">Contact Us</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="nav-link active"  aria-current="page" href="login.php">Login</a>
+                            <a class="nav-link active"  aria-current="page" href="login2.php">Login</a>
                         </li>
                     </ul>
                 </div>
@@ -269,76 +323,141 @@ body {
         </div>
     </nav>
 
-    
-
-                <?php if (isset($error_message)): ?>
-                    <div class="alert alert-danger"><?= $error_message; ?></div>
-                <?php endif; ?>
-
-                <div class="signup-form">
-                <div class="login-container">
-        <div class="logo">
-            <img src="Asset/images/whitelogo.png" alt="Royale Cinema Logo">
-        </div>
+ <!-- Display Error Message if Exists -->
+    <?php if (!empty($error_message)): ?>
+        <div class="alert alert-danger"><?= $error_message; ?></div>
+    <?php endif; ?>
+  <!-- Sign Up Form -->
+  <div class="signup-form">
         <form action="#" method="post">
-            <!-- First Name and Last Name -->
             <div class="form-group name-group">
-                <div>
-                    <input type="text" id="first-name" name="first_name" placeholder="First Name" required>
-                </div>
-                <div>
-                    <input type="text" id="last-name" name="last_name" placeholder="Last Name" required>
-                </div>
+                <input type="text" id="first-name" name="first_name" placeholder="First Name" required>
+                <input type="text" id="last-name" name="last_name" placeholder="Last Name" required>
             </div>
 
             <!-- Email -->
             <div class="form-group">
                 <input type="email" id="email" name="email" placeholder="Email" required>
+                <div id="email-error" class="error-message"></div>
             </div>
 
             <!-- Phone Number -->
             <div class="form-group">
-                <input type="tel" id="phone" name="phone" placeholder="Phone Number" required>
+                <input type="number" id="phone_number" name="phone_number" placeholder="Phone Number" required>
+                <div id="phone-error" class="error-message"></div>
             </div>
 
             <!-- Password -->
             <div class="form-group">
-    <input type="password" id="password" name="password" placeholder="Password" required>
-    <button type="button" class="show-password" onclick="togglePassword('password')">Show</button>
-</div>
+                <input type="password" id="password" name="password" placeholder="Password" required>
+                <button type="button" class="show-password" onclick="togglePassword('password')">Show</button>
+            </div>
 
-<!-- Confirm Password Field -->
-<div class="form-group">
-    <input type="password" id="confirm-password" name="confirm_password" placeholder="Confirm Password" required>
-    <button type="button" class="show-password" onclick="togglePassword('confirm-password')">Show</button>
-</div>
+            <!-- Confirm Password Field -->
+            <div class="form-group">
+                <input type="password" id="confirm-password" name="confirm_password" placeholder="Confirm Password" required>
+                <button type="button" class="show-password" onclick="togglePassword('confirm-password')">Show</button>
+                <div id="password-error" class="error-message"></div>
+            </div>
 
-            <!-- Submit Button -->
-            <button type="submit">LOGIN</button>
+            <button type="submit">Sign Up</button>
         </form>
-        
+
         <div class="login-link">
-            Already have an account? <a href="#">Sign up</a>
+            Already have an account? <a href="login2.php">Login</a>
         </div>
     </div>
+<!-- Sign Up Form (existing code remains unchanged) -->
 
-    <!-- Bootstrap JS -->
-    <script>
-// Function to toggle password visibility
-function togglePassword(inputId) {
-    var input = document.getElementById(inputId);
-    var button = input.nextElementSibling; // Get the button that is next to the input field
-    
-    // Check if the input type is password, if it is, change it to text and vice versa
-    if (input.type === 'password') {
-        input.type = 'text';  // Change to text to show password
-        button.textContent = 'Hide';  // Change button text to "Hide"
-    } else {
-        input.type = 'password';  // Change back to password to hide it
-        button.textContent = 'Show';  // Change button text back to "Show"
+<div id="successModal" style="display:none;">
+    <h4>Account Created Successfully!</h4>
+    <p>You will be redirected to the login page shortly...</p>
+</div>
+
+<!-- JavaScript -->
+<script>
+    document.getElementById('phone_number').addEventListener('input', clearPhoneError);
+    document.getElementById('email').addEventListener('input', clearEmailError);
+    document.getElementById('password').addEventListener('input', clearPasswordError);
+    document.getElementById('confirm-password').addEventListener('input', clearPasswordError);
+
+    function clearPhoneError() {
+        const phoneError = document.getElementById('phone-error');
+        if (phoneError) {
+            phoneError.textContent = '';
+        }
     }
-}
+
+    function clearEmailError() {
+        const emailError = document.getElementById('email-error');
+        if (emailError) {
+            emailError.textContent = '';
+        }
+    }
+
+    function clearPasswordError() {
+        const passwordError = document.getElementById('password-error');
+        if (passwordError) {
+            passwordError.textContent = '';
+        }
+    }
+
+    function validatePhoneNumber() {
+        const phoneNumber = document.getElementById('phone_number').value;
+        const phoneError = document.getElementById('phone-error');
+
+        if (!/^\d{11}$/.test(phoneNumber)) {
+            phoneError.textContent = 'Phone number must be 11 digits and numeric.';
+        }
+    }
+
+    function validateEmail() {
+        const email = document.getElementById('email').value;
+        const emailError = document.getElementById('email-error');
+
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(email)) {
+            emailError.textContent = 'Please enter a valid email.';
+        }
+    }
+
+    function togglePassword(inputId) {
+        var input = document.getElementById(inputId);
+        var button = input.nextElementSibling;
+
+        if (input.type === 'password') {
+            input.type = 'text';  
+            button.textContent = 'Hide';  
+        } else {
+            input.type = 'password';  
+            button.textContent = 'Show';  
+        }
+    }
+
+    document.getElementById('phone_number').addEventListener('blur', validatePhoneNumber);
+    document.getElementById('email').addEventListener('blur', validateEmail);
+
+    function showSuccessModal() {
+        var modal = document.getElementById('successModal');
+        var body = document.body;
+        
+        // Show modal
+        modal.style.display = 'block';
+
+        // Apply the blur effect to the body
+        body.classList.add('modal-active');
+        
+        // Redirect after 5 seconds
+        setTimeout(function() {
+            window.location.href = 'login2.php';  // Redirect to login page
+        }, 5000);
+
+        // After the timeout, remove the blur effect from the body
+        setTimeout(function() {
+            body.classList.remove('modal-active');
+        }, 5000);
+    }
 </script>
 
 </body>
-</php>
+</html>

@@ -55,6 +55,7 @@ $conn_user->close();
 $conn_admin->close();
 ?>
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -204,45 +205,56 @@ $conn_admin->close();
         <source src="Asset/images/videobg.mp4" type="video/mp4">
     </video>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
-        <div class ="container-fluid">
-        <a class="navbar-brand fs-4" href="home.html">
-                <img src="Asset/images/whitelogo.png" alt="Logo" style="height: 40px;">
-            </a> 
-            <button class="navbar-toggler shadow-none border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="sidebar offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
-                <div class="offcanvas-header text-white border-bottom">
-                    <h5 class="offcanvas-title" id="offcanvasNavbarLabel">LOGO</h5>
-                    <button 
-                    type="button" 
-                    class="btn-close btn-close-white shadow-none" 
-                    data-bs-dismiss="offcanvas" 
-                    aria-label="Close"></button>
-                </div>
-                <div class="offcanvas-body d-flex flex-column p-4">
-                    <ul class="navbar-nav justify-content-center justify-content-lg-end align-items-center fs-5 flex-grow-1 pe-3">
-                        <li class="nav-item mx-2">
-                            <a class="nav-link active" aria-current="page" href="home.php">Home</a>
-                        </li>
-                        <li class="nav-item mx-2">
-                            <a class="nav-link" href="nowshowing.php">Now Showing</a>
-                        </li>
-                        <li class="nav-item mx-2">
-                            <a class="nav-link" href="comingSoon.php">Upcoming</a>
-                        </li>
-                        <li class="nav-item mx-2">
-                            <a class="nav-link" href="contact.php">Contact Us</a>
-                        </li>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
+    <div class="container-fluid">
+        <a class="navbar-brand fs-4" href="home.php">
+            <img src="Asset/images/whitelogo.png" alt="Logo" style="height: 40px;">
+        </a> 
+        <button class="navbar-toggler shadow-none border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="sidebar offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+            <div class="offcanvas-header text-white border-bottom">
+                <h5 class="offcanvas-title" id="offcanvasNavbarLabel">LOGO</h5>
+                <button type="button" class="btn-close btn-close-white shadow-none" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body d-flex flex-column p-4">
+                <ul class="navbar-nav justify-content-center justify-content-lg-end align-items-center fs-5 flex-grow-1 pe-3">
+                    <li class="nav-item mx-2">
+                        <a class="nav-link active" aria-current="page" href="home.php">Home</a>
+                    </li>
+                    <li class="nav-item mx-2">
+                        <a class="nav-link" href="nowshowing.php">Now Showing</a>
+                    </li>
+                    <li class="nav-item mx-2">
+                        <a class="nav-link" href="comingSoon.php">Upcoming</a>
+                    </li>
+                    <li class="nav-item mx-2">
+                        <a class="nav-link" href="contact.php">Contact Us</a>
+                    </li>
+
+                    <!-- Show login/signup links if the user is not logged in -->
+                    <?php if (!isset($_SESSION['user']) && !isset($_SESSION['admin'])): ?>
                         <li class="nav-item mx-2">
                             <a class="nav-link" href="login2.php">Login</a>
                         </li>
-                    </ul>
-                </div>
+                    <?php else: ?>
+                        <!-- Display the user's first name if logged in -->
+                        <li class="nav-item mx-2">
+                            <span class="nav-link">Hello, <?php echo $_SESSION['user'] ?? $_SESSION['admin']; ?></span>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="history.php">View History</a></li>
+                                <li><a class="dropdown-item" href="logout.php">Logout</a></li>
+                            </ul>
+                          </li>
+
+                    <?php endif; ?>
+                </ul>
             </div>
         </div>
-    </nav>
+    </div>
+</nav>
+
 
 
 
