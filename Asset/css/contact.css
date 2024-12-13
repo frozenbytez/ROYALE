@@ -130,7 +130,7 @@ body {
    margin: 0;
   }
 
-  /*STYLE FOR FOOTER*/
+ /*STYLE FOR FOOTER*/
 
 .footer {
   background-color: #333456;
@@ -222,7 +222,7 @@ body {
 
 .footer-section button[type="submit"] {
   padding: 8px 15px;
-  background-color: #092635;
+  background-color: #007bff;
   color: rgb(255, 255, 255);
   border: none;
   border-radius: 4px;
@@ -230,7 +230,7 @@ body {
 }
 
 .footer-section button[type="submit"]:hover {
-  background-color: #092635;
+  background-color: #0056b3;
 }
 
 @media (max-width: 768px) {
@@ -264,5 +264,3 @@ body {
       font-size: 12px;
   }
 }
-
-  

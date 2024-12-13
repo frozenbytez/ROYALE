@@ -183,43 +183,6 @@ body {
         color: #ffffff;
     }
 
-    .navbar-nav .nav-item .nav-link {
-        position: relative;
-        padding: 10px 15px;
-        color: #ffffff;
-        text-decoration: none;
-        transition: all 0.3s ease;
-    }
-
-    .navbar-nav .nav-item .nav-link:hover {
-        color: #7acaff;
-    }
-
-    .navbar-nav .nav-item .nav-link::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 1px;
-        background-color: #f3f7ec;
-        transform: scaleX(0);
-        transform-origin: bottom right;
-        transition: transform 0.3s ease-out;
-    }
-
-    .navbar-nav .nav-item .nav-link:hover::after {
-        transform: scaleX(1);
-        transform-origin: bottom left;
-    }
-
-    .navbar .nav-link.active {
-        background-color: #e3eaf31d;
-        color: white;
-        padding: 7px 7px;
-        border-radius: 5px;
-    }
-
 
     .background-video {
         position: fixed;
@@ -283,47 +246,43 @@ body {
         <source src="Asset/images/videobg.mp4" type="video/mp4">
     </video>
 
-    <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
-        <div class="container-fluid">
-        <a class="navbar-brand fs-4" href="home.html">
-                <img src="Asset/images/whitelogo.png" alt="Logo" style="height: 40px;">
-            </a>
-            <button class="navbar-toggler shadow-none border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="sidebar offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
-                <div class="offcanvas-header text-white border-bottom">
-                    <h5 class="offcanvas-title" id="offcanvasNavbarLabel">LOGO</h5>
-                    <button 
-                    type="button" 
-                    class="btn-close btn-close-white shadow-none" 
-                    data-bs-dismiss="offcanvas" 
-                    aria-label="Close"></button>
-                </div>
-                <div class="offcanvas-body d-flex flex-column p-4">
-                    <ul class="navbar-nav justify-content-center justify-content-lg-end align-items-center fs-5 flex-grow-1 pe-3">
-                        <li class="nav-item mx-2">
-                            <a class="nav-link" href="home.php">Home</a>
+    <div class="container-fluid">
+        <a class="navbar-brand fs-4" href="home.php">
+            <img src="Asset/images/whitelogo.png" alt="Logo" style="height: 40px;">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="offcanvas offcanvas-start" id="offcanvasNavbar">
+            <div class="offcanvas-header">
+                <h5>LOGO</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+            </div>
+            <div class="offcanvas-body">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="home.php">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="nowshowing.php">Now Showing</a></li>
+                    <li class="nav-item"><a class="nav-link" href="comingSoon.php">Upcoming</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.php">Contact Us</a></li>
+                    <?php if (!isset($_SESSION['user']) && !isset($_SESSION['admin'])): ?>
+                        <li class="nav-item"><a class="nav-link" href="login2.php">Login</a></li>
+                    <?php else: ?>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                                <?= $_SESSION['user'] ?? $_SESSION['admin']; ?>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="history.php">View History</a></li>
+                                <li><a class="dropdown-item" href="home.php">Logout</a></li>
+                            </ul>
                         </li>
-                        <li class="nav-item mx-2">
-                            <a class="nav-link" href="nowshowing.php">Now Showing</a>
-                        </li>
-                        <li class="nav-item mx-2">
-                            <a class="nav-link" href="comingSoon.php">Upcoming</a>
-                        </li>
-                        <li class="nav-item mx-2">
-                            <a class="nav-link" href="contact.php">Contact Us</a>
-                        </li>
-                        <li class="nav-item mx-2">
-                            <a class="nav-link active"  aria-current="page" href="login2.php">Login</a>
-                        </li>
-                    </ul>
-                </div>
+                    <?php endif; ?>
+                </ul>
             </div>
         </div>
-    </nav>
-
+    </div>
+</nav>
  <!-- Display Error Message if Exists -->
     <?php if (!empty($error_message)): ?>
         <div class="alert alert-danger"><?= $error_message; ?></div>
