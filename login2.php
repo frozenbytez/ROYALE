@@ -17,7 +17,7 @@ $error = "";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'];
-    $password = md5($_POST['password']); // Assuming the password is stored as md5 in the database
+    $password = md5($_POST['password']);
 
     // User query
     $stmt_user = $conn_user->prepare("SELECT * FROM users WHERE email = ? AND password = ?");
@@ -59,275 +59,83 @@ $conn_admin->close();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background-color: #333;
-            color: #fff;
-            margin: 0;
-            flex-direction: column;
-        }
-
-
-        .navbar {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1050;
-    background: transparent;
-    height: 60px;
-    font-family: 'Arial', sans-serif;
-    font-size: 1rem; 
-    color: #ffffff;
-}
-
-
-
-
-
-        .login-container {
-            background-color: #112049;
-            padding: 20px;
-            border-radius: 10px;
-            width: 300px;
-            text-align: center;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-        }
-        .logo img {
-            max-width: 100%;
-            margin-bottom: 20px;
-        }
-        .form-container {
-            position: relative;
-            width: 100%;
-            margin-bottom: 15px;
-        }
-        .form-container input {
-            width: 80%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 14px;
-            outline: none;
-            background-color: #fff;
-            color: #333;
-        }
-        .form-container button {
-          position: absolute;
-        right: 26px;
-        top: 50%;
-        transform: translateY(-50%);
-        background-color: #000; /* Black button */
-        color: #fff; /* White text */
-        border: none;
-        padding: 13px 11px;
-        cursor: pointer;
-        font-size: 12px;
-        border-radius: 5px;
-        outline: none;
-        }
-        .form-container button:hover {
-            background-color: #333;
-        }
-        .login-btn {
-            width: 80%;
-            padding: 10px;
-            background-color: #1a73e8;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 14px;
-        }
-        .signup-link {
-            margin-top: 10px;
-            font-size: 12px;
-        }
-        .signup-link a {
-            color: #1a73e8;
-            text-decoration: none;
-        }
-
-
-        .background-video {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        z-index: -1;
-    }
-    /* From Uiverse.io by aadium */ 
-.paste-button {
-  position: relative;
-  display: block;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-.button {
-  background-color: #4CAF50;
-  color: #212121;
-  padding: 10px 15px;
-  font-size: 15px;
-  font-weight: bold;
-  border: 2px solid transparent;
-  border-radius: 15px;
-  cursor: pointer;
-}
-
-.dropdown-content {
-  display: none;
-  font-size: 13px;
-  position: absolute;
-  z-index: 1;
-  min-width: 200px;
-  background-color: #212121;
-  border: 2px solid #4CAF50;
-  border-radius: 0px 15px 15px 15px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-}
-
-.dropdown-content a {
-  color: #4CAF50;
-  padding: 8px 10px;
-  text-decoration: none;
-  display: block;
-  transition: 0.1s;
-}
-
-.dropdown-content a:hover {
-  background-color: #4CAF50;
-  color: #212121;
-}
-
-.dropdown-content a:focus {
-  background-color: #212121;
-  color: #4CAF50;
-}
-
-.dropdown-content #top:hover {
-  border-radius: 0px 13px 0px 0px;
-}
-
-.dropdown-content #bottom:hover {
-  border-radius: 0px 0px 13px 13px;
-}
-
-.paste-button:hover button {
-  border-radius: 15px 15px 0px 0px;
-}
-
-.paste-button:hover .dropdown-content {
-  display: block;
-}
-
-    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Home Page</title>
+    <link rel="stylesheet" href="Asset/css/logincss.css">
 </head>
 <body>
-
-<video autoplay muted loop playsinline class="background-video">
+      <!-- Background Video -->
+      <video autoplay muted loop playsinline class="background-video">
         <source src="Asset/images/videobg.mp4" type="video/mp4">
     </video>
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
     <div class="container-fluid">
         <a class="navbar-brand fs-4" href="home.php">
             <img src="Asset/images/whitelogo.png" alt="Logo" style="height: 40px;">
-        </a> 
-        <button class="navbar-toggler shadow-none border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="sidebar offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
-            <div class="offcanvas-header text-white border-bottom">
-                <h5 class="offcanvas-title" id="offcanvasNavbarLabel">LOGO</h5>
-                <button type="button" class="btn-close btn-close-white shadow-none" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        <div class="offcanvas offcanvas-start" id="offcanvasNavbar">
+            <div class="offcanvas-header">
+                <h5>LOGO</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
             </div>
-            <div class="offcanvas-body d-flex flex-column p-4">
-                <ul class="navbar-nav justify-content-center justify-content-lg-end align-items-center fs-5 flex-grow-1 pe-3">
-                    <li class="nav-item mx-2">
-                        <a class="nav-link active" aria-current="page" href="home.php">Home</a>
-                    </li>
-                    <li class="nav-item mx-2">
-                        <a class="nav-link" href="nowshowing.php">Now Showing</a>
-                    </li>
-                    <li class="nav-item mx-2">
-                        <a class="nav-link" href="comingSoon.php">Upcoming</a>
-                    </li>
-                    <li class="nav-item mx-2">
-                        <a class="nav-link" href="contact.php">Contact Us</a>
-                    </li>
-
-                    <!-- Display login link only if user/admin is NOT logged in -->
+            <div class="offcanvas-body">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="home.php">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="nowshowing.php">Now Showing</a></li>
+                    <li class="nav-item"><a class="nav-link" href="comingSoon.php">Upcoming</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.php">Contact Us</a></li>
                     <?php if (!isset($_SESSION['user']) && !isset($_SESSION['admin'])): ?>
-    <li class="nav-item mx-2">
-        <a class="nav-link" href="login2.php">Login</a>
-    </li>
-<?php else: ?>
-    <!-- Display the user's first name if logged in -->
-    <li class="nav-item mx-2 dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-           <?php echo $_SESSION['user'] ?? $_SESSION['admin']; ?>
-        </a>
-    </li>
-<?php endif; ?>
+                        <li class="nav-item"><a class="nav-link" href="login2.php">Login</a></li>
+                    <?php else: ?>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                                <?= $_SESSION['user'] ?? $_SESSION['admin']; ?>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="history.php">View History</a></li>
+                                <li><a class="dropdown-item" href="home.php">Logout</a></li>
+                            </ul>
+                        </li>
+                    <?php endif; ?>
                 </ul>
             </div>
         </div>
     </div>
 </nav>
 
-
-
-
-
-    <div class="login-container">
-        <div class="logo">
-            <img src="Asset/images/whitelogo.png" alt="Royale Cinema Logo">
-        </div>
-        <?php if ($error) echo "<p style='color:red;'>$error</p>"; ?>
-        <form method="POST">
-            <div class="form-container">
-                <input type="email" id="email" name="email" placeholder="Email" required>
-            </div>
-            <div class="form-container">
-                <input type="password" id="password" name="password" placeholder="Password" required>
-                <button type="button" id="toggle-password">Show</button>
-            </div>
-            <button type="submit" class="login-btn">LOGIN</button>
-            <p class="signup-link">
-                Don’t have an account? <a href="signup.php">Sign up</a>
-            </p>
-        </form>
+<div class="login-container">
+    <div class="logo">
+        <img src="Asset/images/whitelogo.png" alt="Royale Cinema Logo">
     </div>
+    <?php if ($error) echo "<p style='color:red;'>$error</p>"; ?>
+    <form method="POST">
+        <div class="form-container">
+            <input type="email" id="email" name="email" placeholder="Email" required>
+        </div>
+        <div class="form-container">
+            <input type="password" id="password" name="password" placeholder="Password" required>
+            <button type="button" id="toggle-password">Show</button>
+        </div>
+        <button type="submit" class="login-btn">LOGIN</button>
+        <p class="signup-link">Don’t have an account? <a href="signup.php">Sign up</a></p>
+    </form>
+</div>
 
-    <script>
-        // Toggle visibility for email
-    
+<script>
+    const passwordInput = document.getElementById('password');
+    const togglePasswordBtn = document.getElementById('toggle-password');
 
-        // Toggle visibility for password
-        const passwordInput = document.getElementById('password');
-        const togglePasswordBtn = document.getElementById('toggle-password');
+    togglePasswordBtn.addEventListener('click', () => {
+        const isPassword = passwordInput.type === 'password';
+        passwordInput.type = isPassword ? 'text' : 'password';
+        togglePasswordBtn.textContent = isPassword ? 'Hide' : 'Show';
+    });
+</script>
 
-        togglePasswordBtn.addEventListener('click', () => {
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                togglePasswordBtn.textContent = 'Hide';
-            } else {
-                passwordInput.type = 'password';
-                togglePasswordBtn.textContent = 'Show';
-            }
-            var carousel = new bootstrap.Carousel(document.getElementById('customCarouselExample'));
-
-
-    </script>
-    
 </body>
 </html>

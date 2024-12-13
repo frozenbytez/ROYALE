@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Royale Cinema Login</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #0d1b34;
+        color: #fff;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .login-container {
+        background-color: #112049;
+        padding: 20px;
+        border-radius: 10px;
+        width: 300px;
+        text-align: center;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .logo img {
+        max-width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .login-form input {
+        width: 80%;
+        padding: 10px;
+        margin-left: 10px;
+        margin-right: 10px;
+        margin: 10px;
+        border: none;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+
+    .password-container {
+        position: relative;
+        width: 300px;
+    }
+
+    .password-container input {
+        width: 80%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 14px;
+        outline: none;
+        background-color: #fff;
+        color: #333;
+    }
+
+    .password-container button {
+        position: absolute;
+        right: 19px;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: #000; /* Black button */
+        color: #fff; /* White text */
+        border: none;
+        padding: 12px 10px;
+        cursor: pointer;
+        font-size: 12px;
+        border-radius: 5px;
+        outline: none;
+    }
+
+    .password-container button:hover {
+        background-color: #333; /* Slightly lighter black on hover */
+    }
+    .login-btn {
+        width: 50%;
+        padding: 10px;
+        background-color: #1a73e8;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+    }
+
+    .signup-link {
+        margin-top: 10px;
+        font-size: 12px;
+    }
+
+    .signup-link a {
+        color: #1a73e8;
+        text-decoration: none;
+    }
+
+</style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo">
+            <img src="Asset/images/whitelogo.png" alt="Royale Cinema Logo" style="width: 250px; height: 60px;">
+
+        </div>
+        <form class="login-form">
+            <input type="email" placeholder="Email" required>
+            <div class="password-container">
+                <input type="password" id="password" placeholder="Password">
+                <button type="button" id="show-password">Show</button>
+            </div> 
+            <button type="submit" class="login-btn">LOGIN</button>
+            <p class="signup-link">
+                Don’t have an account? <a href="#">Sign up</a>
+            </p>
+        </form>
+    </div>
+
+    <script>
+        // Select the password input and show-password button
+        const passwordInput = document.getElementById('password');
+        const showPasswordBtn = document.getElementById('show-password');
+
+        // Add event listener to toggle password visibility
+        showPasswordBtn.addEventListener('click', () => {
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text'; // Show password
+                showPasswordBtn.textContent = 'Hide'; // Change button text
+            } else {
+                passwordInput.type = 'password'; // Hide password
+                showPasswordBtn.textContent = 'Show'; // Change button text
+            }
+        });
+    </script>
+</body>
+</html>
