@@ -1,3 +1,10 @@
+<?php
+session_start(); // Start the session at the beginning of the page
+
+// More robust login check
+$loggedIn = isset($_SESSION['user_id']) || isset($_SESSION['admin_id']);
+$first_name = $loggedIn ? ($_SESSION['first_name'] ?? 'User') : null;
+?>
 
 
 <!DOCTYPE php>
@@ -9,8 +16,12 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Bootstrap JS Bundle (includes Popper) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
     <link rel="stylesheet" href="../../assets/css/guest/home.css">
     <title>Home Page</title>
 </head>
@@ -47,9 +58,21 @@
                         <li class="nav-item mx-2">
                             <a class="nav-link" href="contact.php">Contact Us</a>
                         </li>
+                        <?php if ($first_name): ?>
+                        <li class="nav-item dropdown mx-2">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <?php echo htmlspecialchars($first_name); ?>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="profile.php">Profile</a></li>
+                                <li><a class="dropdown-item" href="logout.php">Logout</a></li>
+                            </ul>
+                        </li>
+                    <?php else: ?>
                         <li class="nav-item mx-2">
                             <a class="nav-link" href="login.php">Login</a>
                         </li>
+                    <?php endif; ?>
                     </ul>
                 </div>
             </div>
@@ -430,6 +453,12 @@ document.getElementById('ComingSoon').addEventListener('click', function() {
     document.getElementById('NowShowing').classList.remove('active');
 });
 
+document.addEventListener('DOMContentLoaded', function() {
+    var dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'))
+    var dropdownList = dropdownElementList.map(function (dropdownToggleEl) {
+        return new bootstrap.Dropdown(dropdownToggleEl)
+    });
+});
     </script>
 
 </body>

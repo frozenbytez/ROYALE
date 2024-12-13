@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-
 // Connection for user database (login_system)
 $conn_user = new mysqli('localhost', 'root', '', 'login_system');
 
@@ -22,8 +21,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'];
     $password = md5($_POST['password']);
 
-    
-
     // Check if the user exists in the login_system database
     $stmt_user = $conn_user->prepare("SELECT * FROM users WHERE email = ? AND password = ?");
     $stmt_user->bind_param('ss', $email, $password);
@@ -31,18 +28,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $result_user = $stmt_user->get_result();
 
     // Check if the user exists in the admin_system database
-    $stmt_admin = $conn_admin->prepare("SELECT * FROM users WHERE email = ? AND password = ?");
+    $stmt_admin = $conn_admin->prepare("SELECT * FROM admin WHERE email = ? AND password = ?");
     $stmt_admin->bind_param('ss', $email, $password);
     $stmt_admin->execute();
     $result_admin = $stmt_admin->get_result();
-
-    
 
     // Check if user is an admin
     if ($result_admin->num_rows === 1) {
         $user = $result_admin->fetch_assoc();
         if ($user['is_admin'] == 1) {
             $_SESSION['admin'] = $user['first_name'];
+            $_SESSION['first_name'] = $user['first_name'];  // Add this line
+            $_SESSION['user_id'] = $user['id'];  // Add this line
             header("Location: ../admin/add_movie.php");
             exit();
         } else {
@@ -53,7 +50,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     else if ($result_user->num_rows === 1) {
         $user = $result_user->fetch_assoc();
         $_SESSION['user'] = $user['first_name'];
-        header("Location: ../user/user-home.php");
+        $_SESSION['first_name'] = $user['first_name'];  // Add this line
+        $_SESSION['user_id'] = $user['id'];  // Add this line
+        header("Location: ../user/index.php");
         exit();
     } else {
         $error = "Invalid email or password!";
@@ -66,7 +65,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $conn_user->close();
 $conn_admin->close();
 ?>
-
 
 
 <!DOCTYPE html>

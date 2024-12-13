@@ -524,7 +524,7 @@
         <div class='row movie-card'>
             <div class='col-12 col-md-4 text-center movie-poster'>
                 $image_tag
-                <a href='../user/details.php?movie_id=$movie[id]' class='button'>
+                <a href='../user/movie_details/$sanitized_title.php' class='button'>
                     <div class='button-wrapper'>
                         <div class='text'>Get Ticket</div>
                         <span class='icon'>

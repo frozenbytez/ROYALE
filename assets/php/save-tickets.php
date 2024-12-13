@@ -1,136 +1,51 @@
-<?php 
-// Enhanced error reporting and logging
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-ini_set('log_errors', 1);
-ini_set('error_log', 'ticket_booking_errors.log');
+<?php
+session_start();
+include('../../assets/php/config.php');
 
 header('Content-Type: application/json');
 
-// Database connection settings
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "movies";
+$data = json_decode(file_get_contents('php://input'), true);
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Enhanced connection error handling
-if ($conn->connect_error) {
-    http_response_code(500);
-    error_log("Database connection failed: " . $conn->connect_error);
-    echo json_encode([
-        'success' => false, 
-        'message' => 'Database connection error'
-    ]);
+// Validate input and session
+if (!isset($_SESSION['user_id']) || !$data) {
+    echo json_encode(['success' => false, 'message' => 'Invalid request']);
     exit;
 }
 
-// Decode JSON data
-$rawInput = file_get_contents('php://input');
-$data = json_decode($rawInput, true);
+$user_id = $_SESSION['user_id'];
+$movie_id = $data['movie_id'];
+$date = $data['date'];
+$time = $data['time'];
+$seats = $data['seats'];
 
-// Comprehensive input validation
-if (!$data || 
-    !isset($data['seats']) || 
-    !isset($data['movie_id']) || 
-    !isset($data['date']) || 
-    !isset($data['time'])) {
-    
-    http_response_code(400);
-    error_log("Invalid input: " . print_r($data, true));
-    echo json_encode([
-        'success' => false, 
-        'message' => 'Invalid or missing input parameters'
-    ]);
-    exit;
-}
+$total_price = count($seats) * 440; // Price per seat
+
+// Start transaction
+$conn->begin_transaction();
 
 try {
-    // Begin transaction
-    $conn->begin_transaction();
+    // Insert ticket
+    $query = "INSERT INTO tickets (user_id, movie_id, booking_date, screening_time, total_price) VALUES (?, ?, ?, ?, ?)";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("iissd", $user_id, $movie_id, $date, $time, $total_price);
+    $stmt->execute();
+    $ticket_id = $conn->insert_id;
 
-    $successfulBookings = [];
-    $failedBookings = [];
+    // Insert seat details
+    $seat_query = "INSERT INTO ticket_seats (ticket_id, seat_row, seat_col) VALUES (?, ?, ?)";
+    $seat_stmt = $conn->prepare($seat_query);
 
-    // Prepare statements for checking and updating seat status
-    $stmtCheck = $conn->prepare("SELECT status FROM movie_seats WHERE seat_row = ? AND seat_col = ? AND movie_id = ? AND date = ? AND time = ?");
-    $stmtUpdate = $conn->prepare("UPDATE movie_seats SET status = 'booked' WHERE seat_row = ? AND seat_col = ? AND movie_id = ? AND date = ? AND time = ? AND status = 'available'");
-
-    // Loop through the selected seats
-    foreach ($data['seats'] as $seat) {
-        $row = intval($seat['row']);
-        $col = intval($seat['col']);
-        $movie_id = intval($data['movie_id']);
-        $date = $data['date'];
-        $time = $data['time'];
-        
-        // Bind parameters for seat availability check
-        $stmtCheck->bind_param("iiiss", $row, $col, $movie_id, $date, $time);
-        $stmtCheck->execute();
-        $result = $stmtCheck->get_result();
-        
-        if ($result->num_rows === 0) {
-            error_log("Seat $row-$col does not exist");
-            $failedBookings[] = $seat;
-            continue;
-        }
-
-        $seatData = $result->fetch_assoc();
-        
-        // Check if the seat is already booked
-        if ($seatData['status'] !== 'available') {
-            error_log("Seat $row-$col is already booked");
-            $failedBookings[] = $seat;
-            continue;
-        }
-
-        // Bind parameters for updating seat status
-        $stmtUpdate->bind_param("iiiss", $row, $col, $movie_id, $date, $time);
-        
-        // Update the seat status to 'booked'
-        if ($stmtUpdate->execute() && $stmtUpdate->affected_rows > 0) {
-            $successfulBookings[] = $seat;
-        } else {
-            error_log("Failed to book seat $row-$col");
-            $failedBookings[] = $seat;
-        }
+    foreach ($seats as $seat) {
+        $seat_stmt->bind_param("iii", $ticket_id, $seat['row'], $seat['col']);
+        $seat_stmt->execute();
     }
 
-    // Close the statements
-    $stmtCheck->close();
-    $stmtUpdate->close();
+    // Commit transaction
+    $conn->commit();
 
-    // Handle the booking results
-    if (!empty($failedBookings)) {
-        $conn->rollback();
-        http_response_code(409);
-        echo json_encode([
-            'success' => false, 
-            'message' => 'Some seats could not be booked',
-            'failed_seats' => $failedBookings
-        ]);
-    } else {
-        $conn->commit();
-        echo json_encode([
-            'success' => true, 
-            'message' => 'All tickets booked successfully'
-        ]);
-    }
-
+    echo json_encode(['success' => true]);
 } catch (Exception $e) {
-    // Rollback and log any unexpected errors
+    // Rollback transaction on error
     $conn->rollback();
-    http_response_code(500);
-    error_log("Booking exception: " . $e->getMessage());
-    
-    echo json_encode([
-        'success' => false, 
-        'message' => 'Booking error occurred'
-    ]);
-} finally {
-    // Close the connection
-    $conn->close();
+    echo json_encode(['success' => false, 'message' => $e->getMessage()]);
 }
-?>

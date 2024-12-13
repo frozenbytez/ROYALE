@@ -2,6 +2,12 @@
 // Include the database connection file
 include('../../assets/php/config.php');
 
+session_start();  // Start the session to use session variables
+
+
+
+$loggedIn = isset($_SESSION['user']) || isset($_SESSION['admin']);
+$first_name = $_SESSION['user'] ?? $_SESSION['admin'] ?? '';
 // Fetch movies with 'nowshowing' status from the database
 $query = "SELECT * FROM movies WHERE status = 'comingsoon'";
 $result = mysqli_query($conn, $query);
@@ -55,7 +61,11 @@ $result = mysqli_query($conn, $query);
                             <a class="nav-link" href="contact.php">Contact Us</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="nav-link" href="login.php">Login</a>
+                            <?php if ($loggedIn): ?>
+                                <a class="nav-link" href="../guest/logout.php">Logout (<?php echo htmlspecialchars($first_name); ?>)</a>
+                            <?php else: ?>
+                                <a class="nav-link" href="../guest/login.php">Login</a>
+                            <?php endif; ?>
                         </li>
                     </ul>
                 </div>

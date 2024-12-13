@@ -1,3 +1,10 @@
+<?php
+session_start();  // Start the session to use session variables
+include('../../assets/php/config.php');  // Include database connection
+
+$loggedIn = isset($_SESSION['user']) || isset($_SESSION['admin']);
+$first_name = $_SESSION['user'] ?? $_SESSION['admin'] ?? '';
+?>
 <!DOCTYPE php>
 <php lang="en">
 <head>
@@ -42,8 +49,12 @@
                         <a class="nav-link active" aria-current="page" href="contact.php">Contact Us</a>
                     </li>
                     <li class="nav-item mx-2">
-                        <a class="nav-link" href="login.php">Login</a>
-                    </li>
+                            <?php if ($loggedIn): ?>
+                                <a class="nav-link" href="../guest/logout.php">Logout (<?php echo htmlspecialchars($first_name); ?>)</a>
+                            <?php else: ?>
+                                <a class="nav-link" href="../guest/login.php">Login</a>
+                            <?php endif; ?>
+                        </li>
                 </ul>
             </div>
         </div>

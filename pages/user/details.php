@@ -2,6 +2,35 @@
 session_start();  // Start the session to use session variables
 include('../../assets/php/config.php');  // Include database connection
 
+if (!isset($_SESSION['user']) && !isset($_SESSION['admin'])) {
+    // Redirect to login page if not logged in
+    header('Location: login.php');
+    exit;
+}
+$user_id = $_SESSION['user_id'] ?? $_SESSION['admin_id']; // Adjust based on your session variable
+
+// Query to fetch user's booked tickets with movie details
+$query = "
+    SELECT 
+        t.id AS ticket_id, 
+        m.title AS movie_title, 
+        t.booking_date, 
+        t.screening_time, 
+        t.total_price,
+        GROUP_CONCAT(CONCAT('Row ', ts.seat_row, ', Seat ', ts.seat_col) SEPARATOR '; ') AS seats
+    FROM 
+        tickets t
+    JOIN 
+        movies m ON t.movie_id = m.id
+    JOIN 
+        ticket_seats ts ON t.id = ts.ticket_id
+    WHERE 
+        t.user_id = ?
+    GROUP BY 
+        t.id, m.title, t.booking_date, t.screening_time, t.total_price
+    ORDER BY 
+        t.booking_date DESC
+";
 $loggedIn = isset($_SESSION['user']) || isset($_SESSION['admin']);
 $first_name = $_SESSION['user'] ?? $_SESSION['admin'] ?? '';
 
@@ -156,9 +185,9 @@ $dateRange = new DatePeriod($startDate, $dateInterval, $endDate->modify('+1 day'
                         </li>
                         <li class="nav-item mx-2">
                             <?php if ($loggedIn): ?>
-                                <a class="nav-link" href="../guest/logout.php">Logout (<?php echo htmlspecialchars($first_name); ?>)</a>
+                                <a class="nav-link" href="logout.php">Logout (<?php echo htmlspecialchars($first_name); ?>)</a>
                             <?php else: ?>
-                                <a class="nav-link" href="../guest/login.php">Login</a>
+                                <a class="nav-link" href="login.php">Login</a>
                             <?php endif; ?>
                         </li>
                     </ul>
