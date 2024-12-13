@@ -330,6 +330,9 @@ body {
     <?php endif; ?>
   <!-- Sign Up Form -->
   <div class="signup-form">
+  <div class="logo">
+        <img src="Asset/images/whitelogo.png" alt="Royale Cinema Logo">
+    </div>
         <form action="#" method="post">
             <div class="form-group name-group">
                 <input type="text" id="first-name" name="first_name" placeholder="First Name" required>
