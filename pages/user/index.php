@@ -22,7 +22,7 @@ $first_name = $loggedIn ? ($_SESSION['first_name'] ?? 'User') : null;
 <!-- Bootstrap JS Bundle (includes Popper) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     
-    <link rel="stylesheet" href="../../assets/css/guest/home.css">
+    <link rel="stylesheet" href="../../Asset/css/home.css">
     <title>Home Page</title>
 </head>
 <body>
@@ -84,13 +84,13 @@ $first_name = $loggedIn ? ($_SESSION['first_name'] ?? 'User') : null;
         
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img src="../../assets/images/venom.png" class="d-block w-100" alt="Venom">
+                <img src="../../Asset/images/venom.png" class="d-block w-100" alt="Venom">
             </div>
             <div class="carousel-item">
-                <img src="../../assets/../../assets/images/.png" class="d-block w-100" alt="Deadpool">
+                <img src="../../Asset/../../Asset/images/.png" class="d-block w-100" alt="Deadpool">
             </div>
             <div class="carousel-item">
-                <img src="../../assets/images/batman.jpg" class="d-block w-100" alt="Humane">
+                <img src="../../Asset/images/batman.jpg" class="d-block w-100" alt="Humane">
             </div>
         </div>
     
@@ -135,7 +135,7 @@ $first_name = $loggedIn ? ($_SESSION['first_name'] ?? 'User') : null;
         <div class="row row-cols-1 row-cols-md-4 g-4 py-5">
         <div class="col">
             <div class="card now-showing text-center">
-                <img src="../../assets/images/ns1.jpg" class="card-img-top" alt="">
+                <img src="../../Asset/images/ns1.jpg" class="card-img-top" alt="">
                 <div class="card-body">
                     <p class="card-title">DeadPool & Wolverine</p>
                     <a href="movie_details/deadpool.php" class="btn btn-primary" id="moreDetailsButton">More Details</a>
@@ -144,7 +144,7 @@ $first_name = $loggedIn ? ($_SESSION['first_name'] ?? 'User') : null;
         </div>
 
         <?php 
-   include('../../assets/php/config.php');
+   include('../../Asset/connection/config.php');
 
    // Query to get all movies that are "now showing"
     $query = "SELECT * FROM movies WHERE status = 'nowshowing' LIMIT 8";
@@ -156,7 +156,7 @@ $first_name = $loggedIn ? ($_SESSION['first_name'] ?? 'User') : null;
            $movie_title = $movie['title'];
            $movie_image = $movie['image_url'] ?? 'default_image.jpg';
            $sanitized_title = preg_replace('/[^A-Za-z0-9-]+/', '_', strtolower($movie_title));
-           $image_path = "../../assets/images/" . $movie_image;
+           $image_path = "../../Asset/images/" . $movie_image;
    
            echo "
            <div class='col now-showing text-center'>
@@ -177,7 +177,7 @@ $first_name = $loggedIn ? ($_SESSION['first_name'] ?? 'User') : null;
 
         <div class="C">
             <div class="card">
-                <img src="../../assets/images/ns2.jpg" class="card-img-top" alt="">
+                <img src="../../Asset/images/ns2.jpg" class="card-img-top" alt="">
                 <div class="card-body">
                     <p class="card-title">The Wild Robot</p>
                     <a href="#" class="btn btn-primary" id="moreDetailsButton">More Details</a>
@@ -187,7 +187,7 @@ $first_name = $loggedIn ? ($_SESSION['first_name'] ?? 'User') : null;
     
         <div class="col now-showing text-center">
             <div class="card text-center">
-                <img src="../../assets/images/ns3.jpg" class="card-img-top" alt="">
+                <img src="../../Asset/images/ns3.jpg" class="card-img-top" alt="">
                 <div class="card-body">
                     <p class="card-title">Oppenheimer</p>
                     <a href="#" class="btn btn-primary" id="moreDetailsButton">More Details</a>
@@ -197,7 +197,7 @@ $first_name = $loggedIn ? ($_SESSION['first_name'] ?? 'User') : null;
     
         <div class="col now-showing text-center">
             <div class="card">
-                <img src="../../assets/images/ns4.jpg" class="card-img-top" alt="">
+                <img src="../../Asset/images/ns4.jpg" class="card-img-top" alt="">
                 <div class="card-body">
                     <p class="card-title">The Super MArie Bros2</p>
                     <a href="#" class="btn btn-primary" id="moreDetailsButton">More Details</a>
@@ -207,7 +207,7 @@ $first_name = $loggedIn ? ($_SESSION['first_name'] ?? 'User') : null;
     
         <div class="col now-showing text-center">
             <div class="card">
-                <img src="../../assets/images/ns5.jpg" class="card-img-top" alt="">
+                <img src="../../Asset/images/ns5.jpg" class="card-img-top" alt="">
                 <div class="card-body">
                     <p class="card-title">The Nun2</p>
                     <a href="#" class="btn btn-primary" id="moreDetailsButton">More Details</a>
@@ -217,7 +217,7 @@ $first_name = $loggedIn ? ($_SESSION['first_name'] ?? 'User') : null;
     
         <div class="col">
             <div class="card now-showing text-center">
-                <img src="../../assets/images/ns6.jpg" class="card-img-top" alt="">
+                <img src="../../Asset/images/ns6.jpg" class="card-img-top" alt="">
                 <div class="card-body">
                     <p class="card-title">Spider-Man Across Spider-Verse</p>
                     <a href="#" class="btn btn-primary" id="moreDetailsButton">More Details</a>
@@ -227,7 +227,7 @@ $first_name = $loggedIn ? ($_SESSION['first_name'] ?? 'User') : null;
     
         <div class="col">
             <div class="card now-showing text-center">
-                <img src="../../assets/images/ns7.jpg" class="card-img-top" alt="">
+                <img src="../../Asset/images/ns7.jpg" class="card-img-top" alt="">
                 <div class="card-body">
                     <p class="card-title">Venom The Last Dance</p>
                     <a href="#" class="btn btn-primary" id="moreDetailsButton">More Details</a>
@@ -237,7 +237,7 @@ $first_name = $loggedIn ? ($_SESSION['first_name'] ?? 'User') : null;
 
         <div class="col">
             <div class="card now-showing text-center">
-                <img src="../../assets/images/ns8.jpg" class="card-img-top" alt="">
+                <img src="../../Asset/images/ns8.jpg" class="card-img-top" alt="">
                 <div class="card-body">
                     <p class="card-title">Hello, Love, Again</p>
                     <a href="#" class="btn btn-primary" id="moreDetailsButton">More Details</a>
@@ -250,7 +250,7 @@ $first_name = $loggedIn ? ($_SESSION['first_name'] ?? 'User') : null;
 
             <div class="col coming-soon d-none"  style="margin-top: 3px;">
                 <div class="card text-center">
-                    <img src="../../assets/images/cs4.jpg" class="card-img-top" alt="">
+                    <img src="../../Asset/images/cs4.jpg" class="card-img-top" alt="">
                     <div class="card-body">
                         <h5 class="card-title">Movie Title</h5>
                         <a href="#" class="btn btn-primary" id="moreDetailsButton">More Details</a>
@@ -260,7 +260,7 @@ $first_name = $loggedIn ? ($_SESSION['first_name'] ?? 'User') : null;
 
             <div class="col coming-soon d-none" style="margin-top: 3px;" >
                 <div class="card text-center">
-                    <img src="../../assets/images/cs2.jpg" class="card-img-top" alt="">
+                    <img src="../../Asset/images/cs2.jpg" class="card-img-top" alt="">
                     <div class="card-body">
                         <h5 class="card-title">Movie Title</h5>
                         <a href="#" class="btn btn-primary" id="moreDetailsButton">More Details</a>
@@ -270,7 +270,7 @@ $first_name = $loggedIn ? ($_SESSION['first_name'] ?? 'User') : null;
       
             <div class="col coming-soon d-none" style="margin-top: 3px;">
                 <div class="card text-center">
-                    <img src="../../assets/images/cs3.jpg" class="card-img-top" alt="">
+                    <img src="../../Asset/images/cs3.jpg" class="card-img-top" alt="">
                     <div class="card-body">
                         <h5 class="card-title">Movie Title</h5>
                         <a href="#" class="btn btn-primary" id="moreDetailsButton">More Details</a>
@@ -281,7 +281,7 @@ $first_name = $loggedIn ? ($_SESSION['first_name'] ?? 'User') : null;
                   
             <div class="col coming-soon d-none" style="margin-top: 3px;">
                 <div class="card text-center">
-                    <img src="../../assets/images/cs4.jpg" class="card-img-top" alt="">
+                    <img src="../../Asset/images/cs4.jpg" class="card-img-top" alt="">
                     <div class="card-body">
                         <h5 class="card-title">Movie Title</h5>
                         <a href="#" class="btn btn-primary" id="moreDetailsButton">More Details</a>
@@ -297,7 +297,7 @@ $first_name = $loggedIn ? ($_SESSION['first_name'] ?? 'User') : null;
         <div class="row g-0"> 
           <div class="col-12">
             <div class="full-width-image">
-              <img src="../../assets/images/snacks3.png" alt="Sample Image">
+              <img src="../../Asset/images/snacks3.png" alt="Sample Image">
             </div>
           </div>
         </div>
@@ -308,13 +308,13 @@ $first_name = $loggedIn ? ($_SESSION['first_name'] ?? 'User') : null;
     <div id="carouselExampleAutoplaying1" class="carousel slide" data-bs-ride="carousel" style="width: 70%; margin: 0 auto;">
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img src="../../assets/images/popcorn.png" class="d-block w-100 carousel-image" alt="Pop Corn">
+                <img src="../../Asset/images/popcorn.png" class="d-block w-100 carousel-image" alt="Pop Corn">
             </div>
             <div class="carousel-item">
-                <img src="../../assets/images/drinks.png" class="d-block w-100 carousel-image" alt="Drinks">
+                <img src="../../Asset/images/drinks.png" class="d-block w-100 carousel-image" alt="Drinks">
             </div>
             <div class="carousel-item">
-                <img src="../../assets/images/hot snacks.png" class="d-block w-100 carousel-image" alt="Hot Snacks">
+                <img src="../../Asset/images/hot snacks.png" class="d-block w-100 carousel-image" alt="Hot Snacks">
             </div>
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying1" data-bs-slide="prev">

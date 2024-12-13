@@ -2,10 +2,10 @@
 session_start();
 
 // Connection for user database (login_system)
-$conn_user = new mysqli('localhost', 'root', '', 'login_system');
+$conn_user = new mysqli('localhost', 'root', '', 'movies');
 
 // Connection for admin database (admin_system)
-$conn_admin = new mysqli('localhost', 'root', '', 'admin_system');
+$conn_admin = new mysqli('localhost', 'root', '', 'movies');
 
 // Check connection for user database
 if ($conn_user->connect_error) {
@@ -78,7 +78,7 @@ $conn_admin->close();
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
     <title>Login</title>
-    <link rel="stylesheet" href="stylesheet/login.css">
+    <link rel="stylesheet" href="../../Asset/css/login.css">
 </head>
 <style>
 body {
@@ -178,12 +178,12 @@ body {
 </style>
 <body>
     <video autoplay muted loop playsinline class="background-video">
-        <source src="../../assets/images/login.mp4" type="video/mp4">
+        <source src="../../Asset/images/login.mp4" type="video/mp4">
     </video>
     <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
         <div class="container">
             <a class="navbar-brand fs-4" href="index.php">
-                <img src="../../assets/images/logo.png" alt="Logo" style="height: 40px;">
+                <img src="../../Asset/images/logo.png" alt="Logo" style="height: 40px;">
             </a>
             <button class="navbar-toggler shadow-none border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>

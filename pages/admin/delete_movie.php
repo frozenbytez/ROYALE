@@ -1,5 +1,5 @@
 <?php
-include('../../assets/php/config.php'); // Include database connection
+include('../../Asset/connection/config.php'); // Include database connection
 
 // Check if the delete request was made
 if (isset($_POST['delete_movie'])) {
@@ -12,6 +12,7 @@ if (isset($_POST['delete_movie'])) {
     $stmt->execute();
     $result = $stmt->get_result();
 
+    
     if ($result->num_rows > 0) {
         // Get the movie title
         $movie = $result->fetch_assoc();
@@ -53,7 +54,7 @@ if (isset($_POST['delete_movie'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Delete Movie</title>
-    <link rel="stylesheet" href="../../assets/css/admin/admin-dashboard.css">
+    <link rel="stylesheet" href="../../Asset/css/admin-dashboard.css">
     <style>/* Table Styling */
 .movie-table {
     width: 100%;

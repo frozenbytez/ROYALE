@@ -1,6 +1,6 @@
 <?php
 session_start();  // Start the session to use session variables
-include('../../assets/php/config.php');  // Include database connection
+include('../../Asset/connection/config.php');  // Include database connection
 
 $loggedIn = isset($_SESSION['user']) || isset($_SESSION['admin']);
 $first_name = $_SESSION['user'] ?? $_SESSION['admin'] ?? '';
@@ -13,7 +13,7 @@ $first_name = $_SESSION['user'] ?? $_SESSION['admin'] ?? '';
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="../../assets/css/guest/contact.css">
+    <link rel="stylesheet" href="../../Asset/css/contact.css">
     <title>Contact</title>
 </head>
 <body>
@@ -50,9 +50,9 @@ $first_name = $_SESSION['user'] ?? $_SESSION['admin'] ?? '';
                     </li>
                     <li class="nav-item mx-2">
                             <?php if ($loggedIn): ?>
-                                <a class="nav-link" href="../guest/logout.php">Logout (<?php echo htmlspecialchars($first_name); ?>)</a>
+                                <a class="nav-link" href="logout.php">Logout (<?php echo htmlspecialchars($first_name); ?>)</a>
                             <?php else: ?>
-                                <a class="nav-link" href="../guest/login.php">Login</a>
+                                <a class="nav-link" href="login.php">Login</a>
                             <?php endif; ?>
                         </li>
                 </ul>
@@ -65,7 +65,7 @@ $first_name = $_SESSION['user'] ?? $_SESSION['admin'] ?? '';
   <div class="row g-0"> 
     <div class="col-12">
       <div class="full-width-image">
-        <img src="../../assets/images/contacts2.png" alt="Sample Image">
+        <img src="../../Asset/images/contacts2.png" alt="Sample Image">
       </div>
     </div>
   </div>

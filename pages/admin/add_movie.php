@@ -1,5 +1,5 @@
 <?php
-include('../../assets/php/config.php'); // Include database connection
+include('../../Asset/connection/config.php'); // Include database connection
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Get movie details from the form
@@ -37,10 +37,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $image_tmp = $_FILES['image']['tmp_name'];
             $image_ext = pathinfo($image_name, PATHINFO_EXTENSION);
             $image_new_name = uniqid('movie_', true) . '.' . $image_ext;
-            $image_dir = '../../assets/images/' . $image_new_name;
+            $image_dir = '../../Asset/images/' . $image_new_name;
 
-            if (!is_dir('../../assets/images')) {
-                mkdir('../../assets/images', 0777, true);
+            if (!is_dir('../../Asset/images')) {
+                mkdir('../../Asset/images', 0777, true);
             }
 
             if (move_uploaded_file($image_tmp, $image_dir)) {
@@ -63,7 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 new DateInterval('P1D'),
                 new DateTime($end_date)
             );
-    
+            
             $times = array_filter([$time1, $time2, $time3]);
     
             // Prepare the seats insertion statement
@@ -113,7 +113,7 @@ $result = mysqli_query($conn, $query);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - Add Movie</title>
-    <link rel="stylesheet" href="../../assets/css/admin/admin-dashboard.css">
+    <link rel="stylesheet" href="../../Asset/css/admin-dashboard.css">
 </head>
 <body>
 

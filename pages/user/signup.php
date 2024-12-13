@@ -1,6 +1,6 @@
 <?php
 session_start();
-$conn = new mysqli('localhost', 'root', '', 'login_system');
+$conn = new mysqli('localhost', 'root', '', 'movies');
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -215,7 +215,7 @@ $conn->close();
 <body>
     <!-- Background Video -->
     <video autoplay muted loop playsinline class="background-video">
-        <source src="../../assets/images/signupbgbg.mp4" type="video/mp4">
+        <source src="../../Asset/images/signupbgbg.mp4" type="video/mp4">
     </video>
 
     <!-- Navbar -->

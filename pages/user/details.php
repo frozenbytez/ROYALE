@@ -1,6 +1,6 @@
 <?php
 session_start();  // Start the session to use session variables
-include('../../assets/php/config.php');  // Include database connection
+include('../../Asset/connection/config.php');  // Include database connection
 
 if (!isset($_SESSION['user']) && !isset($_SESSION['admin'])) {
     // Redirect to login page if not logged in
@@ -79,7 +79,7 @@ $dateRange = new DatePeriod($startDate, $dateInterval, $endDate->modify('+1 day'
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../assets/css/user/style.css">
+    <link rel="stylesheet" href="../../Asset/css/details.css">
     <style>
     .seats-container.loading {
     opacity: 0.5;
@@ -155,6 +155,17 @@ $dateRange = new DatePeriod($startDate, $dateInterval, $endDate->modify('+1 day'
   border-radius: 5px;
 }
     </style>
+    <script>
+        function printReceipt() {
+            const receiptContent = document.getElementById('receiptContent').innerHTML;
+            const printWindow = window.open('', '_blank', 'width=800,height=600');
+            printWindow.document.write('<html><head><title>Print Receipt</title></head><body>');
+            printWindow.document.write(receiptContent);
+            printWindow.document.write('</body></html>');
+            printWindow.document.close();
+            printWindow.print();
+        }
+    </script>
     <title><?php echo htmlspecialchars($movie_title); ?> - Movie Details</title>
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
@@ -209,7 +220,7 @@ $dateRange = new DatePeriod($startDate, $dateInterval, $endDate->modify('+1 day'
         </div>
 
         <div class="poster-section">
-            <img src="../../assets/images/<?php echo htmlspecialchars($movie_image); ?>" alt="Movie Poster" class="poster">
+            <img src="../../Asset/images/<?php echo htmlspecialchars($movie_image); ?>" alt="Movie Poster" class="poster">
             <a href="<?php echo htmlspecialchars($movie_trailer); ?>" class="trailer-link d-block text-center text-md-left" data-bs-toggle="modal" data-bs-target="#trailerModal">Watch trailer</a>
         </div>
     </div>
@@ -282,6 +293,31 @@ $dateRange = new DatePeriod($startDate, $dateInterval, $endDate->modify('+1 day'
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="receiptModal" tabindex="-1" aria-labelledby="receiptModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="receiptModalLabel">Receipt</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Receipt details dynamically loaded here -->
+                    <div id="receiptContent">
+                        <p><strong>Seat Number:</strong> A1</p>
+                        <p><strong>Price:</strong> PHP 500.00</p>
+                        <p><strong>Date:</strong> 2024-12-14</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="printReceipt()">Print Receipt</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
                             
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
@@ -375,7 +411,7 @@ function createSeat(row, col) {
         const date = dateSelect.value;
         const time = timeSelect.value;
 
-        fetch('../../assets/php/get-booked-seats.php', {
+        fetch('../../Asset/connection/get-booked-seats.php', {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'
@@ -456,7 +492,7 @@ function createSeat(row, col) {
         const date = dateSelect.value;
         const time = timeSelect.value;
 
-        fetch('../../assets/php/save-tickets.php', {
+        fetch('../../Asset/connection/save-tickets.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

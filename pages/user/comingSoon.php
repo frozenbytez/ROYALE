@@ -1,6 +1,6 @@
 <?php
 // Include the database connection file
-include('../../assets/php/config.php');
+include('../../Asset/connection/config.php');
 
 session_start();  // Start the session to use session variables
 
@@ -25,7 +25,7 @@ $result = mysqli_query($conn, $query);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <title>Royale Cinema - Upcoming Movies</title>
-    <link rel="stylesheet" href="../../assets/css/guest/comingSoon.css">
+    <link rel="stylesheet" href="../../Asset/css/comingSoon.css">
     
 </head>
 <body>
@@ -62,9 +62,9 @@ $result = mysqli_query($conn, $query);
                         </li>
                         <li class="nav-item mx-2">
                             <?php if ($loggedIn): ?>
-                                <a class="nav-link" href="../guest/logout.php">Logout (<?php echo htmlspecialchars($first_name); ?>)</a>
+                                <a class="nav-link" href="logout.php">Logout (<?php echo htmlspecialchars($first_name); ?>)</a>
                             <?php else: ?>
-                                <a class="nav-link" href="../guest/login.php">Login</a>
+                                <a class="nav-link" href="login.php">Login</a>
                             <?php endif; ?>
                         </li>
                     </ul>
@@ -87,7 +87,7 @@ $result = mysqli_query($conn, $query);
                 <div class="container py-4">
                     <div class="row movie-card">
                         <div class="col-12 col-md-4 text-center movie-poster">
-                            <img src="../../assets/images/cs4.jpg" class="img-fluid mb-3" alt=" Moan 2 Photo">
+                            <img src="../../Asset/images/cs4.jpg" class="img-fluid mb-3" alt=" Moan 2 Photo">
                             <div data-bs-toggle="tooltip" data-bs-placement="top" title="Price: ₱350" class="button">
                                 <div class="button-wrapper">
                                     <div class="text">Get Ticket</div>
@@ -139,7 +139,7 @@ $result = mysqli_query($conn, $query);
                         <div class="container py-4">
                             <div class="row movie-card">
                                 <div class="col-12 col-md-4 text-center movie-poster">
-                                    <img src="../../assets/images/cs2.jpg" class="img-fluid mb-3" alt="Deadpool and Wolverine">
+                                    <img src="../../Asset/images/cs2.jpg" class="img-fluid mb-3" alt="Deadpool and Wolverine">
                                     <div data-bs-toggle="tooltip" data-bs-placement="top" title="Price: ₱370" class="button">
                                         <div class="button-wrapper">
                                             <div class="text">Get Ticket</div>
@@ -191,7 +191,7 @@ $result = mysqli_query($conn, $query);
                     <div class="container py-4">
                             <div class="row movie-card">
                                 <div class="col-12 col-md-4 text-center movie-poster">
-                                    <img src="../../assets/images/cs3.jpg" class="img-fluid mb-3" alt="The Wild Robot">
+                                    <img src="../../Asset/images/cs3.jpg" class="img-fluid mb-3" alt="The Wild Robot">
                                     <div data-bs-toggle="tooltip" data-bs-placement="top" title="Price: ₱350" class="button">
                                         <div class="button-wrapper">
                                             <div class="text">Get Ticket</div>
@@ -241,7 +241,7 @@ $result = mysqli_query($conn, $query);
                         </div> 
 
                         <?php
-include('../../assets/php/config.php');  // Include the database connection
+include('../../Asset/connection/config.php');  // Include the database connection
 
 // Query to get all movies that are "now showing"
 $query = "SELECT * FROM movies WHERE status = 'comingSoon'";
@@ -265,9 +265,11 @@ if (mysqli_num_rows($result) > 0) {
     $movie_time1 = date("h:i A", strtotime($movie['time1']));  // Convert to 12-hour format
     $movie_time2 = date("h:i A", strtotime($movie['time2']));  // Convert to 12-hour format
     $movie_time3 = date("h:i A", strtotime($movie['time3']));  // Convert to 12-hour format
-
+    $movie_cinema = $movie['cinema'];
+    $movie_genre = $movie['genre'];
     // Check if image exists, assuming images are stored in the "images" directory
-    $image_path = "../../assets/images/" . $movie_image; // Assuming all images are in the "images" directory
+    $image_path = "../../Asset/images/" . $movie_image; // Assuming all images are in the "images" directory
+    $sanitized_title = preg_replace('/[^A-Za-z0-9-]+/', '_', strtolower($movie_title));
 
     // Check if the image file exists in the images directory
     if (file_exists($image_path)) {
@@ -282,21 +284,21 @@ if (mysqli_num_rows($result) > 0) {
 
     // Output HTML for this movie
     echo "
-    <div class='container py-4'>
-        <div class='row movie-card'>
-            <div class='col-12 col-md-4 text-center movie-poster'>
-                $image_tag
-                <div data-bs-toggle='tooltip' data-bs-placement='top' title='Price: ₱350' class='button'>
-                    <div class='button-wrapper'>
-                        <div class='text'>Get Ticket</div>
-                        <span class='icon'>
-                            <svg viewBox='0 0 16 16' class='bi bi-cart2' fill='currentColor' height='16' width='16' xmlns='http://www.w3.org/2000/svg'>
-                                <path d='M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l1.25 5h8.22l1.25-5H3.14zM5 13a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z'></path>
-                            </svg>
-                        </span>
-                    </div>
+<div class='container py-4'>
+    <div class='row movie-card'>
+        <div class='col-12 col-md-4 text-center movie-poster'>
+            $image_tag
+            <a href='details.php?movie_id=$movie[id]' class='button'>
+                <div class='button-wrapper'>
+                    <div class='text'>Get Ticket</div>
+                    <span class='icon'>
+                        <svg viewBox='0 0 16 16' class='bi bi-cart2' fill='currentColor' height='16' width='16' xmlns='http://www.w3.org/2000/svg'>
+                            <path d='M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l1.25 5h8.22l1.25-5H3.14zM5 13a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z'></path>
+                        </svg>
+                    </span>
                 </div>
-            </div>
+            </a>
+        </div>
             
             <div class='col-12 col-md-8 movie-info'>
                 <hr />
@@ -308,10 +310,9 @@ if (mysqli_num_rows($result) > 0) {
                 <p>$movie_description</p>
                 <p><strong>Director:</strong> $movie_director</p>
                 <p><strong>Cast:</strong> $movie_cast</p>
-                <p><strong>Rating:</strong> $movie_rating <strong>Genre:</strong> {$movie['genre']}</p>
-                <p><strong>Airing Date:</strong> $movie_start_date <strong>-</strong> $movie_end_date </p>
-                <p><strong>Airing Time:</strong> $movie_time1 / $movie_time2 / $movie_time3 </p>
-                                                  
+                <p><strong>Rating:</strong> $movie_rating</p>
+                <p><strong>Genre:</strong> $movie_genre </p>
+                <p><strong>Cinema $movie_cinema</strong>  </p>
             </div>
         </div>
     </div>

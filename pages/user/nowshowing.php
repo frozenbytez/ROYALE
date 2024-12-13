@@ -12,7 +12,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <title>🎞️ Royale Cinema - Now Showing Movies</title>
-    <link rel="stylesheet" href="../../assets/css/guest/nowshowing.css">
+    <link rel="stylesheet" href="../../Asset/css/nowshowing.css">
     
 </head>
 <body>
@@ -70,7 +70,7 @@
     <div class="container py-4">
         <div class="row movie-card">
             <div class="col-12 col-md-4 text-center movie-poster">
-                <img src="../../assets/images/hello_love_again.jpg" class="img-fluid mb-3" alt="Hello Love Again Photo">
+                <img src="../../Asset/images/hello_love_again.jpg" class="img-fluid mb-3" alt="Hello Love Again Photo">
                 <div data-bs-toggle="tooltip" data-bs-placement="top" title="Price: ₱350" class="button">
                     <div class="button-wrapper">
                         <div class="text">Get Ticket</div>
@@ -122,7 +122,7 @@
             <div class="container py-4">
                 <div class="row movie-card">
                     <div class="col-12 col-md-4 text-center movie-poster">
-                        <img src="../../assets/images/deadpool_and_wolverine.jpg" class="img-fluid mb-3" alt="Deadpool and Wolverine">
+                        <img src="../../Asset/images/deadpool_and_wolverine.jpg" class="img-fluid mb-3" alt="Deadpool and Wolverine">
                         <div data-bs-toggle="tooltip" data-bs-placement="top" title="Price: ₱370" class="button">
                             <div class="button-wrapper">
                                 <div class="text">Get Ticket</div>
@@ -173,7 +173,7 @@
         <div class="container py-4">
                 <div class="row movie-card">
                     <div class="col-12 col-md-4 text-center movie-poster">
-                        <img src="../../assets/images/the_wild_robot.jpg" class="img-fluid mb-3" alt="The Wild Robot">
+                        <img src="../../Asset/images/the_wild_robot.jpg" class="img-fluid mb-3" alt="The Wild Robot">
                         <div data-bs-toggle="tooltip" data-bs-placement="top" title="Price: ₱350" class="button">
                             <div class="button-wrapper">
                                 <div class="text">Get Ticket</div>
@@ -227,7 +227,7 @@
             <div class="container py-4">
                 <div class="row movie-card">  
                     <div class="col-12 col-md-4 text-center movie-poster">
-                        <img src="../../assets/images/oppenheimer.jpg" class="img-fluid mb-3" alt="The Wild Robot">
+                        <img src="../../Asset/images/oppenheimer.jpg" class="img-fluid mb-3" alt="The Wild Robot">
                         <div data-bs-toggle="tooltip" data-bs-placement="top" title="Price: ₱350" class="button">
                             <div class="button-wrapper">
                                 <div class="text">Get Ticket</div>
@@ -277,7 +277,7 @@
             <div class="container py-4">
                 <div class="row movie-card">
                     <div class="col-12 col-md-4 text-center movie-poster">
-                        <img src="../../assets/images/the_super_mario_bros2.jpg" class="img-fluid mb-3" alt="The Super Mario Bros 2">
+                        <img src="../../Asset/images/the_super_mario_bros2.jpg" class="img-fluid mb-3" alt="The Super Mario Bros 2">
                         <div data-bs-toggle="tooltip" data-bs-placement="top" title="Price: ₱350" class="button">
                             <div class="button-wrapper">
                                 <div class="text">Get Ticket</div>
@@ -328,7 +328,7 @@
             <div class="container py-4">
                 <div class="row movie-card">
                     <div class="col-12 col-md-4 text-center movie-poster">
-                        <img src="../../assets/images/the_nun2.jpg" class="img-fluid mb-3" alt="The Nun 2">
+                        <img src="../../Asset/images/the_nun2.jpg" class="img-fluid mb-3" alt="The Nun 2">
                         <div data-bs-toggle="tooltip" data-bs-placement="top" title="Price: ₱350" class="button">
                             <div class="button-wrapper">
                                 <div class="text">Get Ticket</div>
@@ -380,7 +380,7 @@
             <div class="container py-4">
                 <div class="row movie-card">
                     <div class="col-12 col-md-4 text-center movie-poster">
-                        <img src="../../assets/images/spider_man_across_spider_verse.jpg" class="img-fluid mb-3" alt="The Spider Man Across Spider Verse">
+                        <img src="../../Asset/images/spider_man_across_spider_verse.jpg" class="img-fluid mb-3" alt="The Spider Man Across Spider Verse">
                         <div data-bs-toggle="tooltip" data-bs-placement="top" title="Price: ₱350" class="button">
                             <div class="button-wrapper">
                                 <div class="text">Get Ticket</div>
@@ -431,7 +431,7 @@
             <div class="container py-4">
                 <div class="row movie-card">
                     <div class="col-12 col-md-4 text-center movie-poster">
-                        <img src="../../assets/images/venom_last_dance.jpg" class="img-fluid mb-3" alt="Venom The Last Dance">
+                        <img src="../../Asset/images/venom_last_dance.jpg" class="img-fluid mb-3" alt="Venom The Last Dance">
                         <div data-bs-toggle="tooltip" data-bs-placement="top" title="Price: ₱350" class="button">
                             <div class="button-wrapper">
                                 <div class="text">Get Ticket</div>
@@ -478,7 +478,7 @@
             </div>
 
                 <?php
-    include('../../assets/php/config.php');  // Include the database connection
+    include('../../Asset/connection/config.php');  // Include the database connection
 
     // Query to get all movies that are "now showing"
     $query = "SELECT * FROM movies WHERE status = 'nowshowing'";
@@ -502,9 +502,10 @@
         $movie_time1 = date("h:i A", strtotime($movie['time1']));  // Convert to 12-hour format
         $movie_time2 = date("h:i A", strtotime($movie['time2']));  // Convert to 12-hour format
         $movie_time3 = date("h:i A", strtotime($movie['time3']));  // Convert to 12-hour format
-
+        $movie_cinema = $movie['cinema'];
+        $movie_genre = $movie['genre'];
         // Check if image exists, assuming images are stored in the "images" directory
-        $image_path = "../../assets/images/" . $movie_image; // Assuming all images are in the "images" directory
+        $image_path = "../../Asset/images/" . $movie_image; // Assuming all images are in the "images" directory
         $sanitized_title = preg_replace('/[^A-Za-z0-9-]+/', '_', strtolower($movie_title));
 
         // Check if the image file exists in the images directory
@@ -546,10 +547,9 @@
                     <p>$movie_description</p>
                     <p><strong>Director:</strong> $movie_director</p>
                     <p><strong>Cast:</strong> $movie_cast</p>
-                    <p><strong>Rating:</strong> $movie_rating <strong>Genre:</strong> {$movie['genre']}</p>
-                    <p><strong>Airing Date:</strong> $movie_start_date <strong>-</strong> $movie_end_date </p>
-                    <p><strong>Airing Time:</strong> $movie_time1 / $movie_time2 / $movie_time3 </p>
-                                                    
+                    <p><strong>Rating:</strong> $movie_rating</p>
+                    <p><strong>Genre:</strong> $movie_genre </p>
+                    <p><strong>Cinema $movie_cinema</strong>  </p>
                 </div>
             </div>
         </div>

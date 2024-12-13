@@ -1,5 +1,5 @@
 <?php
-include('../../assets/php/config.php'); // Include database connection
+include('../../Asset/connection/config.php'); // Include database connection
 
 $movie = null;  // Ensure movie is initialized
 $update_message = '';  // Initialize update_message
@@ -48,7 +48,7 @@ if (isset($_POST['update_movie']) && isset($_POST['movie_id'])) {
         $image_tmp = $_FILES['image']['tmp_name'];
         $image_ext = pathinfo($image_name, PATHINFO_EXTENSION);
         $image_new_name = uniqid('movie_', true) . '.' . $image_ext;
-        $image_dir = '../../assets/images/' . $image_new_name;
+        $image_dir = '../../Asset/images/' . $image_new_name;
 
         // Move the uploaded image to the target directory
         if (move_uploaded_file($image_tmp, $image_dir)) {
@@ -77,7 +77,7 @@ if (isset($_POST['update_movie']) && isset($_POST['movie_id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Update Movie</title>
-    <link rel="stylesheet" href="../../assets/css/admin/admin-dashboard.css">
+    <link rel="stylesheet" href="../../Asset/css/admin-dashboard.css">
 </head>
 <body>
 
@@ -172,7 +172,7 @@ if (isset($_POST['update_movie']) && isset($_POST['movie_id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Delete Movie</title>
-    <link rel="stylesheet" href="../../assets/css/admin/admin-dashboard.css">
+    <link rel="stylesheet" href="../../Asset/css/admin/admin-dashboard.css">
     <style>/* Table Styling */
 .movie-table {
     width: 100%;
